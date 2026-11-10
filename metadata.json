@@ -1,0 +1,11 @@
+{
+  "uuid": "luma-menu@viniciusbispo19",
+  "name": "Luma Menu",
+  "description": "Barra de menus global no estilo do macOS: ícone do sistema, nome do aplicativo em negrito e os menus Arquivo, Editar, Visualizar, Janela e Ajuda.",
+  "shell-version": [
+    "51"
+  ],
+  "url": "https://github.com/viniciusbispo19/luma-menu",
+  "gettext-domain": "luma-menu",
+  "version-name": "0.1.0"
+}

@@ -1,0 +1,29 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later
+ * Luma Menu — estilos.
+ *
+ * Toda classe começa com "luma-menu-" para nunca colidir com o tema
+ * (WhiteSur) nem com outras extensões.
+ *
+ * Sobre especificidade: o tema estiliza os botões com "#panel .panel-button"
+ * (1 id + 1 classe). Para o nosso valor ganhar, o seletor precisa ser mais
+ * específico: "#panel .panel-button.luma-menu-…" (1 id + 2 classes).
+ */
+
+/* A barra inteira (caixa no lado esquerdo do painel). */
+.luma-menu-bar {
+    spacing: 0;
+}
+
+/* Botão do logo: espaçamento lateral parecido com o da maçã no macOS.
+ * -natural-hpadding / -minimum-hpadding são propriedades do GNOME Shell
+ * lidas pelo PanelMenu.ButtonBox (não são CSS padrão da web). */
+#panel .panel-button.luma-menu-system-button {
+    -natural-hpadding: 12px;
+    -minimum-hpadding: 8px;
+}
+
+/* Tamanho do logo em pixels LÓGICOS: com escala 1,5× o Shell desenha o SVG
+ * a 24 px físicos, por isso ele fica nítido em qualquer escala. */
+.luma-menu-system-icon {
+    icon-size: 16px;
+}

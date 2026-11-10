@@ -27,15 +27,49 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   `"W%lu (%s)"` (janela Wayland). Extrair com `/^0x([0-9a-f]+)/i`.
   (Ainda falta confirmar em tempo de execução — fazer na Fase 6.)
 
-### Sessão aninhada (mutter-devkit)
-- `mutter-devkit-51.1` instalado. Comando testado e funcionando:
-  `dbus-run-session -- gnome-shell --devkit --wayland --devkit-args="--monitor-size=1600x1000"`
-  (veja `scripts/dev-nested.sh`).
+### GNOME Shell 51 — painel e extensões (conferido no JS extraído do `libshell-51.so`)
+- Para ler o código JS do Shell: `gresource list /usr/lib64/gnome-shell/libshell-51.so`
+  e `gresource extract … <arquivo>`.
+- `Main.panel._leftBox/_centerBox/_rightBox` (privados). `addToStatusArea(role, indicator,
+  position, box)` só aceita um `PanelMenu.Button`.
+- O `ActivitiesButton` contém os `WorkspaceIndicators`: escondê-lo some com os dois.
+  O ator a esconder/inserir é `button.container` (St.Bin), não o botão.
+- `PanelMenu.Button._init(menuAlignment, nameText, dontCreateMenu)`; com
+  `dontCreateMenu=true` o menu é um `PopupDummyMenu` (não registrar no menuManager).
+- `PopupMenuManager.addMenu()` remove o menu sozinho no `destroy` dele.
+- Padding dos botões: propriedades CSS `-natural-hpadding` / `-minimum-hpadding`.
+  O tema usa `#panel .panel-button`; para vencer: `#panel .panel-button.luma-menu-…`.
+- St recolore como simbólico arquivos que terminam em `-symbolic.svg` (confirmado no libst).
+- `ExtensionBase` chama `initTranslations()` no construtor (usa `gettext-domain` do
+  metadata.json e a pasta `locale/`). `gettext` importado de `extension.js` acha a
+  extensão pela pilha de chamadas (precisa do caminho `/gnome-shell/extensions/`).
+- Estados (`Main.extensionManager.lookup(uuid).state`): 1 = ACTIVE, 2 = INACTIVE.
+- Extensões com `session-modes` padrão são desativadas ao bloquear a tela
+  (`unlock-dialog`) e reativadas ao desbloquear. Testado: a barra não duplica.
+- `gnome-extensions enable <uuid>` falha ("não existe") se a sessão em execução não
+  carregou a extensão no login — por isso o dev usa o dconf isolado (abaixo).
+
+### Sessão aninhada (mutter-devkit) — fluxo de desenvolvimento
+- `./scripts/dev-nested.sh`: empacota, instala, cria dconf isolado e abre o Shell aninhado.
+  Comando base: `dbus-run-session -- gnome-shell --devkit --wayland --devkit-args="--monitor-size=1600x1000"`.
+- dconf isolado: copia `~/.config/dconf/user` → `~/.config/dconf/luma_menu_dev` e usa
+  `DCONF_PROFILE` (arquivo com `user-db:luma_menu_dev`). O nome do banco **não pode ter
+  hífen** (vira caminho D-Bus `/ca/desrt/dconf/Writer/<nome>`; com hífen o `gsettings set` trava).
+- `dev/luma-menu-devtools@viniciusbispo19`: liga `global.context.unsafe_mode` só com
+  `LUMA_MENU_DEV=1`. Isso libera `org.gnome.Shell.Eval` e `org.gnome.Shell.Screenshot`.
+- `./scripts/nested-eval.sh '<js>'` e `./scripts/nested-screenshot.sh [png]` falam com o
+  Shell aninhado pelo endereço salvo em `~/.local/state/luma-menu/nested-bus`.
+- Logs da sessão aninhada: `~/.local/state/luma-menu/nested-*.log`.
 - `MUTTER_DEBUG_DUMMY_MODE_SPECS` **não existe mais** no Mutter 51 (tutoriais antigos).
-- O Shell aninhado compartilha o dconf da sessão real: carrega as mesmas extensões ativas.
-- Ruído pré-existente no log (não é culpa do Luma Menu): `Advanced-media-controller-themes`
-  sem `metadata.json`; `copyous@boerdereinar.dev` falha ao importar `highlight.min.js`;
-  `Error: No object to track signals` (2x); avisos `Overwriting existing binding of keysym`.
+- Ruído pré-existente no log (não é culpa do Luma Menu): `copyous@boerdereinar.dev` falha
+  ao importar `highlight.min.js` (repete a cada desbloqueio); `Error: No object to track
+  signals` (2x); avisos `Overwriting existing binding of keysym`.
+
+### Ícones
+- Fedora: Simple Icons 16.37.0 (`path` copiado por script, nunca à mão). O Simple Icons
+  marca a licença do logo como **custom** (regras de marca do Fedora), não CC0 — ver
+  `icons/CREDITS.md`. Repetir essa checagem (campo `license` em `data/simple-icons.json`)
+  para cada logo da Fase 8.
 
 ### Extensões do usuário
 - Ativas: blur-my-shell, caffeine, appindicatorsupport, compiz-windows-effect,
@@ -51,7 +85,11 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
 - Presentes: git, gh (logado como viniciusbispo19, protocolo ssh), glib-compile-schemas,
   gettext (msgfmt/xgettext/msginit/msgmerge), node/npm, gnome-extensions, gdbus, busctl,
   dbus-monitor.
-- ESLint **não existe no dnf** do Fedora 45 → instalar via npm como devDependency do projeto.
+- ESLint **não existe no dnf** do Fedora 45 → `npm install` (eslint 10.14.0 fixo no
+  package.json). Rodar com `npm run lint`. Config em `eslint.config.js` (estilo GNOME).
+- Build/instalação: `scripts/build.sh` (`gnome-extensions pack`, compila po/ → .mo),
+  `scripts/install.sh` (pack + install; NUNCA symlink — `install --force` apagaria o
+  projeto), `scripts/update-po.sh` (xgettext + msgmerge).
 - Instalados: `d-spy` 50.0 (explorador D-Bus), `gnome-extensions-app`, `libdbusmenu-tools`.
   Atenção: o `libdbusmenu-tools` do Fedora **não** traz o `dbusmenu-dumper`; traz
   `/usr/libexec/dbusmenu-testapp` (publica um DBusMenu a partir de um JSON, ex.:

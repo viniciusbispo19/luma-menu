@@ -1,0 +1,9 @@
+{
+  "uuid": "luma-menu-devtools@viniciusbispo19",
+  "name": "Luma Menu — ferramentas de desenvolvimento",
+  "description": "Uso interno do desenvolvimento do Luma Menu. Liga o modo inseguro do Shell APENAS na sessão aninhada de testes (variável LUMA_MENU_DEV=1). Não faz nada na sessão normal.",
+  "shell-version": [
+    "51"
+  ],
+  "url": "https://github.com/viniciusbispo19/luma-menu"
+}
