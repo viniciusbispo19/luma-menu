@@ -64,11 +64,14 @@ echo "Feche a janela do devkit (ou Ctrl+C aqui) para encerrar."
 #   nested-eval.sh e nested-screenshot.sh conversarem com o Shell aninhado.
 # --devkit: abre o Shell dentro da janela do mutter-devkit (substitui o antigo
 #   --nested, que não existe mais no GNOME 49+).
-trap 'rm -f "$BUS_FILE"' EXIT
+# Ao sair, apaga o arquivo do barramento — mas só se ele ainda for o desta
+# sessão (uma sessão nova pode já ter escrito o dela).
+RUN_ID="$$-$RANDOM"
+trap 'grep -q -- "#$RUN_ID\$" "$BUS_FILE" 2>/dev/null && rm -f "$BUS_FILE"' EXIT
 dbus-run-session -- bash -c '
     set -e
     cp "$DCONF_DIR/user" "$DCONF_DIR/$DEV_DB"
     python3 -I scripts/dconf-enable-extensions.py "$UUID" "$DEVTOOLS_UUID"
-    echo "$DBUS_SESSION_BUS_ADDRESS" > "$1"
+    echo "$DBUS_SESSION_BUS_ADDRESS#$3" > "$1"
     exec gnome-shell --devkit --wayland --devkit-args="--monitor-size=$2"
-' _ "$BUS_FILE" "$SIZE" 2>&1 | tee "$LOG"
+' _ "$BUS_FILE" "$SIZE" "$RUN_ID" 2>&1 | tee "$LOG"

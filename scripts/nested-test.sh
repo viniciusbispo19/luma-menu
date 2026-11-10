@@ -27,7 +27,17 @@ BEFORE=$(wc -l < "$LOG")
     atividadesVisivel: Main.panel.statusArea.activities.container.visible,
     menusNoGerenciador: Main.panel.menuManager._menus.length,
     atoresNoUiGroup: Main.layoutManager.uiGroup.get_n_children(),
+    atoresLumaNoPalco: countOurs(global.stage),
   });
+  // Conta, no palco inteiro, os atores criados pelas NOSSAS classes
+  // (GTypes LumaMenu*). Se algum sobrar após os ciclos, é vazamento nosso.
+  function countOurs(actor) {
+    let n = actor.constructor.name.startsWith('LumaMenu') ? 1 : 0;
+    for (const child of actor.get_children())
+      n += countOurs(child);
+    return n;
+  }
+  await wait(2000); // deixa as outras extensões terminarem de iniciar
   const antes = snap();
   for (let i = 0; i < ${CYCLES}; i++) {
     m.disableExtension(uuid); await wait(250);
@@ -55,7 +65,8 @@ checks = {
     "ativa e sem erro após os ciclos": d["estado"] == 1 and not d["erro"],
     "exatamente 1 barra após os ciclos": d["barras"] == 1,
     "nenhum menu sobrando no gerenciador": d["menusNoGerenciador"] == a["menusNoGerenciador"],
-    "nenhum ator sobrando no uiGroup": d["atoresNoUiGroup"] == a["atoresNoUiGroup"],
+    "nenhum ator nosso sobrando no palco": d["atoresLumaNoPalco"] == a["atoresLumaNoPalco"],
+    "desativar remove todos os atores nossos": data["desativada"]["atoresLumaNoPalco"] == 0,
     "desativar remove a barra": data["desativada"]["barras"] == 0,
     "desativar mostra o botão Atividades": data["desativada"]["atividadesVisivel"],
     "desbloquear recria 1 barra": data["desbloqueada"]["barras"] == 1,

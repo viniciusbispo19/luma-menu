@@ -34,8 +34,10 @@
     -minimum-hpadding: 8px;
 }
 
-/* Nome do app em negrito (preferência "Nome do app em negrito"). */
-.luma-menu-bold-app .luma-menu-app-title {
+/* Nome do app em negrito (preferência "Nome do app em negrito").
+ * Precisa ser MAIS específico que a regra acima (que deixa os títulos em peso
+ * normal): 1 id + 3 classes vence 1 id + 2 classes. */
+#panel .luma-menu-bold-app .panel-button.luma-menu-app-title {
     font-weight: bold;
 }
 

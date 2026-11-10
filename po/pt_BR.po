@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Luma Menu 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/viniciusbispo19/luma-menu/issues\n"
-"POT-Creation-Date: 2026-11-10 16:02-0300\n"
+"POT-Creation-Date: 2026-11-10 16:27-0300\n"
 "PO-Revision-Date: 2026-11-10 15:56-0300\n"
 "Last-Translator: Vinicius Bispo\n"
 "Language-Team: none\n"
@@ -64,6 +64,37 @@ msgstr "GNOME"
 msgid "Kernel"
 msgstr "Kernel"
 
+#: lib/appMenu.js:26
+msgid "No application"
+msgstr "Nenhum aplicativo"
+
+#: lib/appMenu.js:32 lib/appMenu.js:33 lib/appMenu.js:34
+#, javascript-format
+msgid "About %s"
+msgstr "Sobre o %s"
+
+#: lib/appMenu.js:43 lib/appMenu.js:46 lib/appMenu.js:47
+msgid "Settings…"
+msgstr "Configurações…"
+
+#: lib/appMenu.js:52 lib/appMenu.js:53 lib/appMenu.js:54
+#, javascript-format
+msgid "Quit %s"
+msgstr "Sair do %s"
+
+#: lib/appMenu.js:65
+#, javascript-format
+msgid "Hide %s"
+msgstr "Ocultar %s"
+
+#: lib/appMenu.js:71
+msgid "Hide Others"
+msgstr "Ocultar Outros"
+
+#: lib/appMenu.js:76
+msgid "Show All"
+msgstr "Mostrar Tudo"
+
 #: lib/forceQuitDialog.js:39
 msgid "Force Quit Applications"
 msgstr "Forçar Encerramento de Aplicativos"
@@ -73,20 +104,20 @@ msgid ""
 "If an app doesn’t respond for a while, select its name and click Force Quit."
 msgstr "Se um aplicativo não responder por algum tempo, selecione seu nome e clique em Forçar Encerramento."
 
-#: lib/forceQuitDialog.js:63 lib/forceQuitDialog.js:138
+#: lib/forceQuitDialog.js:63 lib/forceQuitDialog.js:144
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: lib/forceQuitDialog.js:67 lib/forceQuitDialog.js:142
+#: lib/forceQuitDialog.js:67 lib/forceQuitDialog.js:148
 msgid "Force Quit"
 msgstr "Forçar Encerramento"
 
-#: lib/forceQuitDialog.js:134
+#: lib/forceQuitDialog.js:140
 #, javascript-format
 msgid "Force “%s” to quit?"
 msgstr "Forçar o encerramento de “%s”?"
 
-#: lib/forceQuitDialog.js:135
+#: lib/forceQuitDialog.js:141
 msgid "You will lose any unsaved changes."
 msgstr "Você perderá as alterações que não foram salvas."
 
