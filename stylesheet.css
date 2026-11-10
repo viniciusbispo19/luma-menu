@@ -140,6 +140,23 @@
     background-color: rgba(128, 128, 128, 0.32);
 }
 
+/* ===================== Busca do menu Ajuda ===================== */
+
+.luma-menu-search-item {
+    padding: 4px 6px 6px;
+}
+
+.luma-menu-search-entry {
+    min-width: 260px;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.luma-menu-search-icon {
+    icon-size: 14px;
+    padding-right: 6px;
+}
+
 /* ======================= Sobre Este Computador ======================= */
 
 .luma-about-box {

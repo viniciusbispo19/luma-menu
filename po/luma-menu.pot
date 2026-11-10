@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Luma Menu 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/viniciusbispo19/luma-menu/issues\n"
-"POT-Creation-Date: 2026-11-10 16:32-0300\n"
+"POT-Creation-Date: 2026-11-10 19:03-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,216 +63,216 @@ msgstr ""
 msgid "Kernel"
 msgstr ""
 
-#: lib/appMenu.js:26
+#: lib/appMenu.js:27
 msgid "No application"
 msgstr ""
 
-#: lib/appMenu.js:32 lib/appMenu.js:33 lib/appMenu.js:34
+#: lib/appMenu.js:33 lib/appMenu.js:34 lib/appMenu.js:35
 #, javascript-format
 msgid "About %s"
 msgstr ""
 
-#: lib/appMenu.js:43 lib/appMenu.js:46 lib/appMenu.js:47
+#: lib/appMenu.js:44 lib/appMenu.js:47 lib/appMenu.js:48
 msgid "Settings…"
 msgstr ""
 
-#: lib/appMenu.js:52 lib/appMenu.js:53 lib/appMenu.js:54
+#: lib/appMenu.js:53 lib/appMenu.js:54 lib/appMenu.js:55
 #, javascript-format
 msgid "Quit %s"
 msgstr ""
 
-#: lib/appMenu.js:65
+#: lib/appMenu.js:66
 #, javascript-format
 msgid "Hide %s"
 msgstr ""
 
-#: lib/appMenu.js:71
+#: lib/appMenu.js:72
 msgid "Hide Others"
 msgstr ""
 
-#: lib/appMenu.js:76
+#: lib/appMenu.js:77
 msgid "Show All"
 msgstr ""
 
-#: lib/fallbackMenus.js:164
+#: lib/fallbackMenus.js:166
 msgid "File"
 msgstr ""
 
-#: lib/fallbackMenus.js:166
+#: lib/fallbackMenus.js:168
 msgid "Edit"
 msgstr ""
 
-#: lib/fallbackMenus.js:168
+#: lib/fallbackMenus.js:170
 msgid "View"
 msgstr ""
 
-#: lib/fallbackMenus.js:170
+#: lib/fallbackMenus.js:172
 msgid "Window"
 msgstr ""
 
-#: lib/fallbackMenus.js:178 lib/fallbackMenus.js:181 lib/fallbackMenus.js:186
+#: lib/fallbackMenus.js:180 lib/fallbackMenus.js:183 lib/fallbackMenus.js:188
 msgid "New Window"
 msgstr ""
 
-#: lib/fallbackMenus.js:190
+#: lib/fallbackMenus.js:192
 msgid "New Tab"
 msgstr ""
 
-#: lib/fallbackMenus.js:191
+#: lib/fallbackMenus.js:193
 msgid "Open…"
 msgstr ""
 
-#: lib/fallbackMenus.js:193
+#: lib/fallbackMenus.js:195
 msgid "Open Recent"
 msgstr ""
 
-#: lib/fallbackMenus.js:199
+#: lib/fallbackMenus.js:201
 msgid "Close Window"
 msgstr ""
 
-#: lib/fallbackMenus.js:205
+#: lib/fallbackMenus.js:207
 msgid "Close All"
 msgstr ""
 
-#: lib/fallbackMenus.js:210
+#: lib/fallbackMenus.js:212
 msgid "Save"
 msgstr ""
 
-#: lib/fallbackMenus.js:211
+#: lib/fallbackMenus.js:213
 msgid "Save As…"
 msgstr ""
 
-#: lib/fallbackMenus.js:213
+#: lib/fallbackMenus.js:215
 msgid "Print…"
 msgstr ""
 
-#: lib/fallbackMenus.js:221 lib/systemMenu.js:166
+#: lib/fallbackMenus.js:223 lib/systemMenu.js:166
 msgid "No recent documents"
 msgstr ""
 
-#: lib/fallbackMenus.js:236 lib/fallbackMenus.js:239
+#: lib/fallbackMenus.js:238 lib/fallbackMenus.js:241
 msgid "Emoji & Symbols"
 msgstr ""
 
-#: lib/fallbackMenus.js:246
+#: lib/fallbackMenus.js:248
 msgid "Undo"
 msgstr ""
 
-#: lib/fallbackMenus.js:247
+#: lib/fallbackMenus.js:249
 msgid "Redo"
 msgstr ""
 
-#: lib/fallbackMenus.js:249
+#: lib/fallbackMenus.js:251
 msgid "Cut"
 msgstr ""
 
-#: lib/fallbackMenus.js:250
+#: lib/fallbackMenus.js:252
 msgid "Copy"
 msgstr ""
 
-#: lib/fallbackMenus.js:251
+#: lib/fallbackMenus.js:253
 msgid "Paste"
 msgstr ""
 
-#: lib/fallbackMenus.js:252
+#: lib/fallbackMenus.js:254
 msgid "Paste Without Formatting"
 msgstr ""
 
-#: lib/fallbackMenus.js:253
+#: lib/fallbackMenus.js:255
 msgid "Delete"
 msgstr ""
 
-#: lib/fallbackMenus.js:254
+#: lib/fallbackMenus.js:256
 msgid "Select All"
 msgstr ""
 
-#: lib/fallbackMenus.js:257
+#: lib/fallbackMenus.js:259
 msgid "Find"
 msgstr ""
 
-#: lib/fallbackMenus.js:260
+#: lib/fallbackMenus.js:262
 msgid "Find…"
 msgstr ""
 
-#: lib/fallbackMenus.js:261
+#: lib/fallbackMenus.js:263
 msgid "Find Next"
 msgstr ""
 
-#: lib/fallbackMenus.js:262
+#: lib/fallbackMenus.js:264
 msgid "Find Previous"
 msgstr ""
 
-#: lib/fallbackMenus.js:263
+#: lib/fallbackMenus.js:265
 msgid "Find and Replace…"
 msgstr ""
 
-#: lib/fallbackMenus.js:274
+#: lib/fallbackMenus.js:276
 msgid "Exit Full Screen"
 msgstr ""
 
-#: lib/fallbackMenus.js:274
+#: lib/fallbackMenus.js:276
 msgid "Enter Full Screen"
 msgstr ""
 
-#: lib/fallbackMenus.js:290
+#: lib/fallbackMenus.js:292
 msgid "Show/Hide Sidebar"
 msgstr ""
 
-#: lib/fallbackMenus.js:292
+#: lib/fallbackMenus.js:294
 msgid "Zoom In"
 msgstr ""
 
-#: lib/fallbackMenus.js:293
+#: lib/fallbackMenus.js:295
 msgid "Zoom Out"
 msgstr ""
 
-#: lib/fallbackMenus.js:294
+#: lib/fallbackMenus.js:296
 msgid "Actual Size"
 msgstr ""
 
-#: lib/fallbackMenus.js:310
+#: lib/fallbackMenus.js:312
 #, javascript-format
 msgid "Workspace %d"
 msgstr ""
 
-#: lib/fallbackMenus.js:326
+#: lib/fallbackMenus.js:328
 msgid "Minimize"
 msgstr ""
 
-#: lib/fallbackMenus.js:332
+#: lib/fallbackMenus.js:334
 msgid "Zoom"
 msgstr ""
 
-#: lib/fallbackMenus.js:338
+#: lib/fallbackMenus.js:340
 msgid "Move Window to Left Side of Screen"
 msgstr ""
 
-#: lib/fallbackMenus.js:344
+#: lib/fallbackMenus.js:346
 msgid "Move Window to Right Side of Screen"
 msgstr ""
 
-#: lib/fallbackMenus.js:350
+#: lib/fallbackMenus.js:352
 msgid "Move to Next Display"
 msgstr ""
 
-#: lib/fallbackMenus.js:356
+#: lib/fallbackMenus.js:358
 msgid "Move to Workspace"
 msgstr ""
 
-#: lib/fallbackMenus.js:361
+#: lib/fallbackMenus.js:363
 msgid "Always on Top"
 msgstr ""
 
-#: lib/fallbackMenus.js:368
+#: lib/fallbackMenus.js:370
 msgid "Bring All to Front"
 msgstr ""
 
-#: lib/fallbackMenus.js:386 lib/fallbackMenus.js:392 lib/fallbackMenus.js:396
+#: lib/fallbackMenus.js:388 lib/fallbackMenus.js:394 lib/fallbackMenus.js:397
 #, javascript-format
 msgid "%s Help"
 msgstr ""
 
-#: lib/fallbackMenus.js:400 lib/fallbackMenus.js:403
+#: lib/fallbackMenus.js:401 lib/fallbackMenus.js:404
 msgid "Keyboard Shortcuts"
 msgstr ""
 
@@ -302,8 +302,16 @@ msgstr ""
 msgid "You will lose any unsaved changes."
 msgstr ""
 
-#: lib/menuBar.js:173
+#: lib/menuBar.js:257 lib/menuBar.js:266
 msgid "Help"
+msgstr ""
+
+#: lib/menuSearch.js:122
+msgid "Search"
+msgstr ""
+
+#: lib/menuSearch.js:164
+msgid "No results"
 msgstr ""
 
 #: lib/shortcuts.js:80
