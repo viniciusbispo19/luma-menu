@@ -8,15 +8,156 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Luma Menu 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/viniciusbispo19/luma-menu/issues\n"
-"POT-Creation-Date: 2026-11-10 15:56-0300\n"
+"POT-Creation-Date: 2026-11-10 16:02-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/systemMenu.js:24
+#: lib/aboutDialog.js:72
+msgid "More Info…"
+msgstr ""
+
+#: lib/aboutDialog.js:78
+msgid "Close"
+msgstr ""
+
+#: lib/aboutDialog.js:121
+#, javascript-format
+msgid "Version %s"
+msgstr ""
+
+#: lib/aboutDialog.js:124
+msgid "Computer"
+msgstr ""
+
+#: lib/aboutDialog.js:125
+msgid "Processor"
+msgstr ""
+
+#: lib/aboutDialog.js:126
+msgid "Memory"
+msgstr ""
+
+#: lib/aboutDialog.js:127
+msgid "Graphics"
+msgstr ""
+
+#: lib/aboutDialog.js:129
+msgid "Disk"
+msgstr ""
+
+#: lib/aboutDialog.js:129
+#, javascript-format
+msgid "%s (%s available)"
+msgstr ""
+
+#: lib/aboutDialog.js:130
+msgid "GNOME"
+msgstr ""
+
+#: lib/aboutDialog.js:131
+msgid "Kernel"
+msgstr ""
+
+#: lib/forceQuitDialog.js:39
+msgid "Force Quit Applications"
+msgstr ""
+
+#: lib/forceQuitDialog.js:43
+msgid ""
+"If an app doesn’t respond for a while, select its name and click Force Quit."
+msgstr ""
+
+#: lib/forceQuitDialog.js:63 lib/forceQuitDialog.js:138
+msgid "Cancel"
+msgstr ""
+
+#: lib/forceQuitDialog.js:67 lib/forceQuitDialog.js:142
+msgid "Force Quit"
+msgstr ""
+
+#: lib/forceQuitDialog.js:134
+#, javascript-format
+msgid "Force “%s” to quit?"
+msgstr ""
+
+#: lib/forceQuitDialog.js:135
+msgid "You will lose any unsaved changes."
+msgstr ""
+
+#: lib/shortcuts.js:80
+msgid "Space"
+msgstr ""
+
+#: lib/systemMenu.js:54
 msgid "System Menu"
+msgstr ""
+
+#: lib/systemMenu.js:73
+msgid "About This Computer"
+msgstr ""
+
+#: lib/systemMenu.js:76
+msgid "System Settings…"
+msgstr ""
+
+#: lib/systemMenu.js:80
+msgid "Software Center…"
+msgstr ""
+
+#: lib/systemMenu.js:87
+msgid "Recent Items"
+msgstr ""
+
+#: lib/systemMenu.js:93
+msgid "Force Quit…"
+msgstr ""
+
+#: lib/systemMenu.js:100
+msgid "Suspend"
+msgstr ""
+
+#: lib/systemMenu.js:106
+msgid "Restart…"
+msgstr ""
+
+#: lib/systemMenu.js:112
+msgid "Shut Down…"
+msgstr ""
+
+#: lib/systemMenu.js:119
+msgid "Lock Screen"
+msgstr ""
+
+#: lib/systemMenu.js:125
+#, javascript-format
+msgid "Log Out “%s”…"
+msgstr ""
+
+#: lib/systemMenu.js:135
+msgid "Applications"
+msgstr ""
+
+#: lib/systemMenu.js:149
+msgid "No recent applications"
+msgstr ""
+
+#: lib/systemMenu.js:152
+msgid "Documents"
+msgstr ""
+
+#: lib/systemMenu.js:154
+msgid "File history is turned off in Privacy settings"
+msgstr ""
+
+#: lib/systemMenu.js:166
+msgid "No recent documents"
+msgstr ""
+
+#: lib/systemMenu.js:171
+msgid "Clear Menu"
 msgstr ""

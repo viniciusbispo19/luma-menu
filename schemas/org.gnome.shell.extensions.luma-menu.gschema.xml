@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Configurações do Luma Menu (GSettings).
+
+  Por que GSettings e não um arquivo JSON? Porque o GSettings avisa na hora
+  (sinal "changed::chave") quando uma opção muda — é isso que permite que a
+  janela de preferências (outro processo) altere a barra AO VIVO.
+
+  O texto de <summary> aparece em ferramentas como o dconf-editor; a interface
+  da extensão usa os seus próprios textos traduzidos.
+-->
+<schemalist gettext-domain="luma-menu">
+  <enum id="org.gnome.shell.extensions.luma-menu.ClockPosition">
+    <value nick="center" value="0"/>
+    <value nick="right" value="1"/>
+  </enum>
+  <enum id="org.gnome.shell.extensions.luma-menu.IconStyle">
+    <value nick="symbolic" value="0"/>
+    <value nick="color" value="1"/>
+  </enum>
+  <enum id="org.gnome.shell.extensions.luma-menu.ShortcutStyle">
+    <value nick="text" value="0"/>
+    <value nick="symbols" value="1"/>
+  </enum>
+
+  <schema id="org.gnome.shell.extensions.luma-menu" path="/org/gnome/shell/extensions/luma-menu/">
+
+    <!-- ===================== Geral ===================== -->
+    <key name="show-fallback-menus" type="b">
+      <default>true</default>
+      <summary>Show standard menus (File, Edit, View, Window, Help) when the app does not export its own</summary>
+    </key>
+    <key name="hide-activities" type="b">
+      <default>true</default>
+      <summary>Hide the Activities button</summary>
+    </key>
+    <key name="clock-position" enum="org.gnome.shell.extensions.luma-menu.ClockPosition">
+      <default>'center'</default>
+      <summary>Clock position in the top bar</summary>
+    </key>
+    <key name="focus-bar-shortcut" type="as">
+      <default><![CDATA[['F10']]]></default>
+      <summary>Shortcut to focus the menu bar</summary>
+    </key>
+    <key name="force-quit-shortcut" type="as">
+      <default><![CDATA[['<Control><Alt>Escape']]]></default>
+      <summary>Shortcut to open the Force Quit dialog</summary>
+    </key>
+
+    <!-- ===================== Aparência ===================== -->
+    <key name="system-icon" type="s">
+      <default>'fedora'</default>
+      <summary>System icon (fedora, tux, gnome, ubuntu, debian, arch, opensuse, mint, popos, manjaro, nixos, zorin, elementary, auto, custom)</summary>
+    </key>
+    <key name="custom-icon-path" type="s">
+      <default>''</default>
+      <summary>Path of a custom SVG/PNG icon</summary>
+    </key>
+    <key name="icon-size" type="i">
+      <range min="14" max="22"/>
+      <default>16</default>
+      <summary>System icon size in logical pixels</summary>
+    </key>
+    <key name="icon-style" enum="org.gnome.shell.extensions.luma-menu.IconStyle">
+      <default>'symbolic'</default>
+      <summary>Symbolic (monochrome) or colored system icon</summary>
+    </key>
+    <key name="shortcut-style" enum="org.gnome.shell.extensions.luma-menu.ShortcutStyle">
+      <default>'text'</default>
+      <summary>Show shortcuts as text (Ctrl+C) or Mac-style symbols (⌃C)</summary>
+    </key>
+    <key name="bold-app-name" type="b">
+      <default>true</default>
+      <summary>Show the application name in bold</summary>
+    </key>
+    <key name="title-spacing" type="i">
+      <range min="4" max="20"/>
+      <default>10</default>
+      <summary>Horizontal padding of each menu title in logical pixels</summary>
+    </key>
+    <key name="menu-opacity" type="i">
+      <range min="50" max="100"/>
+      <default>92</default>
+      <summary>Opacity of drop-down menus (percent)</summary>
+    </key>
+    <key name="menu-radius" type="i">
+      <range min="0" max="16"/>
+      <default>10</default>
+      <summary>Corner radius of drop-down menus in logical pixels</summary>
+    </key>
+
+    <!-- ===================== Menus ===================== -->
+    <key name="show-file-menu" type="b"><default>true</default><summary>Show the File menu</summary></key>
+    <key name="show-edit-menu" type="b"><default>true</default><summary>Show the Edit menu</summary></key>
+    <key name="show-view-menu" type="b"><default>true</default><summary>Show the View menu</summary></key>
+    <key name="show-window-menu" type="b"><default>true</default><summary>Show the Window menu</summary></key>
+    <key name="show-help-menu" type="b"><default>true</default><summary>Show the Help menu</summary></key>
+    <key name="help-search" type="b">
+      <default>true</default>
+      <summary>Show the menu search field in the Help menu</summary>
+    </key>
+    <key name="system-menu-show-software" type="b">
+      <default>true</default>
+      <summary>Show “Software Center…” in the system menu</summary>
+    </key>
+    <key name="system-menu-show-recent" type="b">
+      <default>true</default>
+      <summary>Show “Recent Items” in the system menu</summary>
+    </key>
+    <key name="system-menu-show-force-quit" type="b">
+      <default>true</default>
+      <summary>Show “Force Quit…” in the system menu</summary>
+    </key>
+    <key name="system-menu-show-power" type="b">
+      <default>true</default>
+      <summary>Show Suspend, Restart and Shut Down in the system menu</summary>
+    </key>
+
+    <!-- ===================== Compatibilidade ===================== -->
+    <key name="enable-registrar" type="b">
+      <default>true</default>
+      <summary>Provide com.canonical.AppMenu.Registrar to read DBusMenu menus (Qt, Electron, LibreOffice under XWayland)</summary>
+    </key>
+    <key name="ignored-apps" type="as">
+      <default>[]</default>
+      <summary>Apps (app id or WM_CLASS) that always use only the standard menus</summary>
+    </key>
+    <key name="debug" type="b">
+      <default>false</default>
+      <summary>Write debug messages to the journal</summary>
+    </key>
+
+    <!-- ===================== Estado interno ===================== -->
+    <key name="recent-apps" type="as">
+      <default>[]</default>
+      <summary>Recently used applications (internal, most recent first)</summary>
+    </key>
+  </schema>
+</schemalist>

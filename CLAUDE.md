@@ -25,7 +25,32 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
 - **Como obter o XID na camada B**: `Meta.Window.get_description()`. As strings de
   formato no `libmutter-51.so` são `"0x%lx (%s)"` (janela X11: XID + título) e
   `"W%lu (%s)"` (janela Wayland). Extrair com `/^0x([0-9a-f]+)/i`.
-  (Ainda falta confirmar em tempo de execução — fazer na Fase 6.)
+  Confirmado em execução para Wayland (`W0 (Calculadora)`); X11 falta (Fase 6).
+
+### GNOME Shell 51 — APIs usadas pelo menu (conferidas)
+- `Shell.App`: `get_action_group()` (muxer com `app.*`/`win.*` das GActions do app),
+  `update_window_actions(window)`, `request_quit()` (usa `app.quit` ou fecha as janelas),
+  `can_open_new_window()`, `open_new_window(-1)`, `activate_action(name, param, 0, -1, null)`
+  (promisificado pelo Shell), `get_windows()`, `create_icon_texture(size)`.
+- `misc/systemActions.js`: `getDefault()` com `canSuspend/canRestart/canPowerOff/
+  canLockScreen/canLogout` e `activateSuspend/Restart/PowerOff/LockScreen/Logout()`.
+  Na sessão aninhada suspender/reiniciar/desligar ficam indisponíveis (sem sessão logind).
+- Abrir painel das Configurações: `app.activate_action('launch-panel', av[(sav)])` como em
+  `ui/status/network.js`; `gnome-control-center system about` é um subpage válido.
+- Detalhes do app no GNOME Software: `org.gtk.Actions.Activate('details', [(ss)])` (ui/appMenu.js).
+- `Main.wm.addKeybinding(name, settings, flags, modes, handler)` / `removeKeybinding(name)`.
+  Conflitos: `<Control><Alt>Escape` = `cycle-panels` do Mutter; `F10` = menubar-accel/Ptyxis.
+- PopupMenu: o `PopupMenuManager` faz `Main.pushModal(menu.actor)`; o setter `actor` de
+  `PopupMenuBase` liga o destroy do ator ao do menu. BoxPointer `_reposition()` calcula
+  posição em coordenadas de TELA (pai precisa estar na origem). Base dos submenus em
+  cascata (`lib/popup.js`: raiz de tamanho zero contendo menu + cascatas).
+- `Clutter.Actor.allocate_preferred_size(x, y)`; `St.Settings.enable_animations`;
+  `animationUtils.adjustAnimationTime` zera durações com "Reduzir animação".
+- CSS: `-st-accent-color` / `-st-accent-fg-color` existem no St 51.
+- GJS 1.90 NÃO promisifica tudo: usar `Gio._promisify` (ex.: `load_contents_async`).
+- `Gio.DBus.session` / `Gio.DBus.system` reaproveitam a conexão do Shell (sem chamada síncrona).
+- Informações do sistema: hostnamed (`HardwareVendor/HardwareModel/KernelRelease`) e
+  switcheroo-control (`GPUs`) respondem neste notebook.
 
 ### GNOME Shell 51 — painel e extensões (conferido no JS extraído do `libshell-51.so`)
 - Para ler o código JS do Shell: `gresource list /usr/lib64/gnome-shell/libshell-51.so`
@@ -59,11 +84,20 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   `LUMA_MENU_DEV=1`. Isso libera `org.gnome.Shell.Eval` e `org.gnome.Shell.Screenshot`.
 - `./scripts/nested-eval.sh '<js>'` e `./scripts/nested-screenshot.sh [png]` falam com o
   Shell aninhado pelo endereço salvo em `~/.local/state/luma-menu/nested-bus`.
+  No escopo do Eval existem `Main`, `global`, `Shell`, `St`, `Meta`, mas NÃO `Clutter`.
+- `./scripts/nested-test.sh [ciclos]`: ativa/desativa N vezes + bloqueio simulado e
+  só acusa avisos cuja pilha JS passa pelo `luma-menu@` (usa `SHELL_DEBUG=backtrace-warnings`).
+- `./scripts/nested-stop.sh`: encerra só o Shell aninhado. NUNCA usar
+  `pkill -f 'gnome-shell --devkit'` (o padrão casa com o próprio shell e o mata).
+- dconf: cada barramento tem seu `dconf-service` com o banco em memória; por isso a
+  cópia e as escritas no banco isolado são feitas DENTRO do barramento aninhado.
 - Logs da sessão aninhada: `~/.local/state/luma-menu/nested-*.log`.
 - `MUTTER_DEBUG_DUMMY_MODE_SPECS` **não existe mais** no Mutter 51 (tutoriais antigos).
 - Ruído pré-existente no log (não é culpa do Luma Menu): `copyous@boerdereinar.dev` falha
-  ao importar `highlight.min.js` (repete a cada desbloqueio); `Error: No object to track
-  signals` (2x); avisos `Overwriting existing binding of keysym`.
+  ao importar `highlight.min.js` e gera `No object to track signals`; `dynamic-calendar…`
+  gera `setSourceSurface … Not an object`; `hiragana-clock` gera
+  `meta_workspace_get_work_area_for_monitor` CRITICAL; Luma Dock gera
+  `LumaBackground … needs an allocation`; milhares de `Overwriting existing binding of keysym`.
 
 ### Ícones
 - Fedora: Simple Icons 16.37.0 (`path` copiado por script, nunca à mão). O Simple Icons

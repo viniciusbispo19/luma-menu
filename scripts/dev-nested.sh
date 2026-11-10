@@ -38,45 +38,37 @@ DCONF_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/dconf"
 gnome-extensions pack --force --out-dir=build "dev/$DEVTOOLS_UUID" >/dev/null
 gnome-extensions install --force "build/$DEVTOOLS_UUID.shell-extension.zip"
 
-# 2. Cria o dconf isolado a partir das suas configurações atuais.
-cp "$DCONF_DIR/user" "$DCONF_DIR/$DEV_DB"
+# 2. Prepara o dconf isolado e sobe o Shell aninhado.
+#
+# Atenção a um detalhe do dconf: cada barramento D-Bus tem o SEU dconf-service,
+# que guarda o banco em memória e regrava o arquivo inteiro a cada mudança.
+# Se escrevêssemos no banco isolado pelo barramento da sessão real e o Shell
+# aninhado escrevesse pelo barramento dele, um sobrescreveria o outro. Por isso
+# a cópia e as escritas acontecem DENTRO do barramento aninhado, antes do Shell.
 printf 'user-db:%s\n' "$DEV_DB" > "$STATE_DIR/dconf-profile"
 export DCONF_PROFILE="$STATE_DIR/dconf-profile"
-
-# 3. No dconf isolado: ativa o Luma Menu + auxiliar e garante que a Global Menu
-#    esteja desligada. (gsettings respeita o DCONF_PROFILE exportado acima.)
-python3 -I - "$UUID" "$DEVTOOLS_UUID" <<'EOF'
-import ast, subprocess, sys
-
-def get_list(key):
-    out = subprocess.check_output(['gsettings', 'get', 'org.gnome.shell', key], text=True, timeout=10).strip()
-    return [] if out.startswith('@as') else ast.literal_eval(out)
-
-def set_list(key, values):
-    subprocess.check_call(['gsettings', 'set', 'org.gnome.shell', key, str(values)], timeout=10)
-
-ours = sys.argv[1:]
-enabled = [u for u in get_list('enabled-extensions') if u != 'globalmenu@ShiroOSL.github.io']
-set_list('enabled-extensions', enabled + [u for u in ours if u not in enabled])
-set_list('disabled-extensions', [u for u in get_list('disabled-extensions') if u not in ours])
-subprocess.check_call(['gsettings', 'set', 'org.gnome.shell', 'disable-user-extensions', 'false'], timeout=10)
-EOF
+export DCONF_DIR DEV_DB UUID DEVTOOLS_UUID
+# LUMA_MENU_DEV=1: avisa a extensão auxiliar que ela pode ligar o modo inseguro.
+export LUMA_MENU_DEV=1
+# SHELL_DEBUG=backtrace-warnings: cada aviso/CRITICAL no log vem acompanhado
+# da pilha de chamadas JavaScript — mostra QUAL código causou o problema.
+export SHELL_DEBUG=backtrace-warnings
 
 echo "Monitor virtual: $SIZE"
 echo "Log desta sessão: $LOG"
 echo "Feche a janela do devkit (ou Ctrl+C aqui) para encerrar."
 
-# 4. Sobe o Shell aninhado.
 # dbus-run-session: cria um barramento D-Bus novo e só desse Shell. Essencial
 #   para a camada B (Registrar), que não pode colidir com a sua sessão real.
 #   Salvamos o endereço desse barramento em $BUS_FILE para os scripts
 #   nested-eval.sh e nested-screenshot.sh conversarem com o Shell aninhado.
 # --devkit: abre o Shell dentro da janela do mutter-devkit (substitui o antigo
 #   --nested, que não existe mais no GNOME 49+).
-# LUMA_MENU_DEV=1: avisa a extensão auxiliar que ela pode ligar o modo inseguro.
-export LUMA_MENU_DEV=1
 trap 'rm -f "$BUS_FILE"' EXIT
 dbus-run-session -- bash -c '
+    set -e
+    cp "$DCONF_DIR/user" "$DCONF_DIR/$DEV_DB"
+    python3 -I scripts/dconf-enable-extensions.py "$UUID" "$DEVTOOLS_UUID"
     echo "$DBUS_SESSION_BUS_ADDRESS" > "$1"
     exec gnome-shell --devkit --wayland --devkit-args="--monitor-size=$2"
 ' _ "$BUS_FILE" "$SIZE" 2>&1 | tee "$LOG"

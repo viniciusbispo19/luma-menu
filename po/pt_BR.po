@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Luma Menu 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/viniciusbispo19/luma-menu/issues\n"
-"POT-Creation-Date: 2026-11-10 15:56-0300\n"
+"POT-Creation-Date: 2026-11-10 16:02-0300\n"
 "PO-Revision-Date: 2026-11-10 15:56-0300\n"
 "Last-Translator: Vinicius Bispo\n"
 "Language-Team: none\n"
@@ -18,6 +18,147 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: lib/systemMenu.js:24
+#: lib/aboutDialog.js:72
+msgid "More Info…"
+msgstr "Mais Informações…"
+
+#: lib/aboutDialog.js:78
+msgid "Close"
+msgstr "Fechar"
+
+#: lib/aboutDialog.js:121
+#, javascript-format
+msgid "Version %s"
+msgstr "Versão %s"
+
+#: lib/aboutDialog.js:124
+msgid "Computer"
+msgstr "Computador"
+
+#: lib/aboutDialog.js:125
+msgid "Processor"
+msgstr "Processador"
+
+#: lib/aboutDialog.js:126
+msgid "Memory"
+msgstr "Memória"
+
+#: lib/aboutDialog.js:127
+msgid "Graphics"
+msgstr "Placa de Vídeo"
+
+#: lib/aboutDialog.js:129
+msgid "Disk"
+msgstr "Disco"
+
+#: lib/aboutDialog.js:129
+#, javascript-format
+msgid "%s (%s available)"
+msgstr "%s (%s disponíveis)"
+
+#: lib/aboutDialog.js:130
+msgid "GNOME"
+msgstr "GNOME"
+
+#: lib/aboutDialog.js:131
+msgid "Kernel"
+msgstr "Kernel"
+
+#: lib/forceQuitDialog.js:39
+msgid "Force Quit Applications"
+msgstr "Forçar Encerramento de Aplicativos"
+
+#: lib/forceQuitDialog.js:43
+msgid ""
+"If an app doesn’t respond for a while, select its name and click Force Quit."
+msgstr "Se um aplicativo não responder por algum tempo, selecione seu nome e clique em Forçar Encerramento."
+
+#: lib/forceQuitDialog.js:63 lib/forceQuitDialog.js:138
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: lib/forceQuitDialog.js:67 lib/forceQuitDialog.js:142
+msgid "Force Quit"
+msgstr "Forçar Encerramento"
+
+#: lib/forceQuitDialog.js:134
+#, javascript-format
+msgid "Force “%s” to quit?"
+msgstr "Forçar o encerramento de “%s”?"
+
+#: lib/forceQuitDialog.js:135
+msgid "You will lose any unsaved changes."
+msgstr "Você perderá as alterações que não foram salvas."
+
+#: lib/shortcuts.js:80
+msgid "Space"
+msgstr "Espaço"
+
+#: lib/systemMenu.js:54
 msgid "System Menu"
 msgstr "Menu do Sistema"
+
+#: lib/systemMenu.js:73
+msgid "About This Computer"
+msgstr "Sobre Este Computador"
+
+#: lib/systemMenu.js:76
+msgid "System Settings…"
+msgstr "Configurações do Sistema…"
+
+#: lib/systemMenu.js:80
+msgid "Software Center…"
+msgstr "Central de Programas…"
+
+#: lib/systemMenu.js:87
+msgid "Recent Items"
+msgstr "Itens Recentes"
+
+#: lib/systemMenu.js:93
+msgid "Force Quit…"
+msgstr "Forçar Encerramento…"
+
+#: lib/systemMenu.js:100
+msgid "Suspend"
+msgstr "Suspender"
+
+#: lib/systemMenu.js:106
+msgid "Restart…"
+msgstr "Reiniciar…"
+
+#: lib/systemMenu.js:112
+msgid "Shut Down…"
+msgstr "Desligar…"
+
+#: lib/systemMenu.js:119
+msgid "Lock Screen"
+msgstr "Bloquear Tela"
+
+#: lib/systemMenu.js:125
+#, javascript-format
+msgid "Log Out “%s”…"
+msgstr "Encerrar Sessão de “%s”…"
+
+#: lib/systemMenu.js:135
+msgid "Applications"
+msgstr "Aplicativos"
+
+#: lib/systemMenu.js:149
+msgid "No recent applications"
+msgstr "Nenhum aplicativo recente"
+
+#: lib/systemMenu.js:152
+msgid "Documents"
+msgstr "Documentos"
+
+#: lib/systemMenu.js:154
+msgid "File history is turned off in Privacy settings"
+msgstr "O histórico de arquivos está desativado nas configurações de Privacidade"
+
+#: lib/systemMenu.js:166
+msgid "No recent documents"
+msgstr "Nenhum documento recente"
+
+#: lib/systemMenu.js:171
+msgid "Clear Menu"
+msgstr "Limpar Menu"

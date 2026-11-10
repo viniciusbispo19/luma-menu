@@ -7,5 +7,6 @@
   ],
   "url": "https://github.com/viniciusbispo19/luma-menu",
   "gettext-domain": "luma-menu",
+  "settings-schema": "org.gnome.shell.extensions.luma-menu",
   "version-name": "0.1.0"
 }

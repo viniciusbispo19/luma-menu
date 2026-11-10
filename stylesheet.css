@@ -1,29 +1,207 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later
  * Luma Menu — estilos.
  *
- * Toda classe começa com "luma-menu-" para nunca colidir com o tema
- * (WhiteSur) nem com outras extensões.
+ * Toda classe começa com "luma-" para nunca colidir com o tema (WhiteSur)
+ * nem com outras extensões.
  *
  * Sobre especificidade: o tema estiliza os botões com "#panel .panel-button"
  * (1 id + 1 classe). Para o nosso valor ganhar, o seletor precisa ser mais
- * específico: "#panel .panel-button.luma-menu-…" (1 id + 2 classes).
+ * específico: "#panel .panel-button.luma-…" (1 id + 2 classes).
+ *
+ * Cores: usamos cinzas semitransparentes, que funcionam tanto em tema escuro
+ * quanto claro, e a cor de destaque do sistema (-st-accent-color, a mesma
+ * escolhida em Configurações › Aparência) no item sob o mouse — o "azul" do
+ * macOS também é a cor de destaque de lá.
  */
 
-/* A barra inteira (caixa no lado esquerdo do painel). */
+/* ============================== Barra ============================== */
+
 .luma-menu-bar {
     spacing: 0;
 }
 
-/* Botão do logo: espaçamento lateral parecido com o da maçã no macOS.
- * -natural-hpadding / -minimum-hpadding são propriedades do GNOME Shell
- * lidas pelo PanelMenu.ButtonBox (não são CSS padrão da web). */
+/* Espaçamento lateral dos títulos (sobrescrito ao vivo pela preferência
+ * "Espaçamento"). -natural-hpadding / -minimum-hpadding são propriedades do
+ * GNOME Shell lidas pelo PanelMenu.ButtonBox (não são CSS padrão da web). */
+#panel .panel-button.luma-menu-title {
+    -natural-hpadding: 10px;
+    -minimum-hpadding: 5px;
+    font-weight: normal;
+}
+
 #panel .panel-button.luma-menu-system-button {
     -natural-hpadding: 12px;
     -minimum-hpadding: 8px;
 }
 
-/* Tamanho do logo em pixels LÓGICOS: com escala 1,5× o Shell desenha o SVG
- * a 24 px físicos, por isso ele fica nítido em qualquer escala. */
+/* Nome do app em negrito (preferência "Nome do app em negrito"). */
+.luma-menu-bold-app .luma-menu-app-title {
+    font-weight: bold;
+}
+
+/* Tamanho do logo em pixels LÓGICOS: com escala 1,5× o Shell desenha o SVG a
+ * 24 px físicos — por isso ele fica nítido em qualquer escala. */
 .luma-menu-system-icon {
     icon-size: 16px;
+}
+
+/* ========================== Menus suspensos ========================== */
+
+/* Sem "setinha" apontando para o título, como no macOS. */
+.luma-menu-boxpointer {
+    -arrow-rise: 0px;
+    -arrow-base: 0px;
+    -arrow-border-radius: 10px;
+    -arrow-border-width: 0px;
+    -arrow-background-color: transparent;
+    -boxpointer-gap: 2px;
+}
+
+/* Fundo e cantos: a opacidade e o raio são aplicados ao vivo pelo código
+ * (preferências), mantendo a cor de fundo do tema. */
+.luma-menu-content {
+    min-width: 200px;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.28);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
+.luma-menu-item {
+    padding: 3px 10px 3px 4px;
+    margin: 0;
+    border-radius: 5px;
+    spacing: 6px;
+    min-height: 18px;
+}
+
+/* Item sob o mouse / foco do teclado: destaque com a cor do sistema. */
+.luma-menu-item:selected,
+.luma-menu-item:checked {
+    background-color: -st-accent-color;
+    color: -st-accent-fg-color;
+}
+
+/* Item desabilitado (cinza), como no macOS. */
+.luma-menu-item:insensitive {
+    color: rgba(128, 128, 128, 0.85);
+}
+
+/* Coluna do ✓ (sempre ocupa espaço, para alinhar os rótulos). */
+.luma-menu-check {
+    min-width: 14px;
+    text-align: center;
+}
+
+.luma-menu-item-icon {
+    icon-size: 16px;
+}
+
+/* Atalho à direita, em cinza. */
+.luma-menu-accel {
+    padding-left: 24px;
+    color: rgba(150, 150, 150, 1);
+}
+
+.luma-menu-item:selected .luma-menu-accel {
+    color: inherit;
+}
+
+.luma-menu-arrow {
+    padding-left: 24px;
+    font-weight: bold;
+}
+
+/* Títulos de seção ("Aplicativos", "Documentos"): pequenos e cinza. */
+.luma-menu-header {
+    font-size: 0.85em;
+    font-weight: bold;
+    color: rgba(140, 140, 140, 1);
+}
+
+/* Separador fino. */
+.luma-menu-separator {
+    padding: 4px 8px;
+}
+
+.luma-menu-separator .popup-separator-menu-item-separator {
+    height: 1px;
+    background-color: rgba(128, 128, 128, 0.32);
+}
+
+/* ======================= Sobre Este Computador ======================= */
+
+.luma-about-box {
+    spacing: 6px;
+    padding: 12px 24px 4px;
+    min-width: 380px;
+}
+
+.luma-about-logo {
+    margin-bottom: 8px;
+}
+
+.luma-about-title {
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+.luma-about-version {
+    color: rgba(150, 150, 150, 1);
+    margin-bottom: 14px;
+}
+
+.luma-about-grid {
+    spacing-rows: 6px;
+    spacing-columns: 12px;
+}
+
+.luma-about-key {
+    color: rgba(150, 150, 150, 1);
+}
+
+.luma-about-value {
+    max-width: 300px;
+}
+
+/* ======================= Forçar Encerramento ======================= */
+
+.luma-force-quit-box {
+    spacing: 10px;
+    min-width: 420px;
+}
+
+.luma-force-quit-title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.luma-force-quit-hint {
+    color: rgba(150, 150, 150, 1);
+}
+
+.luma-force-quit-scroll {
+    max-height: 320px;
+    border-radius: 8px;
+    border: 1px solid rgba(128, 128, 128, 0.28);
+    padding: 4px;
+}
+
+.luma-force-quit-row {
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.luma-force-quit-row:hover {
+    background-color: rgba(128, 128, 128, 0.18);
+}
+
+.luma-force-quit-row:checked,
+.luma-force-quit-row:focus:checked {
+    background-color: -st-accent-color;
+    color: -st-accent-fg-color;
+}
+
+.luma-force-quit-row-box {
+    spacing: 10px;
 }

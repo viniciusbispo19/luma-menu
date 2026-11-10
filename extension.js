@@ -14,11 +14,18 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 import {MenuBar} from './lib/menuBar.js';
+import {PanelLayout} from './lib/panelLayout.js';
+import {setDebug} from './lib/util.js';
 
 export default class LumaMenuExtension extends Extension {
     enable() {
+        this._settings = this.getSettings();
+        setDebug(this._settings.get_boolean('debug'));
+        this._settings.connectObject('changed::debug',
+            () => setDebug(this._settings.get_boolean('debug')), this);
+
         // A barra é um único ator (St.BoxLayout) com todos os títulos dentro.
-        this._menuBar = new MenuBar(this.dir);
+        this._menuBar = new MenuBar(this);
 
         // `_leftBox` é a caixa da esquerda do painel. O "_" indica que é
         // interno do Shell (não há API pública para inserir um ator qualquer
@@ -28,34 +35,21 @@ export default class LumaMenuExtension extends Extension {
         // GNOME 51 no metadata.json.
         Main.panel._leftBox.insert_child_at_index(this._menuBar, 0);
 
-        this._hideActivitiesButton();
+        // Esconde o botão Atividades / move o relógio (conforme preferências).
+        this._panelLayout = new PanelLayout(this._settings);
     }
 
     disable() {
-        this._restoreActivitiesButton();
+        this._panelLayout?.destroy();
+        this._panelLayout = null;
 
         // destroy() remove a barra do painel e destrói os filhos (botões e
         // menus); os menus saem sozinhos do gerenciador de menus do painel.
         this._menuBar?.destroy();
         this._menuBar = null;
-    }
 
-    // No GNOME 51 o botão "Atividades" contém os pontinhos das áreas de
-    // trabalho, então escondê-lo some com os dois — igual ao macOS.
-    // Por enquanto ele é sempre escondido; na Fase 8 vira uma opção.
-    _hideActivitiesButton() {
-        const activities = Main.panel.statusArea.activities;
-
-        // Só restauramos depois o que NÓS escondemos: se outra extensão (ex.:
-        // Just Perfection) já o tinha escondido, não mexemos nele no disable().
-        this._activitiesHiddenByUs = Boolean(activities?.container.visible);
-        if (this._activitiesHiddenByUs)
-            activities.container.hide();
-    }
-
-    _restoreActivitiesButton() {
-        if (this._activitiesHiddenByUs)
-            Main.panel.statusArea.activities?.container.show();
-        this._activitiesHiddenByUs = false;
+        this._settings?.disconnectObject(this);
+        this._settings = null;
+        setDebug(false);
     }
 }

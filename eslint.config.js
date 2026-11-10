@@ -53,7 +53,6 @@ export default [
                     // a classe fica na coluna 0, sem indentação extra.
                     'CallExpression[callee.object.name=GObject][callee.property.name=registerClass] > ClassExpression:first-child',
                 ],
-                CallExpression: {arguments: 'first'},
                 MemberExpression: 'off',
                 SwitchCase: 1,
             }],
