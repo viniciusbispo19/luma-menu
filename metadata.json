@@ -8,5 +8,9 @@
   "url": "https://github.com/viniciusbispo19/luma-menu",
   "gettext-domain": "luma-menu",
   "settings-schema": "org.gnome.shell.extensions.luma-menu",
+  "session-modes": [
+    "user",
+    "unlock-dialog"
+  ],
   "version-name": "0.1.0"
 }

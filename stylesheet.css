@@ -24,8 +24,8 @@
  * "Espaçamento"). -natural-hpadding / -minimum-hpadding são propriedades do
  * GNOME Shell lidas pelo PanelMenu.ButtonBox (não são CSS padrão da web). */
 #panel .panel-button.luma-menu-title {
-    -natural-hpadding: 10px;
-    -minimum-hpadding: 5px;
+    -natural-hpadding: 6px;
+    -minimum-hpadding: 3px;
     font-weight: normal;
 }
 
@@ -39,6 +39,15 @@
  * normal): 1 id + 3 classes vence 1 id + 2 classes. */
 #panel .luma-menu-bold-app .panel-button.luma-menu-app-title {
     font-weight: bold;
+}
+
+/* Nomes de app muito longos não empurram os menus para fora da barra, e o
+ * nome nunca some por completo. Atenção: a regra vai no RÓTULO, não no botão
+ * — o PanelMenu.ButtonBox calcula a própria largura em JS e ignora
+ * min-width/max-width aplicados a ele. */
+.luma-menu-app-label {
+    max-width: 240px;
+    min-width: 64px;
 }
 
 /* Tamanho do logo em pixels LÓGICOS: com escala 1,5× o Shell desenha o SVG a

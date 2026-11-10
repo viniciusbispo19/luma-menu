@@ -41,6 +41,11 @@ BEFORE=$(wc -l < "$LOG")
     return n;
   }
   await wait(2000); // deixa as outras extensões terminarem de iniciar
+  // Ciclo de aquecimento: reativar recria o Registrar, e apps Qt/Electron já
+  // abertos não se registram de novo (a barra passa a usar os menus padrão).
+  // Medimos a partir daqui, para comparar só o que é vazamento.
+  m.disableExtension(uuid); await wait(250);
+  m.enableExtension(uuid); await wait(500);
   const antes = snap();
   for (let i = 0; i < ${CYCLES}; i++) {
     m.disableExtension(uuid); await wait(250);
@@ -72,6 +77,8 @@ checks = {
     "desativar remove todos os atores nossos": data["desativada"]["atoresLumaNoPalco"] == 0,
     "desativar remove a barra": data["desativada"]["barras"] == 0,
     "desativar mostra o botão Atividades": data["desativada"]["atividadesVisivel"],
+    "bloquear remove a barra (só o Registrar fica)": data["bloqueada"]["barras"] == 0
+        and data["bloqueada"]["atoresLumaNoPalco"] == 0,
     "desbloquear recria 1 barra": data["desbloqueada"]["barras"] == 1,
 }
 for name, ok in checks.items():

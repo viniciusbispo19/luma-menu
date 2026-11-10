@@ -25,7 +25,7 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
 - **Como obter o XID na camada B**: `Meta.Window.get_description()`. As strings de
   formato no `libmutter-51.so` são `"0x%lx (%s)"` (janela X11: XID + título) e
   `"W%lu (%s)"` (janela Wayland). Extrair com `/^0x([0-9a-f]+)/i`.
-  Confirmado em execução para Wayland (`W0 (Calculadora)`); X11 falta (Fase 6).
+  Confirmado em execução: Wayland `W0 (Calculadora)`, X11 `0x600007 (Reprodutor de Mídias VLC)`.
 
 ### GNOME Shell 51 — APIs usadas pelo menu (conferidas)
 - `Shell.App`: `get_action_group()` (muxer com `app.*`/`win.*` das GActions do app),
@@ -64,7 +64,32 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   Ações booleanas, rádio (alvo) e `win.*` (GActionMap da janela) testadas.
 - Apps sem `.desktop` são "window backed" (`app.is_window_backed()`, id `window:N`):
   nome amigável = fim do WM_CLASS (`appDisplayName`).
-- Iniciar programa dentro da sessão aninhada: `GLib.spawn_command_line_async(...)` via
+### Camada B e apps reais (testado na Fase 6)
+- Registrar (`lib/sources/registrar.js`) exporta `com.canonical.AppMenu.Registrar`;
+  métodos com sufixo `Async` recebem `invocation` (sender = serviço do menu).
+- VLC (Qt5, `QT_QPA_PLATFORM=xcb`): registra `/MenuBar/N`; menus com ícones (`icon-data`).
+  Rótulos Qt podem trazer `&` de mnemônico (tratado em `cleanLabel`).
+- VS Code (Electron, `--ozone-platform=x11` + `window.titleBarStyle: native`): registra
+  `/com/canonical/menu/<XID>`. Submenus vêm VAZIOS até `AboutToShow`; ele responde
+  `false` mas preenche e emite `LayoutUpdated`. Por isso: AboutToShow só ao ABRIR
+  (`onOpen`), nunca ao montar o modelo (senão vira ciclo); submenu vazio → `GetLayout(id)`.
+- LibreOffice (GTK3, Wayland nativo): usa a CAMADA A; os menus de topo ficam dentro de
+  uma SEÇÃO da barra (getMenus desce nas seções).
+- Apps Qt/Electron só registram ao abrir: desativar/reativar a extensão (que recria o
+  Registrar) perde os menus deles até reabrir o app. Por isso `session-modes` inclui
+  `unlock-dialog`: no bloqueio só o Registrar fica vivo (testado: menus sobrevivem).
+- Firefox não foi testado (o perfil do usuário já está em uso na sessão real).
+
+### Painel (Fase 6)
+- `Panel.vfunc_allocate` limita a caixa da esquerda a METADE do painel. A barra
+  sobrescreve `vfunc_allocate` para transbordar até o 1º item visível do centro/direita
+  (`clip_to_allocation` evita desenhar por cima dos ícones).
+- `PanelMenu.ButtonBox` calcula a largura em JS: `min-width`/`max-width` no BOTÃO são
+  ignorados — aplicar no rótulo (`.luma-menu-app-label`).
+- Just Perfection move o relógio ao iniciar (e tem guarda `child-added` nas caixas);
+  o PanelLayout reaplica (máx. 3 em 10 s) e confere de novo após 3 s.
+- Ao desbloquear, o painel mostra o botão Atividades de novo: re-esconder em `notify::visible`.
+- - Iniciar programa dentro da sessão aninhada: `GLib.spawn_command_line_async(...)` via
   Eval (o Shell aninhado tem `WAYLAND_DISPLAY=wayland-1`, `DISPLAY=:2` e o barramento dele).
 - GJS 1.90 NÃO promisifica tudo: usar `Gio._promisify` (ex.: `load_contents_async`).
 - `Gio.DBus.session` / `Gio.DBus.system` reaproveitam a conexão do Shell (sem chamada síncrona).

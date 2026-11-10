@@ -35,7 +35,8 @@
       <summary>Hide the Activities button</summary>
     </key>
     <key name="clock-position" enum="org.gnome.shell.extensions.luma-menu.ClockPosition">
-      <default>'center'</default>
+      <!-- Padrão "right": como no macOS, e libera o painel inteiro para os menus. -->
+      <default>'right'</default>
       <summary>Clock position in the top bar</summary>
     </key>
     <key name="focus-bar-shortcut" type="as">
@@ -74,8 +75,9 @@
       <summary>Show the application name in bold</summary>
     </key>
     <key name="title-spacing" type="i">
-      <range min="4" max="20"/>
-      <default>10</default>
+      <range min="2" max="16"/>
+      <!-- 6 px de cada lado = 12 px entre títulos, como no macOS. -->
+      <default>6</default>
       <summary>Horizontal padding of each menu title in logical pixels</summary>
     </key>
     <key name="menu-opacity" type="i">
