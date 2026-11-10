@@ -6,8 +6,8 @@
 
 ## Estado do projeto
 
-Fases 0–9 concluídas em 2026-11-10 (ver `git log`). Pendências: testar na sessão REAL
-(exige encerrar a sessão), Firefox não testado, envio ao extensions.gnome.org.
+Fases 0–9 concluídas em 2026-11-10 (ver `git log`). Testado e aprovado pelo usuário na
+sessão REAL. Pendências: Firefox não testado, envio ao extensions.gnome.org.
 Fluxo de teste: `./scripts/nested-restart.sh && ./scripts/nested-test.sh 10`.
 
 ## Achados verificados no sistema (atualizar a cada fase)
