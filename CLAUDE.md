@@ -4,6 +4,12 @@
 > A seção "Achados verificados" é mantida atualizada a cada fase; abaixo dela
 > está a especificação original (o prompt do projeto).
 
+## Estado do projeto
+
+Fases 0–9 concluídas em 2026-11-10 (ver `git log`). Pendências: testar na sessão REAL
+(exige encerrar a sessão), Firefox não testado, envio ao extensions.gnome.org.
+Fluxo de teste: `./scripts/nested-restart.sh && ./scripts/nested-test.sh 10`.
+
 ## Achados verificados no sistema (atualizar a cada fase)
 
 Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 1.90.1, Wayland.
@@ -79,6 +85,9 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   Registrar) perde os menus deles até reabrir o app. Por isso `session-modes` inclui
   `unlock-dialog`: no bloqueio só o Registrar fica vivo (testado: menus sobrevivem).
 - Firefox não foi testado (o perfil do usuário já está em uso na sessão real).
+- Ptyxis: perfil de terminal testado (Copiar = Ctrl+Shift+C, Recortar cinza).
+- O sistema do usuário tem o diário do gvfs-metadata corrompido (avisos
+  `meta_journal_iterate … journal corruption` no `gnome-extensions pack`): inofensivo.
 
 ### Preferências (Fase 8)
 - libadwaita 1.10, GTK 4.24. `ExtensionPreferences.fillPreferencesWindow(window)` recebe
