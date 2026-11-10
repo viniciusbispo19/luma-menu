@@ -52,8 +52,11 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   gettext (msgfmt/xgettext/msginit/msgmerge), node/npm, gnome-extensions, gdbus, busctl,
   dbus-monitor.
 - ESLint **não existe no dnf** do Fedora 45 → instalar via npm como devDependency do projeto.
-- Disponíveis no dnf: `d-spy` (explorador D-Bus), `libdbusmenu-tools` (`dbusmenu-dumper`),
-  `gnome-extensions-app`, `appmenu-qt5` (só Qt5; Qt6 já traz suporte a DBusMenu embutido).
+- Instalados: `d-spy` 50.0 (explorador D-Bus), `gnome-extensions-app`, `libdbusmenu-tools`.
+  Atenção: o `libdbusmenu-tools` do Fedora **não** traz o `dbusmenu-dumper`; traz
+  `/usr/libexec/dbusmenu-testapp` (publica um DBusMenu a partir de um JSON, ex.:
+  `/usr/share/libdbusmenu/json/test-gtk-label.json`) — útil para testar a camada B.
+- Disponível no dnf (não instalado): `appmenu-qt5` (só Qt5; Qt6 já traz suporte a DBusMenu embutido).
 - `appmenu-gtk-module` (appmenu-gtk3-module) **não está nos repositórios** do Fedora 45.
 
 ---
