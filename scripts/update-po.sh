@@ -19,8 +19,10 @@ VERSION=$(python3 -I -c 'import json; print(json.load(open("metadata.json"))["ve
 mapfile -t SOURCES < <(find . -name '*.js' \
     -not -path './node_modules/*' -not -path './build/*' -not -path './dev/*' \
     -not -name 'eslint.config.js' -printf '%P\n' | sort)
-# (-printf '%P\n' tira o "./" do início: o xgettext 1.0 consulta o git para
-#  datar o .pot e não reconhece caminhos como "./extension.js".)
+# (-printf '%P\n' tira o "./" do início dos caminhos, que aparecem no .pot.)
+# Aviso conhecido: o xgettext 1.0 consulta o git para datar o .pot e às vezes
+# imprime "vc-mtime: git ls-files returned an unexpected file name". É inofensivo:
+# afeta só o campo POT-Creation-Date, não as traduções.
 
 xgettext \
     --from-code=UTF-8 \
