@@ -58,6 +58,14 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   `raise()`, `activate(time)`, `delete(time)`; `Main.activateWindow(window)`.
 - GTK4/libadwaita (ex.: Editor de Texto) só exporta ações `app.*`: as `win.*` são
   widget actions, não vão para o D-Bus (o grupo da janela vem vazio).
+- Camada A testada com `dev/test-apps/gtk-menubar-app.js` (GTK4 + `set_menubar`):
+  o Mutter expõe `get_gtk_menubar_object_path()` em Wayland; `Gio.DBusMenuModel.get()`
+  e `Gio.DBusActionGroup.get()` funcionam (leitura assíncrona via `items-changed`).
+  Ações booleanas, rádio (alvo) e `win.*` (GActionMap da janela) testadas.
+- Apps sem `.desktop` são "window backed" (`app.is_window_backed()`, id `window:N`):
+  nome amigável = fim do WM_CLASS (`appDisplayName`).
+- Iniciar programa dentro da sessão aninhada: `GLib.spawn_command_line_async(...)` via
+  Eval (o Shell aninhado tem `WAYLAND_DISPLAY=wayland-1`, `DISPLAY=:2` e o barramento dele).
 - GJS 1.90 NÃO promisifica tudo: usar `Gio._promisify` (ex.: `load_contents_async`).
 - `Gio.DBus.session` / `Gio.DBus.system` reaproveitam a conexão do Shell (sem chamada síncrona).
 - Informações do sistema: hostnamed (`HardwareVendor/HardwareModel/KernelRelease`) e
