@@ -1,0 +1,14 @@
+# Gerados pelo build — nunca versionar arquivos compilados
+schemas/gschemas.compiled
+locale/
+build/
+*.zip
+*.shell-extension.zip
+
+# Ferramentas de desenvolvimento (ESLint via npm)
+node_modules/
+
+# Logs da sessão aninhada e lixo de editor
+*.log
+.vscode/
+*.swp

@@ -1,0 +1,302 @@
+# Luma Menu — contexto do projeto
+
+> Este arquivo é carregado automaticamente pelo Claude Code em toda sessão.
+> A seção "Achados verificados" é mantida atualizada a cada fase; abaixo dela
+> está a especificação original (o prompt do projeto).
+
+## Achados verificados no sistema (atualizar a cada fase)
+
+Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 1.90.1, Wayland.
+
+### APIs do Mutter 51 (conferidas no typelib `/usr/lib64/mutter-51/Meta-51.typelib`)
+- **Existem**: `Meta.Window.get_gtk_unique_bus_name`, `get_gtk_menubar_object_path`,
+  `get_gtk_app_menu_object_path`, `get_gtk_application_object_path`,
+  `get_gtk_window_object_path`, `get_gtk_application_id`, `get_client_type`,
+  `get_wm_class`, `get_sandboxed_app_id`, `get_pid`, `get_id`, `get_description`,
+  `minimize`, `maximize`, `unmaximize`, `is_maximized`, `set_maximize_flags`,
+  `make_fullscreen`, `unmake_fullscreen`, `is_fullscreen`, `make_above`,
+  `unmake_above`, `is_above`, `delete`, `kill`, `change_workspace`, `move_to_monitor`.
+  `Meta.Workspace.activate_with_focus` existe.
+- **NÃO existem no GJS**: `Meta.Window.get_xwindow()` (o símbolo C
+  `meta_window_x11_get_xwindow` existe, mas não é introspectável), `get_maximized()`
+  (use `is_maximized()` / `get_maximize_flags()`), `Meta.Display.get_x11_display()`.
+- `Meta.X11Display.lookup_xwindow(xid)` existe, mas não há getter público para
+  obter o `X11Display` a partir do `Meta.Display`.
+- **Como obter o XID na camada B**: `Meta.Window.get_description()`. As strings de
+  formato no `libmutter-51.so` são `"0x%lx (%s)"` (janela X11: XID + título) e
+  `"W%lu (%s)"` (janela Wayland). Extrair com `/^0x([0-9a-f]+)/i`.
+  (Ainda falta confirmar em tempo de execução — fazer na Fase 6.)
+
+### Sessão aninhada (mutter-devkit)
+- `mutter-devkit-51.1` instalado. Comando testado e funcionando:
+  `dbus-run-session -- gnome-shell --devkit --wayland --devkit-args="--monitor-size=1600x1000"`
+  (veja `scripts/dev-nested.sh`).
+- `MUTTER_DEBUG_DUMMY_MODE_SPECS` **não existe mais** no Mutter 51 (tutoriais antigos).
+- O Shell aninhado compartilha o dconf da sessão real: carrega as mesmas extensões ativas.
+- Ruído pré-existente no log (não é culpa do Luma Menu): `Advanced-media-controller-themes`
+  sem `metadata.json`; `copyous@boerdereinar.dev` falha ao importar `highlight.min.js`;
+  `Error: No object to track signals` (2x); avisos `Overwriting existing binding of keysym`.
+
+### Extensões do usuário
+- Ativas: blur-my-shell, caffeine, appindicatorsupport, compiz-windows-effect,
+  just-perfection, slider-percentages, gnome-mosaic, copyous, user-theme,
+  launchpad-search, dynamic-calendar-and-clocks-icons-reborn, luma-dock,
+  hiragana-clock.
+- Astra Monitor **não está instalada** neste momento.
+- `globalmenu@ShiroOSL.github.io` (Global Menu for GNOME v26) instalada e **desativada**.
+  Ela só implementa a camada D (menus fixos + teclado virtual do Clutter); não lê menus
+  reais dos apps; usa `Gio.DBusProxy.new_for_bus_sync` (síncrono) no painel de informações.
+
+### Ferramentas
+- Presentes: git, gh (logado como viniciusbispo19, protocolo ssh), glib-compile-schemas,
+  gettext (msgfmt/xgettext/msginit/msgmerge), node/npm, gnome-extensions, gdbus, busctl,
+  dbus-monitor.
+- ESLint **não existe no dnf** do Fedora 45 → instalar via npm como devDependency do projeto.
+- Disponíveis no dnf: `d-spy` (explorador D-Bus), `libdbusmenu-tools` (`dbusmenu-dumper`),
+  `gnome-extensions-app`, `appmenu-qt5` (só Qt5; Qt6 já traz suporte a DBusMenu embutido).
+- `appmenu-gtk-module` (appmenu-gtk3-module) **não está nos repositórios** do Fedora 45.
+
+---
+
+# Especificação original
+
+## 1. Seu papel
+
+Você é um desenvolvedor sênior de extensões do GNOME Shell (GJS, ES Modules, St, Clutter, Meta, Gio/DBus, libadwaita) e também meu professor. Eu sou estudante de desenvolvimento e quero **aprender a fazer sozinho**, então:
+
+- Explique o **porquê** de cada decisão, cada arquivo e cada trecho importante de código, em português do Brasil.
+- Coloque **comandos de terminal sempre em blocos de código separados** das explicações, para eu copiar e colar sem risco.
+- Meu sistema é Fedora: use `dnf` para pacotes (nunca `apt`).
+- Quando entregar uma etapa de instalação/configuração, entregue **todos os passos de uma vez, completos**.
+- Não invente APIs. Antes de usar qualquer método do GNOME Shell/Mutter, **confira se ele existe no GNOME 51** (código-fonte do gnome-shell/mutter da versão 51 ou o `gjs-docs`). Se algo não for possível, me diga claramente e proponha a melhor alternativa.
+
+## 2. Objetivo
+
+Criar do zero a extensão **Luma Menu** (UUID `luma-menu@viniciusbispo19`, schema `org.gnome.shell.extensions.luma-menu`, licença GPL-3.0), que transforma o lado esquerdo do painel superior do GNOME em uma **barra de menus global praticamente idêntica à do macOS**, com:
+
+1. Um **ícone de sistema Linux** no lugar da maçã (logo do Fedora por padrão, configurável).
+2. O **nome do app ativo em negrito**, com o menu do aplicativo.
+3. Os menus **Arquivo, Editar, Visualizar, Janela e Ajuda** (e os menus reais do app quando ele os exportar).
+4. **Toda a interface em português do Brasil**, traduzível via gettext.
+
+## 3. Meu ambiente
+
+- Fedora 45, GNOME Shell **51.1**, sessão **Wayland**.
+- Notebook Lenovo Yoga Slim 6i, tela 14" de alta resolução (escala fracionária possível — a barra tem que ficar nítida em qualquer escala).
+- Tema GTK + Shell: **WhiteSur-Dark** (via extensão User Themes).
+- Extensões que precisam continuar funcionando junto: **Luma Dock** (meu fork do Dhruva), Blur my Shell, Just Perfection, AppIndicator and KStatusNotifierItem Support, Caffeine, Astra Monitor.
+- Tenho a extensão **Global Menu for GNOME** instalada: o Luma Menu vai substituí-la. No início, me mostre como desativá-la para não haver conflito.
+
+## 4. Realidade técnica (leia antes de projetar)
+
+No macOS todo app entrega seu menu ao sistema. No Linux/Wayland não existe um padrão único, então a extensão deve usar **camadas de fonte de menu**, da melhor para a mais genérica, e escolher automaticamente para cada janela:
+
+| Camada | Fonte | Apps típicos | Como obter |
+|---|---|---|---|
+| A | **GMenuModel exportado via D-Bus (`org.gtk.Menus`)** + ações (`org.gtk.Actions`) | Apps GTK3/GTK4 que usam `GtkApplication` com menubar ou app menu | Pelo `Meta.Window`: `get_gtk_unique_bus_name()`, `get_gtk_menubar_object_path()`, `get_gtk_app_menu_object_path()`, `get_gtk_application_object_path()`, `get_gtk_window_object_path()` (verifique os nomes no Mutter 51) |
+| B | **DBusMenu (`com.canonical.dbusmenu`)** registrado em `com.canonical.AppMenu.Registrar` | Apps Qt/KDE, Electron/Chromium, Firefox, LibreOffice, apps GTK3 com `appmenu-gtk-module` — **principalmente via XWayland** | A própria extensão implementa o serviço `com.canonical.AppMenu.Registrar` no barramento de sessão e associa o ID de janela X11 (`Meta.Window.get_xwindow()` ou equivalente) à janela ativa |
+| C | **Ações GAction do app sem menubar** | Apps GNOME/libadwaita modernos (menu hambúrguer) | Ler `org.gtk.Actions` no caminho da aplicação e da janela; mapear ações conhecidas: `app.about`, `app.preferences`, `app.quit`, `app.new-window`, `win.show-help-overlay`, `app.shortcuts`, `win.close`, etc. |
+| D | **Menu padrão macOS (fallback)** | Qualquer janela | Itens executados por: (1) GAction, se existir; (2) API do Mutter (`minimize`, `maximize`, `make_fullscreen`, `delete`, `change_workspace`…); (3) atalho de teclado sintetizado via dispositivo virtual do Clutter (ex.: Ctrl+C), como último recurso |
+
+Requisitos sobre isso:
+- Documente no README o que funciona em Wayland nativo vs XWayland, sem promessas falsas.
+- Itens cujo efeito não dá para garantir devem ficar **desabilitados (cinza)**, como no macOS, em vez de não fazer nada.
+- Estude como referência (sem copiar código sem respeitar a licença): o antigo projeto **Fildem** e a extensão **Global Menu for GNOME** que já tenho instalada. Me explique o que cada um fazia certo e errado.
+
+## 5. Especificação visual
+
+- A barra global ocupa o **lado esquerdo do painel superior**; o botão "Atividades"/indicador de áreas de trabalho é ocultado (com opção de manter).
+- O relógio e o menu de status do GNOME ficam à direita, como no macOS. Opção de mover o relógio para a direita.
+- Tipografia: fonte do sistema, nome do app em **negrito**, demais menus em peso normal, espaçamento horizontal parecido com o do macOS (~10–14 px entre títulos).
+- Menus suspensos: cantos arredondados (~10 px), fundo translúcido escuro compatível com Blur my Shell e WhiteSur-Dark, separadores finos, destaque azul no item sob o mouse, **atalho alinhado à direita** em cinza, setas `›` para submenus, marca `✓` para itens marcáveis.
+- Todo o estilo em `stylesheet.css`, com variáveis/classes bem nomeadas, respeitando tema claro e escuro.
+- Animação curta de abertura (fade + leve deslocamento, ~120 ms), respeitando a opção "Reduzir animação" do GNOME.
+
+## 6. Comportamento (igual ao macOS)
+
+- Clicar abre o menu; com um menu aberto, **passar o mouse** sobre outro título troca de menu sem clicar.
+- Navegação por teclado: **F10** foca a barra (configurável), setas navegam, Enter ativa, Esc fecha, letras sublinhadas/mnemônicos opcionais.
+- A barra **acompanha a janela em foco** imediatamente (sinais `notify::focus-window` do `global.display`), inclusive ao trocar de área de trabalho e de monitor.
+- Sem janela em foco (área de trabalho vazia): mostra o menu do **Arquivos (Nautilus)**, como o Finder no macOS.
+- Em multimonitor: opção de mostrar a barra só no monitor principal ou em todos.
+- Nada de vazamento: desconectar **todos** os sinais, proxies D-Bus e timers no `disable()`.
+
+## 7. Menus — conteúdo completo
+
+Os atalhos abaixo são os do Linux/GNOME. Ofereça nas preferências a opção de exibir no estilo texto (`Ctrl+C`, padrão) ou com símbolos estilo Mac (`⌃C`, `⇧`, `⌥`, `❖` para Super).
+
+### 7.1 Menu do sistema (ícone Linux, no lugar da )
+- **Sobre Este Computador** — janela própria estilo "Sobre Este Mac": logo da distro, nome e versão (`/etc/os-release`), modelo do computador, processador, memória, placa de vídeo, disco, versão do GNOME e do kernel, botão "Mais Informações…" que abre Configurações › Sistema › Sobre.
+- separador
+- **Configurações do Sistema…**
+- **Central de Programas…** (GNOME Software)
+- separador
+- **Itens Recentes ›** — Aplicativos recentes e Documentos recentes (ler `~/.local/share/recently-used.xbel`), + "Limpar Menu"
+- separador
+- **Forçar Encerramento…** — `Ctrl+Alt+Esc`: janela própria que lista os apps abertos, igual à do macOS, com botão "Forçar Encerramento"
+- separador
+- **Suspender**
+- **Reiniciar…**
+- **Desligar…**
+- separador
+- **Bloquear Tela** — `Super+L`
+- **Encerrar Sessão de "<nome do usuário>"…** — `Ctrl+Alt+Del`
+
+(Use as APIs do próprio GNOME Shell/logind para suspender, reiniciar, desligar e bloquear, mantendo os diálogos de confirmação nativos.)
+
+### 7.2 Menu do aplicativo (nome do app em negrito)
+- **Sobre o <App>**
+- separador
+- **Configurações…** — `Ctrl+,`
+- separador
+- **Ocultar <App>** — `Super+H` (minimiza todas as janelas do app)
+- **Ocultar Outros** — minimiza as janelas dos demais apps
+- **Mostrar Tudo**
+- separador
+- **Sair do <App>** — `Ctrl+Q`
+
+### 7.3 Arquivo
+- Nova Janela — `Ctrl+N`
+- Nova Aba — `Ctrl+T`
+- Abrir… — `Ctrl+O`
+- Abrir Recentes ›
+- separador
+- Fechar Janela — `Ctrl+W`
+- Fechar Todas — `Ctrl+Shift+W`
+- Salvar — `Ctrl+S`
+- Salvar Como… — `Ctrl+Shift+S`
+- separador
+- Imprimir… — `Ctrl+P`
+
+### 7.4 Editar
+- Desfazer — `Ctrl+Z`
+- Refazer — `Ctrl+Shift+Z`
+- separador
+- Recortar — `Ctrl+X`
+- Copiar — `Ctrl+C`
+- Colar — `Ctrl+V`
+- Colar sem Formatação — `Ctrl+Shift+V`
+- Apagar
+- Selecionar Tudo — `Ctrl+A`
+- separador
+- Buscar › (Buscar… `Ctrl+F`, Buscar Próximo `Ctrl+G`, Buscar Anterior `Ctrl+Shift+G`, Buscar e Substituir… `Ctrl+H`)
+- separador
+- Emoji e Símbolos — `Ctrl+.` / abre o seletor de emoji ou o app Caracteres
+
+### 7.5 Visualizar
+- Mostrar/Ocultar Barra Lateral — `F9`
+- separador
+- Ampliar — `Ctrl++`
+- Reduzir — `Ctrl+-`
+- Tamanho Real — `Ctrl+0`
+- separador
+- Entrar em Tela Cheia / Sair da Tela Cheia — `F11` (texto muda conforme o estado)
+
+### 7.6 Janela
+- Minimizar — `Super+H`
+- Zoom (Maximizar/Restaurar)
+- separador
+- Mover para a Metade Esquerda da Tela — `Super+←`
+- Mover para a Metade Direita da Tela — `Super+→`
+- Mover para o Próximo Monitor (só se houver mais de um)
+- Mover para Área de Trabalho › (lista das áreas de trabalho)
+- Sempre no Topo (marcável ✓)
+- separador
+- Trazer Tudo para a Frente
+- separador
+- Lista das janelas abertas do app, com `✓` na janela ativa (clicar foca a janela)
+
+### 7.7 Ajuda
+- **Campo de busca no topo**, como no macOS: ao digitar, pesquisa em **todos os itens de menu do app atual** (todas as camadas) e mostra os resultados com o caminho (ex.: `Editar › Buscar › Buscar…`); Enter executa o item.
+- Ajuda do <App> — `F1` (abre o Yelp quando houver ajuda instalada)
+- Atalhos de Teclado — `Ctrl+?` (GAction `win.show-help-overlay`/`app.shortcuts` quando existir)
+
+### 7.8 Menus reais do app
+Quando o app exportar menus próprios (camadas A/B), **eles substituem Arquivo…Ajuda**, mantendo sempre o menu do sistema, o menu do app em negrito (mesclando "Sobre", "Configurações" e "Sair" se o app tiver esses itens) e o campo de busca no menu Ajuda. Traduza só os rótulos que vierem do fallback; os rótulos do app vêm traduzidos pelo próprio app.
+
+## 8. Ícones do sistema (no lugar da maçã)
+
+- Opções no seletor das preferências, com prévia: **Fedora** (padrão), **Tux**, **GNOME**, **Ubuntu**, **Debian**, **Arch Linux**, **openSUSE**, **Linux Mint**, **Pop!_OS**, **Manjaro**, **NixOS**, **Zorin OS**, **elementary OS**, **Automático** (detecta a distro pelo `ID` do `/etc/os-release` e usa o ícone `distributor-logo`/`fedora-logo-icon` do sistema quando existir) e **Personalizado** (escolher um arquivo SVG/PNG).
+- Ícones em SVG **simbólico** (monocromático, recolorido pelo tema) dentro de `icons/`, com opção "colorido".
+- Para os logos, use fontes com licença compatível (ex.: Simple Icons, CC0) e registre a origem e a licença de cada arquivo em `icons/CREDITS.md`, lembrando que marcas registradas continuam pertencendo aos donos.
+- Tamanho ajustável (14–22 px), alinhado verticalmente com o texto da barra.
+
+## 9. Preferências (`prefs.js` com libadwaita)
+
+Páginas organizadas, tudo em pt-BR:
+- **Geral**: ativar/desativar menus padrão (fallback), mostrar em todos os monitores, ocultar botão Atividades, posição do relógio, atalho para focar a barra.
+- **Aparência**: ícone do sistema (com prévia), tamanho do ícone, simbólico/colorido, estilo dos atalhos (texto ou símbolos ⌃⇧⌥), negrito no nome do app, espaçamento, opacidade/arredondamento dos menus.
+- **Menus**: ligar/desligar cada menu (Arquivo, Editar, Visualizar, Janela, Ajuda), busca no menu Ajuda, itens do menu do sistema.
+- **Compatibilidade**: ativar o Registrar DBusMenu (camada B), lista de apps ignorados (por `app_id`/`WM_CLASS`), modo de depuração com logs.
+- **Sobre**: versão, autor, link do GitHub (`github.com/viniciusbispo19`), licença.
+
+Todas as opções salvas em GSettings (`schemas/org.gnome.shell.extensions.luma-menu.gschema.xml`) e aplicadas **ao vivo**, sem precisar reiniciar a sessão.
+
+## 10. Tradução
+
+- Todas as strings visíveis com `gettext` (`_()`), domínio `luma-menu`.
+- Arquivo `po/pt_BR.po` completo + `po/luma-menu.pot`.
+- Script para compilar as traduções e empacotar com `gnome-extensions pack`.
+
+## 11. Estrutura de arquivos esperada
+
+```
+luma-menu/
+├── metadata.json            # shell-version: ["51"] (e "50" se for compatível de verdade)
+├── extension.js             # enable()/disable(), monta a barra
+├── prefs.js                 # janela de preferências (Adw)
+├── stylesheet.css
+├── lib/
+│   ├── menuBar.js           # barra e lógica de abrir/trocar menus
+│   ├── systemMenu.js        # menu do ícone Linux
+│   ├── appMenu.js           # menu do app em negrito
+│   ├── fallbackMenus.js     # Arquivo/Editar/Visualizar/Janela/Ajuda padrão
+│   ├── sources/
+│   │   ├── gtkMenuSource.js     # camada A (org.gtk.Menus/Actions)
+│   │   ├── dbusMenuSource.js    # camada B (com.canonical.dbusmenu)
+│   │   ├── registrar.js         # serviço com.canonical.AppMenu.Registrar
+│   │   └── actionSource.js      # camada C (GActions conhecidas)
+│   ├── windowTracker.js     # janela/app em foco
+│   ├── actions.js           # executar ações (GAction, Mutter, teclado virtual)
+│   ├── menuSearch.js        # busca do menu Ajuda
+│   ├── aboutDialog.js       # "Sobre Este Computador"
+│   └── forceQuitDialog.js   # "Forçar Encerramento"
+├── icons/                   # logos SVG + CREDITS.md
+├── schemas/
+├── po/
+├── scripts/                 # build, install, pack, compile-translations
+├── README.md                # em pt-BR, com limitações explicadas
+└── LICENSE                  # GPL-3.0
+```
+
+## 12. Qualidade e compatibilidade
+
+- Seguir as **regras de revisão do extensions.gnome.org** (nada criado fora do `enable()`, tudo destruído no `disable()`, sem `Main` modificado sem restaurar, sem código síncrono pesado no thread principal).
+- Chamadas D-Bus **assíncronas** e com tratamento de erro (app fechou, menu sumiu, bus caiu) — a barra nunca pode travar o Shell.
+- Cache de menus por janela, atualizado pelos sinais de mudança (`Changed`, `LayoutUpdated`, `ItemsPropertiesUpdated`).
+- Não quebrar Luma Dock, Blur my Shell e Just Perfection; testar com todas ativas.
+- Código comentado em português, explicando o porquê.
+- ESLint configurado com o estilo do GNOME Shell.
+
+## 13. Como trabalhar comigo (fases)
+
+Trabalhe em fases. Ao final de cada fase: me diga o que foi feito, como testar, o que aprender ali, e **espere eu confirmar** que funcionou antes de seguir.
+
+1. **Fase 0 — Preparação**: pacotes necessários (via `dnf`), como desativar a Global Menu for GNOME, criação do projeto e do repositório Git/GitHub, como testar a extensão numa sessão aninhada no GNOME 51 (modo devkit) sem derrubar minha sessão, e como ver os logs (`journalctl`).
+2. **Fase 1 — Esqueleto**: `metadata.json`, `extension.js` mínimo, barra vazia no painel, ícone do Fedora.
+3. **Fase 2 — Menu do sistema** completo, incluindo "Sobre Este Computador" e "Forçar Encerramento".
+4. **Fase 3 — Rastreamento de janela** + menu do app em negrito.
+5. **Fase 4 — Menus padrão (camada D)** com todas as ações.
+6. **Fase 5 — Camadas A e C** (GTK/GActions).
+7. **Fase 6 — Camada B** (Registrar + DBusMenu para XWayland).
+8. **Fase 7 — Busca no menu Ajuda**.
+9. **Fase 8 — Preferências** completas.
+10. **Fase 9 — Tradução pt-BR**, empacotamento, README e checklist para publicar no extensions.gnome.org.
+
+## 14. Critérios de aceite
+
+- Com Nautilus, Editor de Texto, Terminal (Ptyxis), Firefox, VS Code, LibreOffice e um app Qt abertos, a barra troca corretamente a cada foco, sem atraso perceptível.
+- Nenhum erro no `journalctl` ao ativar, desativar e reativar a extensão 10 vezes seguidas.
+- Bloquear tela e voltar não duplica a barra nem perde menus.
+- Todos os textos visíveis estão em português do Brasil.
+- O README explica com honestidade o que funciona em cada tipo de app.
