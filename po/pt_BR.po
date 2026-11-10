@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Luma Menu 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/viniciusbispo19/luma-menu/issues\n"
-"POT-Creation-Date: 2026-11-10 19:03-0300\n"
+"POT-Creation-Date: 2026-11-10 19:05-0300\n"
 "PO-Revision-Date: 2026-11-10 15:56-0300\n"
 "Last-Translator: Vinicius Bispo\n"
 "Language-Team: none\n"
@@ -95,19 +95,19 @@ msgstr "Ocultar Outros"
 msgid "Show All"
 msgstr "Mostrar Tudo"
 
-#: lib/fallbackMenus.js:166
+#: lib/fallbackMenus.js:166 prefs.js:312
 msgid "File"
 msgstr "Arquivo"
 
-#: lib/fallbackMenus.js:168
+#: lib/fallbackMenus.js:168 prefs.js:313
 msgid "Edit"
 msgstr "Editar"
 
-#: lib/fallbackMenus.js:170
+#: lib/fallbackMenus.js:170 prefs.js:314
 msgid "View"
 msgstr "Visualizar"
 
-#: lib/fallbackMenus.js:172
+#: lib/fallbackMenus.js:172 prefs.js:315
 msgid "Window"
 msgstr "Janela"
 
@@ -273,7 +273,7 @@ msgstr "Trazer Tudo para a Frente"
 msgid "%s Help"
 msgstr "Ajuda do %s"
 
-#: lib/fallbackMenus.js:401 lib/fallbackMenus.js:404
+#: lib/fallbackMenus.js:401 lib/fallbackMenus.js:404 prefs.js:166
 msgid "Keyboard Shortcuts"
 msgstr "Atalhos de Teclado"
 
@@ -290,7 +290,7 @@ msgstr "Se um aplicativo não responder por algum tempo, selecione seu nome e cl
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: lib/forceQuitDialog.js:67 lib/forceQuitDialog.js:148
+#: lib/forceQuitDialog.js:67 lib/forceQuitDialog.js:148 prefs.js:169
 msgid "Force Quit"
 msgstr "Forçar Encerramento"
 
@@ -303,7 +303,7 @@ msgstr "Forçar o encerramento de “%s”?"
 msgid "You will lose any unsaved changes."
 msgstr "Você perderá as alterações que não foram salvas."
 
-#: lib/menuBar.js:257 lib/menuBar.js:266
+#: lib/menuBar.js:279 lib/menuBar.js:288 prefs.js:316
 msgid "Help"
 msgstr "Ajuda"
 
@@ -319,7 +319,7 @@ msgstr "Nenhum resultado"
 msgid "Space"
 msgstr "Espaço"
 
-#: lib/systemMenu.js:54
+#: lib/systemMenu.js:54 prefs.js:321
 msgid "System Menu"
 msgstr "Menu do Sistema"
 
@@ -331,15 +331,15 @@ msgstr "Sobre Este Computador"
 msgid "System Settings…"
 msgstr "Configurações do Sistema…"
 
-#: lib/systemMenu.js:80
+#: lib/systemMenu.js:80 prefs.js:322
 msgid "Software Center…"
 msgstr "Central de Programas…"
 
-#: lib/systemMenu.js:87
+#: lib/systemMenu.js:87 prefs.js:323
 msgid "Recent Items"
 msgstr "Itens Recentes"
 
-#: lib/systemMenu.js:93
+#: lib/systemMenu.js:93 prefs.js:324
 msgid "Force Quit…"
 msgstr "Forçar Encerramento…"
 
@@ -383,3 +383,261 @@ msgstr "O histórico de arquivos está desativado nas configurações de Privaci
 #: lib/systemMenu.js:171
 msgid "Clear Menu"
 msgstr "Limpar Menu"
+
+#: prefs.js:95
+msgid "Disabled"
+msgstr "Desativado"
+
+#: prefs.js:113
+msgid "Press the new shortcut"
+msgstr "Pressione o novo atalho"
+
+#: prefs.js:114
+msgid "Esc cancels · Backspace disables the shortcut"
+msgstr "Esc cancela · Backspace desativa o atalho"
+
+#: prefs.js:117
+msgid "Set Shortcut"
+msgstr "Definir Atalho"
+
+#: prefs.js:152
+msgid "General"
+msgstr "Geral"
+
+#: prefs.js:156 prefs.js:200
+msgid "Menu Bar"
+msgstr "Barra de Menus"
+
+#: prefs.js:157
+msgid "Standard menus"
+msgstr "Menus padrão"
+
+#: prefs.js:158
+msgid "Show File, Edit, View and Window when the app has no menus of its own"
+msgstr "Mostrar Arquivo, Editar, Visualizar e Janela quando o app não tem menus próprios"
+
+#: prefs.js:159
+msgid "Hide the Activities button"
+msgstr "Ocultar o botão Atividades"
+
+#: prefs.js:160
+msgid "Clock position"
+msgstr "Posição do relógio"
+
+#: prefs.js:161
+msgid "Center"
+msgstr "Centro"
+
+#: prefs.js:162
+msgid "Right (like macOS)"
+msgstr "Direita (como no macOS)"
+
+#: prefs.js:167
+msgid "Focus the menu bar"
+msgstr "Focar a barra de menus"
+
+#: prefs.js:168
+msgid "Opens the app menu; use the arrow keys to navigate"
+msgstr "Abre o menu do app; use as setas para navegar"
+
+#: prefs.js:172
+msgid "Multiple Monitors"
+msgstr "Vários Monitores"
+
+#: prefs.js:174
+msgid "The menu bar is shown on the primary monitor"
+msgstr "A barra de menus aparece no monitor principal"
+
+#: prefs.js:175
+msgid ""
+"GNOME has a single top bar, on the primary monitor. Showing the menus on "
+"every monitor would need a second bar, which this extension does not create."
+msgstr "O GNOME tem uma única barra superior, no monitor principal. Mostrar os menus em todos os monitores exigiria uma segunda barra, que esta extensão não cria."
+
+#: prefs.js:183
+msgid "Appearance"
+msgstr "Aparência"
+
+#: prefs.js:189
+msgid "System Icon"
+msgstr "Ícone do Sistema"
+
+#: prefs.js:190
+msgid "The logo shown in place of the Apple menu"
+msgstr "O logo mostrado no lugar da maçã"
+
+#: prefs.js:193
+msgid "Icon size"
+msgstr "Tamanho do ícone"
+
+#: prefs.js:193 prefs.js:212
+msgid "In pixels"
+msgstr "Em pixels"
+
+#: prefs.js:194
+msgid "Icon style"
+msgstr "Estilo do ícone"
+
+#: prefs.js:195
+msgid "Symbolic (follows the theme color)"
+msgstr "Simbólico (segue a cor do tema)"
+
+#: prefs.js:196
+msgid "Color"
+msgstr "Colorido"
+
+#: prefs.js:201
+msgid "App name in bold"
+msgstr "Nome do app em negrito"
+
+#: prefs.js:202
+msgid "Title spacing"
+msgstr "Espaçamento dos títulos"
+
+#: prefs.js:203
+msgid "Space on each side of a menu title, in pixels"
+msgstr "Espaço de cada lado de um título de menu, em pixels"
+
+#: prefs.js:206
+msgid "Drop-down Menus"
+msgstr "Menus Suspensos"
+
+#: prefs.js:207
+msgid "Shortcut style"
+msgstr "Estilo dos atalhos"
+
+#: prefs.js:208
+msgid "Text (Ctrl+C)"
+msgstr "Texto (Ctrl+C)"
+
+#: prefs.js:209
+msgid "Mac symbols (⌃C)"
+msgstr "Símbolos do Mac (⌃C)"
+
+#: prefs.js:211
+msgid "Opacity"
+msgstr "Opacidade"
+
+#: prefs.js:211
+msgid "In percent"
+msgstr "Em porcentagem"
+
+#: prefs.js:212
+msgid "Corner radius"
+msgstr "Arredondamento dos cantos"
+
+#: prefs.js:262
+msgid "Automatic"
+msgstr "Automático"
+
+#: prefs.js:265
+msgid "Custom…"
+msgstr "Personalizado…"
+
+#: prefs.js:282
+msgid "Images (SVG, PNG)"
+msgstr "Imagens (SVG, PNG)"
+
+#: prefs.js:288
+msgid "Choose an Icon"
+msgstr "Escolha um Ícone"
+
+#: prefs.js:304
+msgid "Menus"
+msgstr "Menus"
+
+#: prefs.js:309
+msgid "Standard Menus"
+msgstr "Menus Padrão"
+
+#: prefs.js:310
+msgid "Used when the app does not export menus of its own"
+msgstr "Usados quando o app não exporta menus próprios"
+
+#: prefs.js:317
+msgid "Search field in the Help menu"
+msgstr "Campo de busca no menu Ajuda"
+
+#: prefs.js:318
+msgid "Searches every menu item of the current app"
+msgstr "Procura em todos os itens de menu do app atual"
+
+#: prefs.js:325
+msgid "Suspend, Restart and Shut Down"
+msgstr "Suspender, Reiniciar e Desligar"
+
+#: prefs.js:332
+msgid "Compatibility"
+msgstr "Compatibilidade"
+
+#: prefs.js:336
+msgid "Apps That Use DBusMenu"
+msgstr "Apps que Usam DBusMenu"
+
+#: prefs.js:337
+msgid "Read menus from Qt, Electron and similar apps"
+msgstr "Ler menus de apps Qt, Electron e semelhantes"
+
+#: prefs.js:338
+msgid ""
+"Provides the com.canonical.AppMenu.Registrar service. Works with apps "
+"running through XWayland; apps that were already open need to be restarted."
+msgstr "Oferece o serviço com.canonical.AppMenu.Registrar. Funciona com apps rodando pelo XWayland; apps que já estavam abertos precisam ser reiniciados."
+
+#: prefs.js:343
+msgid "Troubleshooting"
+msgstr "Solução de Problemas"
+
+#: prefs.js:344
+msgid "Debug mode"
+msgstr "Modo de depuração"
+
+#: prefs.js:345
+msgid "Writes details to the system journal (journalctl)"
+msgstr "Grava detalhes no registro do sistema (journalctl)"
+
+#: prefs.js:353
+msgid "Ignored Apps"
+msgstr "Apps Ignorados"
+
+#: prefs.js:354
+msgid ""
+"These apps always use the standard menus. Use the app ID (e.g. "
+"org.gnome.TextEditor) or the window class (WM_CLASS)."
+msgstr "Estes apps sempre usam os menus padrão. Use o ID do app (ex.: org.gnome.TextEditor) ou a classe da janela (WM_CLASS)."
+
+#: prefs.js:358
+msgid "Add app"
+msgstr "Adicionar app"
+
+#: prefs.js:378
+msgid "Remove"
+msgstr "Remover"
+
+#: prefs.js:398
+msgid "About"
+msgstr "Sobre"
+
+#: prefs.js:415
+msgid "A macOS-style global menu bar for GNOME"
+msgstr "Barra de menus global no estilo do macOS para o GNOME"
+
+#: prefs.js:423
+msgid "Version"
+msgstr "Versão"
+
+#: prefs.js:426
+msgid "Author"
+msgstr "Autor"
+
+#: prefs.js:428
+msgid "Source code"
+msgstr "Código-fonte"
+
+#: prefs.js:438
+msgid "License"
+msgstr "Licença"
+
+#: prefs.js:439
+msgid "GNU General Public License, version 3 or later"
+msgstr "GNU General Public License, versão 3 ou posterior"

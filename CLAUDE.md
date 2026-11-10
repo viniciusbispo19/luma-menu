@@ -80,6 +80,16 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   `unlock-dialog`: no bloqueio só o Registrar fica vivo (testado: menus sobrevivem).
 - Firefox não foi testado (o perfil do usuário já está em uso na sessão real).
 
+### Preferências (Fase 8)
+- libadwaita 1.10, GTK 4.24. `ExtensionPreferences.fillPreferencesWindow(window)` recebe
+  um `Adw.PreferencesWindow`. Testar: `Main.extensionManager.openExtensionPrefs(uuid,'',{})`
+  via Eval abre a janela DENTRO da sessão aninhada.
+- Fora do app Extensões o `gettext` de prefs.js falha ("only be called from extensions");
+  uma ferramenta de prévia separada travou no fill — foi descartada.
+- Mudanças nas preferências testadas ao vivo (ícone, estilo, tamanho, espaçamento, atalhos).
+- `pgrep -f`/`pkill -f` com padrão que aparece na própria linha de comando matam o
+  shell da ferramenta (exit 144): usar PID (`$!`) ou `ps -eo pid,args | awk '$2==...'`.
+
 ### Painel (Fase 6)
 - `Panel.vfunc_allocate` limita a caixa da esquerda a METADE do painel. A barra
   sobrescreve `vfunc_allocate` para transbordar até o 1º item visível do centro/direita
