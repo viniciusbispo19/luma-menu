@@ -29,10 +29,13 @@ BEFORE=$(wc -l < "$LOG")
     atoresNoUiGroup: Main.layoutManager.uiGroup.get_n_children(),
     atoresLumaNoPalco: countOurs(global.stage),
   });
-  // Conta, no palco inteiro, os atores criados pelas NOSSAS classes
-  // (GTypes LumaMenu*). Se algum sobrar após os ciclos, é vazamento nosso.
+  // Conta, no palco inteiro, os atores ESTRUTURAIS das nossas classes
+  // (barra, títulos, raízes de menu, diálogos — GTypes LumaMenu*). Itens de
+  // menu ficam de fora: eles são criados sob demanda quando um menu abre.
+  // Se algum ator estrutural sobrar após os ciclos, é vazamento nosso.
   function countOurs(actor) {
-    let n = actor.constructor.name.startsWith('LumaMenu') ? 1 : 0;
+    const name = actor.constructor.name;
+    let n = name.startsWith('LumaMenu') && !name.endsWith('Item') ? 1 : 0;
     for (const child of actor.get_children())
       n += countOurs(child);
     return n;

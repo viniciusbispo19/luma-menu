@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Luma Menu 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/viniciusbispo19/luma-menu/issues\n"
-"POT-Creation-Date: 2026-11-10 16:27-0300\n"
+"POT-Creation-Date: 2026-11-10 16:32-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,6 +94,188 @@ msgstr ""
 msgid "Show All"
 msgstr ""
 
+#: lib/fallbackMenus.js:164
+msgid "File"
+msgstr ""
+
+#: lib/fallbackMenus.js:166
+msgid "Edit"
+msgstr ""
+
+#: lib/fallbackMenus.js:168
+msgid "View"
+msgstr ""
+
+#: lib/fallbackMenus.js:170
+msgid "Window"
+msgstr ""
+
+#: lib/fallbackMenus.js:178 lib/fallbackMenus.js:181 lib/fallbackMenus.js:186
+msgid "New Window"
+msgstr ""
+
+#: lib/fallbackMenus.js:190
+msgid "New Tab"
+msgstr ""
+
+#: lib/fallbackMenus.js:191
+msgid "Open…"
+msgstr ""
+
+#: lib/fallbackMenus.js:193
+msgid "Open Recent"
+msgstr ""
+
+#: lib/fallbackMenus.js:199
+msgid "Close Window"
+msgstr ""
+
+#: lib/fallbackMenus.js:205
+msgid "Close All"
+msgstr ""
+
+#: lib/fallbackMenus.js:210
+msgid "Save"
+msgstr ""
+
+#: lib/fallbackMenus.js:211
+msgid "Save As…"
+msgstr ""
+
+#: lib/fallbackMenus.js:213
+msgid "Print…"
+msgstr ""
+
+#: lib/fallbackMenus.js:221 lib/systemMenu.js:166
+msgid "No recent documents"
+msgstr ""
+
+#: lib/fallbackMenus.js:236 lib/fallbackMenus.js:239
+msgid "Emoji & Symbols"
+msgstr ""
+
+#: lib/fallbackMenus.js:246
+msgid "Undo"
+msgstr ""
+
+#: lib/fallbackMenus.js:247
+msgid "Redo"
+msgstr ""
+
+#: lib/fallbackMenus.js:249
+msgid "Cut"
+msgstr ""
+
+#: lib/fallbackMenus.js:250
+msgid "Copy"
+msgstr ""
+
+#: lib/fallbackMenus.js:251
+msgid "Paste"
+msgstr ""
+
+#: lib/fallbackMenus.js:252
+msgid "Paste Without Formatting"
+msgstr ""
+
+#: lib/fallbackMenus.js:253
+msgid "Delete"
+msgstr ""
+
+#: lib/fallbackMenus.js:254
+msgid "Select All"
+msgstr ""
+
+#: lib/fallbackMenus.js:257
+msgid "Find"
+msgstr ""
+
+#: lib/fallbackMenus.js:260
+msgid "Find…"
+msgstr ""
+
+#: lib/fallbackMenus.js:261
+msgid "Find Next"
+msgstr ""
+
+#: lib/fallbackMenus.js:262
+msgid "Find Previous"
+msgstr ""
+
+#: lib/fallbackMenus.js:263
+msgid "Find and Replace…"
+msgstr ""
+
+#: lib/fallbackMenus.js:274
+msgid "Exit Full Screen"
+msgstr ""
+
+#: lib/fallbackMenus.js:274
+msgid "Enter Full Screen"
+msgstr ""
+
+#: lib/fallbackMenus.js:290
+msgid "Show/Hide Sidebar"
+msgstr ""
+
+#: lib/fallbackMenus.js:292
+msgid "Zoom In"
+msgstr ""
+
+#: lib/fallbackMenus.js:293
+msgid "Zoom Out"
+msgstr ""
+
+#: lib/fallbackMenus.js:294
+msgid "Actual Size"
+msgstr ""
+
+#: lib/fallbackMenus.js:310
+#, javascript-format
+msgid "Workspace %d"
+msgstr ""
+
+#: lib/fallbackMenus.js:326
+msgid "Minimize"
+msgstr ""
+
+#: lib/fallbackMenus.js:332
+msgid "Zoom"
+msgstr ""
+
+#: lib/fallbackMenus.js:338
+msgid "Move Window to Left Side of Screen"
+msgstr ""
+
+#: lib/fallbackMenus.js:344
+msgid "Move Window to Right Side of Screen"
+msgstr ""
+
+#: lib/fallbackMenus.js:350
+msgid "Move to Next Display"
+msgstr ""
+
+#: lib/fallbackMenus.js:356
+msgid "Move to Workspace"
+msgstr ""
+
+#: lib/fallbackMenus.js:361
+msgid "Always on Top"
+msgstr ""
+
+#: lib/fallbackMenus.js:368
+msgid "Bring All to Front"
+msgstr ""
+
+#: lib/fallbackMenus.js:386 lib/fallbackMenus.js:392 lib/fallbackMenus.js:396
+#, javascript-format
+msgid "%s Help"
+msgstr ""
+
+#: lib/fallbackMenus.js:400 lib/fallbackMenus.js:403
+msgid "Keyboard Shortcuts"
+msgstr ""
+
 #: lib/forceQuitDialog.js:39
 msgid "Force Quit Applications"
 msgstr ""
@@ -118,6 +300,10 @@ msgstr ""
 
 #: lib/forceQuitDialog.js:141
 msgid "You will lose any unsaved changes."
+msgstr ""
+
+#: lib/menuBar.js:173
+msgid "Help"
 msgstr ""
 
 #: lib/shortcuts.js:80
@@ -183,10 +369,6 @@ msgstr ""
 
 #: lib/systemMenu.js:154
 msgid "File history is turned off in Privacy settings"
-msgstr ""
-
-#: lib/systemMenu.js:166
-msgid "No recent documents"
 msgstr ""
 
 #: lib/systemMenu.js:171

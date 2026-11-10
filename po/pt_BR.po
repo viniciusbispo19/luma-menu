@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Luma Menu 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/viniciusbispo19/luma-menu/issues\n"
-"POT-Creation-Date: 2026-11-10 16:27-0300\n"
+"POT-Creation-Date: 2026-11-10 16:32-0300\n"
 "PO-Revision-Date: 2026-11-10 15:56-0300\n"
 "Last-Translator: Vinicius Bispo\n"
 "Language-Team: none\n"
@@ -95,6 +95,188 @@ msgstr "Ocultar Outros"
 msgid "Show All"
 msgstr "Mostrar Tudo"
 
+#: lib/fallbackMenus.js:164
+msgid "File"
+msgstr "Arquivo"
+
+#: lib/fallbackMenus.js:166
+msgid "Edit"
+msgstr "Editar"
+
+#: lib/fallbackMenus.js:168
+msgid "View"
+msgstr "Visualizar"
+
+#: lib/fallbackMenus.js:170
+msgid "Window"
+msgstr "Janela"
+
+#: lib/fallbackMenus.js:178 lib/fallbackMenus.js:181 lib/fallbackMenus.js:186
+msgid "New Window"
+msgstr "Nova Janela"
+
+#: lib/fallbackMenus.js:190
+msgid "New Tab"
+msgstr "Nova Aba"
+
+#: lib/fallbackMenus.js:191
+msgid "Open…"
+msgstr "Abrir…"
+
+#: lib/fallbackMenus.js:193
+msgid "Open Recent"
+msgstr "Abrir Recentes"
+
+#: lib/fallbackMenus.js:199
+msgid "Close Window"
+msgstr "Fechar Janela"
+
+#: lib/fallbackMenus.js:205
+msgid "Close All"
+msgstr "Fechar Todas"
+
+#: lib/fallbackMenus.js:210
+msgid "Save"
+msgstr "Salvar"
+
+#: lib/fallbackMenus.js:211
+msgid "Save As…"
+msgstr "Salvar Como…"
+
+#: lib/fallbackMenus.js:213
+msgid "Print…"
+msgstr "Imprimir…"
+
+#: lib/fallbackMenus.js:221 lib/systemMenu.js:166
+msgid "No recent documents"
+msgstr "Nenhum documento recente"
+
+#: lib/fallbackMenus.js:236 lib/fallbackMenus.js:239
+msgid "Emoji & Symbols"
+msgstr "Emoji e Símbolos"
+
+#: lib/fallbackMenus.js:246
+msgid "Undo"
+msgstr "Desfazer"
+
+#: lib/fallbackMenus.js:247
+msgid "Redo"
+msgstr "Refazer"
+
+#: lib/fallbackMenus.js:249
+msgid "Cut"
+msgstr "Recortar"
+
+#: lib/fallbackMenus.js:250
+msgid "Copy"
+msgstr "Copiar"
+
+#: lib/fallbackMenus.js:251
+msgid "Paste"
+msgstr "Colar"
+
+#: lib/fallbackMenus.js:252
+msgid "Paste Without Formatting"
+msgstr "Colar sem Formatação"
+
+#: lib/fallbackMenus.js:253
+msgid "Delete"
+msgstr "Apagar"
+
+#: lib/fallbackMenus.js:254
+msgid "Select All"
+msgstr "Selecionar Tudo"
+
+#: lib/fallbackMenus.js:257
+msgid "Find"
+msgstr "Buscar"
+
+#: lib/fallbackMenus.js:260
+msgid "Find…"
+msgstr "Buscar…"
+
+#: lib/fallbackMenus.js:261
+msgid "Find Next"
+msgstr "Buscar Próximo"
+
+#: lib/fallbackMenus.js:262
+msgid "Find Previous"
+msgstr "Buscar Anterior"
+
+#: lib/fallbackMenus.js:263
+msgid "Find and Replace…"
+msgstr "Buscar e Substituir…"
+
+#: lib/fallbackMenus.js:274
+msgid "Exit Full Screen"
+msgstr "Sair da Tela Cheia"
+
+#: lib/fallbackMenus.js:274
+msgid "Enter Full Screen"
+msgstr "Entrar em Tela Cheia"
+
+#: lib/fallbackMenus.js:290
+msgid "Show/Hide Sidebar"
+msgstr "Mostrar/Ocultar Barra Lateral"
+
+#: lib/fallbackMenus.js:292
+msgid "Zoom In"
+msgstr "Ampliar"
+
+#: lib/fallbackMenus.js:293
+msgid "Zoom Out"
+msgstr "Reduzir"
+
+#: lib/fallbackMenus.js:294
+msgid "Actual Size"
+msgstr "Tamanho Real"
+
+#: lib/fallbackMenus.js:310
+#, javascript-format
+msgid "Workspace %d"
+msgstr "Área de Trabalho %d"
+
+#: lib/fallbackMenus.js:326
+msgid "Minimize"
+msgstr "Minimizar"
+
+#: lib/fallbackMenus.js:332
+msgid "Zoom"
+msgstr "Zoom"
+
+#: lib/fallbackMenus.js:338
+msgid "Move Window to Left Side of Screen"
+msgstr "Mover para a Metade Esquerda da Tela"
+
+#: lib/fallbackMenus.js:344
+msgid "Move Window to Right Side of Screen"
+msgstr "Mover para a Metade Direita da Tela"
+
+#: lib/fallbackMenus.js:350
+msgid "Move to Next Display"
+msgstr "Mover para o Próximo Monitor"
+
+#: lib/fallbackMenus.js:356
+msgid "Move to Workspace"
+msgstr "Mover para Área de Trabalho"
+
+#: lib/fallbackMenus.js:361
+msgid "Always on Top"
+msgstr "Sempre no Topo"
+
+#: lib/fallbackMenus.js:368
+msgid "Bring All to Front"
+msgstr "Trazer Tudo para a Frente"
+
+#: lib/fallbackMenus.js:386 lib/fallbackMenus.js:392 lib/fallbackMenus.js:396
+#, javascript-format
+msgid "%s Help"
+msgstr "Ajuda do %s"
+
+#: lib/fallbackMenus.js:400 lib/fallbackMenus.js:403
+msgid "Keyboard Shortcuts"
+msgstr "Atalhos de Teclado"
+
 #: lib/forceQuitDialog.js:39
 msgid "Force Quit Applications"
 msgstr "Forçar Encerramento de Aplicativos"
@@ -120,6 +302,10 @@ msgstr "Forçar o encerramento de “%s”?"
 #: lib/forceQuitDialog.js:141
 msgid "You will lose any unsaved changes."
 msgstr "Você perderá as alterações que não foram salvas."
+
+#: lib/menuBar.js:173
+msgid "Help"
+msgstr "Ajuda"
 
 #: lib/shortcuts.js:80
 msgid "Space"
@@ -185,10 +371,6 @@ msgstr "Documentos"
 #: lib/systemMenu.js:154
 msgid "File history is turned off in Privacy settings"
 msgstr "O histórico de arquivos está desativado nas configurações de Privacidade"
-
-#: lib/systemMenu.js:166
-msgid "No recent documents"
-msgstr "Nenhum documento recente"
 
 #: lib/systemMenu.js:171
 msgid "Clear Menu"

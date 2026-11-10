@@ -47,6 +47,17 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
 - `Clutter.Actor.allocate_preferred_size(x, y)`; `St.Settings.enable_animations`;
   `animationUtils.adjustAnimationTime` zera durações com "Reduzir animação".
 - CSS: `-st-accent-color` / `-st-accent-fg-color` existem no St 51.
+- **`Clutter.get_default_backend()` NÃO existe no GNOME 51**: usar
+  `global.stage.context.get_backend().get_default_seat()` (como `ui/screenShield.js`).
+  Teclado virtual testado: F11 e digitação + Editar › Copiar funcionam.
+- `Meta.Window.maximize()` e `unmaximize()` **sem parâmetros** no Mutter 51;
+  `set_maximize_flags(directions)` existe. **Não há `Meta.TileMode`** nem API de tiling:
+  "Metade esquerda/direita" sintetiza o atalho `org.gnome.mutter.keybindings
+  toggle-tiled-left/right` do usuário (fallback: `move_resize_frame`).
+- `Meta.Window.change_workspace_by_index(i, append)`, `move_to_monitor(i)`,
+  `raise()`, `activate(time)`, `delete(time)`; `Main.activateWindow(window)`.
+- GTK4/libadwaita (ex.: Editor de Texto) só exporta ações `app.*`: as `win.*` são
+  widget actions, não vão para o D-Bus (o grupo da janela vem vazio).
 - GJS 1.90 NÃO promisifica tudo: usar `Gio._promisify` (ex.: `load_contents_async`).
 - `Gio.DBus.session` / `Gio.DBus.system` reaproveitam a conexão do Shell (sem chamada síncrona).
 - Informações do sistema: hostnamed (`HardwareVendor/HardwareModel/KernelRelease`) e
