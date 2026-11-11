@@ -160,21 +160,20 @@ export default class LumaMenuPreferences extends ExtensionPreferences {
         const clockRow = this._combo('clock-position', _('Clock position'), [
             ['center', _('Center')],
             ['right', _('Right (like macOS)')],
-        ], _('Used when the island is off'));
-        // Com a ilha ligada, ela ocupa o centro e o relógio do GNOME some:
-        // a opção fica cinza (só vale com a ilha desligada).
+        ], _('Used with the GNOME clock'));
+        // Com o relógio do Luma ligado, ele fica sempre no canto direito
+        // (como no macOS): a opção fica cinza.
         this._settings.bind('island-enabled', clockRow, 'sensitive',
             Gio.SettingsBindFlags.GET | Gio.SettingsBindFlags.INVERT_BOOLEAN);
         bar.add(clockRow);
         page.add(bar);
 
         const island = new Adw.PreferencesGroup({
-            title: _('Island'),
-            description: _('A notch in the center of the top bar, in place of the clock'),
+            title: _('Clock'),
+            description: _('A macOS-style clock in the right corner; click it for music, calendar, notifications, focus and reminders'),
         });
-        island.add(this._switch('island-enabled', _('Show the island')));
-        island.add(this._spin('island-hover-delay', _('Open on hover after (ms)'),
-            _('0 = open only by clicking'), 0, 2000, 50));
+        island.add(this._switch('island-enabled', _('Use the Luma clock'),
+            _('Replaces the GNOME clock')));
         island.add(this._switch('island-show-date', _('Show the date beside the time')));
         island.add(this._switch('island-world-clocks', _('World clocks on the Calendar page')));
         page.add(island);

@@ -234,20 +234,24 @@
     spacing: 10px;
 }
 
-/* =============================== Ilha =============================== *
- * Fechada, a ilha é só o relógio da barra: sem fundo, com a cor e a fonte
- * do painel (copiadas pelo código, island.js). Aberta, ela ganha a MESMA
- * cor de fundo dos menus do tema, com a opacidade e o arredondamento das
- * preferências do Luma Menu (islandActor.js). Aqui ficam os espaçamentos e
- * a tipografia — os mesmos tokens dos menus suspensos.
- * "tnum" = dígitos tabulares (todos com a mesma largura): a ilha não
+/* ================== Relógio + painel do Isle ================== *
+ * O relógio é um botão comum do painel: a fonte, a cor e o destaque ao
+ * clicar vêm do tema, como nos outros itens da barra. O painel que abre é um
+ * menu do Luma Menu (.luma-menu-content: mesma cor, opacidade e cantos).
+ * Aqui ficam só espaçamentos e tipografia.
+ * "tnum" = dígitos tabulares (todos com a mesma largura): o relógio não
  * "treme" quando 9:59 vira 10:00. */
 
-.luma-island-closed {
-    padding: 0 18px;
+/* Mesmo peso dos títulos "Arquivo", "Editar"… (o tema põe negrito nos
+ * botões do painel; no macOS o relógio tem peso normal). */
+#panel .panel-button.luma-island-clock {
+    -natural-hpadding: 10px;
+    -minimum-hpadding: 6px;
+    font-weight: normal;
 }
 
-.luma-island-closed-box {
+.luma-island-clock-box,
+.luma-island-activities {
     spacing: 7px;
 }
 
@@ -256,13 +260,16 @@
     font-feature-settings: "tnum";
 }
 
-.luma-island-open {
-    min-width: 560px;
-    padding: 0 20px 18px;
+/* O painel inteiro é um único item, sem destaque nem recuo. */
+.luma-island-panel {
+    padding: 0;
+    margin: 0;
 }
 
-.luma-island-header {
-    spacing: 6px;
+.luma-island-open {
+    min-width: 540px;
+    padding: 4px 8px 8px;
+    spacing: 10px;
 }
 
 .luma-island-tabs {
@@ -271,8 +278,7 @@
 
 /* Abas: como os itens dos menus — cinza no hover, cor de destaque na ativa. */
 .luma-island-tab {
-    padding: 2px 12px;
-    margin: 3px 0;
+    padding: 3px 12px;
     border-radius: 99px;
     color: inherit;
 }
@@ -286,12 +292,8 @@
     color: -st-accent-fg-color;
 }
 
-.luma-island-page {
-    padding-top: 10px;
-}
-
 .luma-island-calendar {
-    spacing: 20px;
+    spacing: 16px;
 }
 
 .luma-island-events {

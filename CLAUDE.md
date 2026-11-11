@@ -162,13 +162,18 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   `meta_workspace_get_work_area_for_monitor` CRITICAL; Luma Dock gera
   `LumaBackground … needs an allocation`; milhares de `Overwriting existing binding of keysym`.
 
-### Ilha (projeto 2, inspirado no Isle — plano em ~/.claude/plans/playful-purring-abelson.md)
-- Fase 1 da ilha concluída em 2026-11-11 (`lib/island/`). Fases seguintes: 2a (bateria
-  MacBook, volume/brilho com %, temperatura), 2b (Música portada do wavebar-music,
-  Notificações), 2c (Foco, Lembretes, alertas), 3 (prefs completas; perguntar antes).
-- **Visual pedido pelo usuário**: a ilha FECHADA não tem fundo nem cores próprias — é o
-  relógio da barra (cor/fonte copiadas de `Main.panel.get_theme_node()`). Só a ilha
-  ABERTA ganha o fundo dos menus do luma-menu.
+### Funções do Isle na barra do macOS (projeto 2 — plano em ~/.claude/plans/playful-purring-abelson.md)
+- **Layout decidido pelo usuário (2026-11-11)**: NADA no centro da barra. Relógio do Luma
+  no CANTO DIREITO (último item de `_rightBox`, via `addToStatusArea('luma-menu-clock')`),
+  com a aparência do tema (botão de painel comum, peso normal como "Arquivo"). **Clique**
+  abre o painel do Isle (abas) como um `LumaMenu` alinhado à direita (`alignment = 1.0`).
+  Alertas (Fase 2) numa caixinha no **canto superior direito**, abaixo da barra. Sem hover.
+- Fase 1 concluída (`lib/island/`: clockButton.js, island.js, pages/calendarPage.js,
+  strings.js; spring.js guardado para a caixinha de alertas). Fases seguintes: 2a
+  (bateria MacBook, volume/brilho com %, temperatura), 2b (Música portada do
+  wavebar-music, Notificações), 2c (Foco, Lembretes, alertas), 3 (prefs; perguntar antes).
+- `PopupMenu.close()` emite `menu-closed` só DEPOIS da animação: é quando a página
+  devolve o calendário emprestado.
 - `Main.layoutManager.addChrome(actor, params)` no GNOME 51 aceita só `trackFullscreen` e
   `affectsStruts` (`affectsInputRegion` NÃO existe mais → erro "Unrecognized parameter").
 - `St.ButtonMask.ONE/TWO/THREE` estão obsoletos: usar `PRIMARY/MIDDLE/SECONDARY`.
@@ -188,7 +193,8 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
 - Clima: GWeather-4.0 e Geoclue-2.0 disponíveis; `org.gnome.shell.weather` tem Salvador.
   A `WeatherClient` do Shell não tem destroy() → fazer cliente próprio com `GWeather.Info`.
 - PowerProfiles via tuned-ppd (`net.hadess.PowerProfiles` e `org.freedesktop.UPower.PowerProfiles`).
-- Animação de molas parada antes de `removeChrome` (senão: "Timelines with detached actors").
+- Ator de chrome com animação rodando: parar antes de `removeChrome` (senão: "Timelines
+  with detached actors") — vale para a caixinha de alertas.
 - Extensões do usuário que tocam no relógio/música: `hiragana-clock` (esconde
   `dateMenu.container`) e `wavebar-music` (dele, GPL-3.0-or-later; MPRIS + LRCLIB).
 - Isle clonado em `/tmp/isle-ref` (GPL-3.0) só como referência: NÃO copiar código.

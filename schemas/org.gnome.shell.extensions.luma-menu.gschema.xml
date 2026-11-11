@@ -140,44 +140,30 @@
       <summary>Write debug messages to the journal</summary>
     </key>
 
-    <!-- ===================== Ilha (notch) =====================
+    <!-- ===================== Relógio + painel do Isle =====================
          Algumas chaves só passam a ter efeito nas Fases 2 e 3; elas já
          existem para o prefs e o código usarem sempre os mesmos nomes. -->
     <key name="island-enabled" type="b">
       <default>true</default>
-      <summary>Show the island in the center of the top bar, in place of the clock</summary>
-    </key>
-    <key name="island-hover-delay" type="i">
-      <range min="0" max="2000"/>
-      <!-- 0 = abre só com clique. -->
-      <default>300</default>
-      <summary>Time the pointer must rest on the island before it opens (ms; 0 = click only)</summary>
-    </key>
-    <key name="island-close-shortcut" type="as">
-      <default><![CDATA[['Escape']]]></default>
-      <summary>Shortcut that closes the open island (active only while it is open)</summary>
+      <summary>Replace the GNOME clock with the Luma clock (right corner) and its Isle-style panel</summary>
     </key>
     <key name="island-show-date" type="b">
       <default>true</default>
-      <summary>Show the date beside the time in the closed island</summary>
+      <summary>Show the date beside the time in the clock</summary>
     </key>
     <key name="island-pages" type="as">
       <default>['music', 'calendar', 'notifications', 'focus', 'reminders']</default>
-      <summary>Island pages, in order (music, calendar, notifications, focus, reminders)</summary>
+      <summary>Clock panel pages, in order (music, calendar, notifications, focus, reminders)</summary>
     </key>
     <key name="island-world-clocks" type="b">
       <default>true</default>
       <summary>Show world clocks on the Calendar page</summary>
     </key>
-    <key name="island-blur" type="b">
-      <default>false</default>
-      <summary>Blur what is behind the open island</summary>
-    </key>
 
     <!-- Temperatura (Fase 2) -->
     <key name="weather-enabled" type="b">
       <default>true</default>
-      <summary>Show the current temperature in the closed island</summary>
+      <summary>Show the current temperature beside the clock</summary>
     </key>
     <key name="weather-unit" enum="org.gnome.shell.extensions.luma-menu.TemperatureUnit">
       <default>'celsius'</default>
@@ -199,11 +185,11 @@
     <!-- Volume, brilho e bateria (Fase 2) -->
     <key name="alert-volume" type="b">
       <default>true</default>
-      <summary>Show volume changes in the island instead of GNOME’s pop-up</summary>
+      <summary>Show volume changes in the top-right alert instead of GNOME’s pop-up</summary>
     </key>
     <key name="alert-brightness" type="b">
       <default>true</default>
-      <summary>Show brightness changes in the island instead of GNOME’s pop-up</summary>
+      <summary>Show brightness changes in the top-right alert instead of GNOME’s pop-up</summary>
     </key>
     <key name="osd-show-percentage" type="b">
       <default>true</default>
@@ -221,7 +207,7 @@
     <!-- Alertas (Fase 2) -->
     <key name="alert-battery-low" type="b"><default>true</default><summary>Alert when the battery drops to 20% and 10%</summary></key>
     <key name="alert-battery-full" type="b"><default>false</default><summary>Alert when the battery is fully charged</summary></key>
-    <key name="alert-notifications" type="b"><default>true</default><summary>Show notifications as island alerts instead of GNOME banners</summary></key>
+    <key name="alert-notifications" type="b"><default>true</default><summary>Show notifications as top-right alerts instead of GNOME banners</summary></key>
     <key name="alert-caps-lock" type="b"><default>true</default><summary>Alert when Caps Lock is turned on or off</summary></key>
     <key name="alert-bluetooth" type="b"><default>true</default><summary>Alert when a Bluetooth device connects or disconnects</summary></key>
     <key name="alert-network" type="b"><default>true</default><summary>Alert when the computer goes offline</summary></key>
