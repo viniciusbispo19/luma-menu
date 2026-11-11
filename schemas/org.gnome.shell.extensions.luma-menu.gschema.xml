@@ -254,6 +254,10 @@
     </key>
 
     <!-- ===================== Estado interno ===================== -->
+    <key name="weather-cache" type="s">
+      <default>''</default>
+      <summary>Last weather reading (internal, JSON), shown while offline</summary>
+    </key>
     <key name="recent-apps" type="as">
       <default>[]</default>
       <summary>Recently used applications (internal, most recent first)</summary>

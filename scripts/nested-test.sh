@@ -34,6 +34,10 @@ BEFORE=$(wc -l < "$LOG")
     relogioVisivel: Main.panel.statusArea.dateMenu.container.visible,
     calendarioEmCasa: !Main.panel.statusArea.dateMenu._calendar.get_parent()?.has_style_class_name?.('luma-island-calendar-month'),
     barraPreta: (Main.panel.style ?? '').includes('rgba(0, 0, 0,'),
+    // Bateria: o ícone do GNOME volta ao desativar; o OSD volta ao original.
+    bateriaGnomeVisivel: Main.panel.statusArea.quickSettings._system?.visible ?? true,
+    osdOriginal: !Object.prototype.hasOwnProperty.call(Main.osdWindowManager, 'showAll') ||
+      Main.osdWindowManager.showAll === Object.getPrototypeOf(Main.osdWindowManager).showAll,
     superficies: Main.layoutManager.uiGroup.get_children().filter(c => c.constructor.name === 'LumaMenuIslandSurface').length,
     superVOriginal: !Object.prototype.hasOwnProperty.call(Main.panel, 'toggleCalendar') ||
       Main.panel.toggleCalendar === Object.getPrototypeOf(Main.panel).toggleCalendar,
@@ -61,6 +65,8 @@ BEFORE=$(wc -l < "$LOG")
     m.enableExtension(uuid); await wait(250);
     // Abre o painel (pelo Super+V) e desativa com ele aberto: o calendário
     // emprestado precisa voltar para o relógio do GNOME.
+    // Um alerta de volume no meio do ciclo (a forma do alerta precisa sumir).
+    Main.osdWindowManager.showAll(new (imports.gi.Gio.ThemedIcon)({name: 'audio-volume-medium-symbolic'}), null, 0.5, 1);
     if (i % 2 === 0) { Main.panel.toggleCalendar(); await wait(150); }
     // E com um menu da barra aberto (a forma do Isle atrás dele).
     else {
@@ -108,6 +114,8 @@ checks = {
     "barra preta ativa": d["barraPreta"],
     "desativar devolve a cor original da barra": not data["desativada"]["barraPreta"],
     "desativar remove as formas do Isle": data["desativada"]["superficies"] == 0,
+    "desativar mostra o ícone de bateria do GNOME": data["desativada"]["bateriaGnomeVisivel"],
+    "desativar devolve o OSD original": data["desativada"]["osdOriginal"],
     "bloquear remove o relógio do Luma": data["bloqueada"]["ilhas"] == 0,
     "desbloquear recria 1 relógio do Luma": data["desbloqueada"]["ilhas"] == 1,
 }

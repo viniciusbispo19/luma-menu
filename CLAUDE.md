@@ -194,15 +194,28 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
 - O BMS reescreve `Main.panel.style` (tira o `;` final): remover a nossa regra por regex.
 - `get_transformed_position()` de ator sem alocação devolve NaN; menu aberto antes do título
   ter alocação faz o BoxPointer alocar NaN → `LumaMenu.open` recusa sem `has_allocation()`.
+- **Fase 2a concluída (2026-11-11)**: `alerts.js` (AlertPresenter: IslandSurface que sai do
+  relógio; reaproveita `BarLevel` de `ui/barLevel.js`, com `overdrive` acima de 100%),
+  `services/osdOverride.js` (InjectionManager em `Main.osdWindowManager.show/showAll/showOne`;
+  ícones `audio-volume*`, `display-brightness*`, `keyboard-brightness*`; o resto e tela
+  cheia/painel aberto → OSD original), `services/power.js` (UPower DisplayDevice +
+  `org.freedesktop.UPower.PowerProfiles`, XML via `loadInterfaceXML` do Shell),
+  `batteryIcon.js` (Cairo; esconde `quickSettings._system`; subtítulo no `powerToggle`),
+  `services/weather.js` (GWeather.Info próprio; `get_conditions()` ou `get_sky()` já vêm em
+  pt-BR; ícone `get_symbolic_icon_name()` com dia/noite; cache em `weather-cache`).
+- Âncora de alertas: medir o relógio NA HORA (`notify::allocation` do botão não dispara
+  quando só o contêiner anda).
+- No Eval, `imports.gi.Gio` existe (útil para simular OSD: `Main.osdWindowManager.showAll(
+  new (imports.gi.Gio.ThemedIcon)({name:'audio-volume-medium-symbolic'}), null, 0.5, 1)`).
+- O notebook do usuário fica na tomada com carga completa (UPower State 4): bateria verde
+  com raio é o esperado.
 - NÃO usar `trackFullscreen` em chrome que fica escondido: o LayoutManager força
   `visible` ao sair da tela cheia.
 - `PanelMenu.Button` sem menu (`dontCreateMenu`) desliga o ClickGesture dele: o relógio
   tem o próprio `Clutter.ClickGesture` (recognize_on_press). Padding do botão do painel:
   `get_theme_node().get_length('-natural-hpadding')`.
-- Fase 1 concluída (`lib/island/`: clockButton.js, islandShape.js, island.js, spring.js,
-  pages/calendarPage.js, strings.js). Fases seguintes: 2a (bateria MacBook, volume/brilho
-  com %, temperatura), 2b (Música portada do wavebar-music, Notificações), 2c (Foco,
-  Lembretes, alertas), 3 (prefs; perguntar antes).
+- Fases 1 e 2a concluídas. Próximas: 2b (Música portada do wavebar-music, Notificações),
+  2c (Foco, Lembretes, demais alertas), 3 (prefs completas; perguntar antes).
 - `PopupMenu.close()` emite `menu-closed` só DEPOIS da animação (útil se voltar a usar menu).
 - `Main.layoutManager.addChrome(actor, params)` no GNOME 51 aceita só `trackFullscreen` e
   `affectsStruts` (`affectsInputRegion` NÃO existe mais → erro "Unrecognized parameter").

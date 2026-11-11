@@ -349,3 +349,95 @@
 .luma-island-world-clocks {
     margin-top: 4px;
 }
+
+/* ---------- Temperatura ao lado do relógio ---------- */
+.luma-island-weather {
+    spacing: 4px;
+}
+
+.luma-island-weather-icon {
+    icon-size: 16px;
+}
+
+/* Largura mínima + dígitos tabulares: "9°" → "10°" não empurra o relógio. */
+.luma-island-weather-temp {
+    min-width: 2.2em;
+    font-feature-settings: "tnum";
+}
+
+.luma-island-weather-condition {
+    color: rgba(255, 255, 255, 0.64);
+    padding-right: 6px;
+}
+
+/* ---------- Alertas (volume/brilho) saindo do relógio ---------- */
+.luma-island-alert {
+    min-width: 280px;
+    color: #ffffff;
+}
+
+.luma-island-alert-row {
+    spacing: 12px;
+    padding: 10px 18px 16px;
+}
+
+.luma-island-alert-icon {
+    icon-size: 22px;
+}
+
+.luma-island-alert-text {
+    spacing: 7px;
+}
+
+.luma-island-alert-title {
+    font-weight: bold;
+}
+
+/* A barra do OSD do GNOME (BarLevel), no visual do Isle: trilho de vidro e
+ * a parte cheia na cor de destaque; acima de 100%, laranja-avermelhado. */
+.luma-island-level {
+    height: 6px;
+    -barlevel-height: 6px;
+    -barlevel-background-color: rgba(255, 255, 255, 0.18);
+    -barlevel-active-background-color: -st-accent-color;
+    -barlevel-overdrive-color: #ff6b4a;
+    -barlevel-overdrive-separator-width: 1px;
+}
+
+/* Número com largura fixa: "9%" → "100%" sem a forma tremer. */
+.luma-island-alert-value {
+    min-width: 3.4em;
+    text-align: right;
+    font-feature-settings: "tnum";
+}
+
+.luma-island-alert-over {
+    color: #ff6b4a;
+}
+
+/* ---------- Bateria estilo MacBook ---------- */
+.luma-battery {
+    spacing: 5px;
+    padding: 0 2px;
+}
+
+/* Proporção ~2:1, altura alinhada aos outros ícones (16 px). */
+.luma-battery-icon {
+    width: 26px;
+    height: 12px;
+}
+
+.luma-battery-label {
+    font-feature-settings: "tnum";
+    min-width: 2.6em;
+    text-align: right;
+}
+
+/* Dica ao passar o ponteiro: como os menus do Luma (vidro escuro). */
+.luma-battery-tooltip {
+    background-color: rgba(20, 20, 22, 0.94);
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 5px 10px;
+    border: 1px solid rgba(128, 128, 128, 0.28);
+}

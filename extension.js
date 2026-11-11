@@ -19,6 +19,7 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 import {BarLook} from './lib/island/barLook.js';
+import {BatteryIndicator} from './lib/island/batteryIcon.js';
 import {Island} from './lib/island/island.js';
 import {MenuBar} from './lib/menuBar.js';
 import {PanelLayout} from './lib/panelLayout.js';
@@ -102,6 +103,9 @@ export default class LumaMenuExtension extends Extension {
         // Esconde o botão Atividades / move o relógio (conforme preferências).
         this._panelLayout = new PanelLayout(this._settings);
 
+        // Bateria no estilo do MacBook, no lugar do ícone do GNOME.
+        this._battery = new BatteryIndicator(this._settings);
+
         // A ilha (notch) no lugar do relógio, se ligada nas preferências.
         this._island = null;
         this._syncIsland();
@@ -124,6 +128,8 @@ export default class LumaMenuExtension extends Extension {
         this._island?.destroy();
         this._island = null;
 
+        this._battery?.destroy();
+        this._battery = null;
         this._panelLayout?.destroy();
         this._panelLayout = null;
 

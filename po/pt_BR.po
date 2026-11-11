@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Luma Menu 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/viniciusbispo19/luma-menu/issues\n"
-"POT-Creation-Date: 2026-11-11 14:20-0300\n"
+"POT-Creation-Date: 2026-11-11 14:51-0300\n"
 "PO-Revision-Date: 2026-11-10 15:56-0300\n"
 "Last-Translator: Vinicius Bispo\n"
 "Language-Team: none\n"
@@ -351,28 +351,84 @@ msgstr "Dia inteiro"
 msgid "World Clocks"
 msgstr "Relógios mundiais"
 
+#: lib/island/strings.js:62
+msgid "Volume"
+msgstr "Volume"
+
+#: lib/island/strings.js:65
+msgid "Brightness"
+msgstr "Brilho"
+
+#: lib/island/strings.js:68
+msgid "Keyboard Brightness"
+msgstr "Brilho do teclado"
+
+#: lib/island/strings.js:71
+msgid "Muted"
+msgstr "Mudo"
+
+#: lib/island/strings.js:76
+msgid "Battery"
+msgstr "Bateria"
+
+#: lib/island/strings.js:79
+msgid "Charging"
+msgstr "Carregando"
+
+#: lib/island/strings.js:82
+msgid "Charged"
+msgstr "Carregada"
+
+#: lib/island/strings.js:85
+msgid "Plugged In"
+msgstr "Na tomada"
+
+#: lib/island/strings.js:88
+msgid "Power Saver"
+msgstr "Modo de economia"
+
 #. Translators: date in the top bar clock, e.g. "Wed, Nov 11". Uses
 #. * GLib.DateTime.format() codes: %a weekday, %-d day, %b month.
-#: lib/island/strings.js:73
+#: lib/island/strings.js:104
 msgid "%a, %b %-d"
 msgstr "%a, %-d de %b"
 
 #. Translators: time in 24-hour format (GLib.DateTime.format codes).
-#: lib/island/strings.js:85
+#: lib/island/strings.js:116
 msgctxt "time format"
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: time in 12-hour format (GLib.DateTime.format codes).
-#: lib/island/strings.js:87
+#: lib/island/strings.js:118
 msgctxt "time format"
 msgid "%-l:%M %p"
 msgstr "%-l:%M %p"
 
 #. Translators: a full date with year, e.g. "Wed, Nov 11, 2027".
-#: lib/island/strings.js:112
+#: lib/island/strings.js:143
 msgid "%a, %b %-d, %Y"
 msgstr "%a, %-d de %b de %Y"
+
+#. Translators: a duration; {h} = hours, {m} = minutes (two digits).
+#: lib/island/strings.js:186
+msgid "{h} h {m} min"
+msgstr "{h} h {m} min"
+
+#. Translators: a duration in minutes.
+#: lib/island/strings.js:189
+msgid "{m} min"
+msgstr "{m} min"
+
+#. Translators: battery, e.g. "1 h 05 min until full".
+#: lib/island/strings.js:205
+msgid "{time} until full"
+msgstr "{time} até completar"
+
+#. Translators: battery, e.g. "3 h 20 min left".
+#: lib/island/strings.js:213
+msgid "{time} left"
+msgstr "{time} restantes"
 
 #: lib/menuBar.js:285 lib/menuBar.js:294 prefs.js:339
 msgid "Help"
@@ -500,7 +556,8 @@ msgstr "Barra preta"
 
 #: prefs.js:161
 msgid "Like Isle: the bar, the menus and the clock panel look like one piece"
-msgstr "Como no Isle: a barra, os menus e o painel do relógio parecem uma peça só"
+msgstr ""
+"Como no Isle: a barra, os menus e o painel do relógio parecem uma peça só"
 
 #: prefs.js:162
 msgid "Black bar opacity (%)"
