@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Luma Menu 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/viniciusbispo19/luma-menu/issues\n"
-"POT-Creation-Date: 2026-11-11 15:00-0300\n"
+"POT-Creation-Date: 2026-11-11 18:15-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "More Info…"
 msgstr ""
 
-#: lib/aboutDialog.js:78
+#: lib/aboutDialog.js:78 lib/island/strings.js:68
 msgid "Close"
 msgstr ""
 
@@ -303,127 +303,139 @@ msgid "You will lose any unsaved changes."
 msgstr ""
 
 #: lib/island/strings.js:25
-msgid "Music"
-msgstr ""
-
-#: lib/island/strings.js:28
 msgid "Calendar"
 msgstr ""
 
-#: lib/island/strings.js:31
+#: lib/island/strings.js:28
 msgid "Notifications"
 msgstr ""
 
-#: lib/island/strings.js:34
+#: lib/island/strings.js:31
 msgctxt "island page"
 msgid "Focus"
 msgstr ""
 
-#: lib/island/strings.js:37
+#: lib/island/strings.js:34
 msgid "Reminders"
 msgstr ""
 
-#: lib/island/strings.js:42
+#: lib/island/strings.js:39
 msgid "Today"
 msgstr ""
 
-#: lib/island/strings.js:45
+#: lib/island/strings.js:42
 msgid "Tomorrow"
 msgstr ""
 
-#: lib/island/strings.js:48
+#: lib/island/strings.js:45
 msgid "Yesterday"
 msgstr ""
 
-#: lib/island/strings.js:51
+#: lib/island/strings.js:48
 msgid "No Events"
 msgstr ""
 
-#: lib/island/strings.js:54
+#: lib/island/strings.js:51
 msgctxt "event time"
 msgid "All Day"
 msgstr ""
 
-#: lib/island/strings.js:57
+#: lib/island/strings.js:54
 msgid "World Clocks"
 msgstr ""
 
+#: lib/island/strings.js:59
+msgid "No Notifications"
+msgstr ""
+
 #: lib/island/strings.js:62
-msgid "Volume"
+msgid "Clear"
 msgstr ""
 
 #: lib/island/strings.js:65
-msgid "Brightness"
-msgstr ""
-
-#: lib/island/strings.js:68
-msgid "Keyboard Brightness"
+msgid "Do Not Disturb"
 msgstr ""
 
 #: lib/island/strings.js:71
-msgid "Muted"
+msgid "Only urgent notifications appear while Do Not Disturb is on"
 msgstr ""
 
 #: lib/island/strings.js:76
-msgid "Battery"
+msgid "Volume"
 msgstr ""
 
 #: lib/island/strings.js:79
-msgid "Charging"
+msgid "Brightness"
 msgstr ""
 
 #: lib/island/strings.js:82
-msgid "Charged"
+msgid "Keyboard Brightness"
 msgstr ""
 
 #: lib/island/strings.js:85
+msgid "Muted"
+msgstr ""
+
+#: lib/island/strings.js:90
+msgid "Battery"
+msgstr ""
+
+#: lib/island/strings.js:93
+msgid "Charging"
+msgstr ""
+
+#: lib/island/strings.js:96
+msgid "Charged"
+msgstr ""
+
+#: lib/island/strings.js:99
 msgid "Plugged In"
 msgstr ""
 
-#: lib/island/strings.js:88
+#: lib/island/strings.js:102
 msgid "Power Saver"
 msgstr ""
 
 #. Translators: date in the top bar clock, e.g. "Wed, Nov 11". Uses
 #. * GLib.DateTime.format() codes: %a weekday, %-d day, %b month.
-#: lib/island/strings.js:104
+#: lib/island/strings.js:118
 msgid "%a, %b %-d"
 msgstr ""
 
 #. Translators: time in 24-hour format (GLib.DateTime.format codes).
-#: lib/island/strings.js:116
+#: lib/island/strings.js:130
 msgctxt "time format"
 msgid "%H:%M"
 msgstr ""
 
 #. Translators: time in 12-hour format (GLib.DateTime.format codes).
-#: lib/island/strings.js:118
+#: lib/island/strings.js:132
 msgctxt "time format"
 msgid "%-l:%M %p"
 msgstr ""
 
 #. Translators: a full date with year, e.g. "Wed, Nov 11, 2027".
-#: lib/island/strings.js:143
+#: lib/island/strings.js:157
 msgid "%a, %b %-d, %Y"
 msgstr ""
 
 #. Translators: a duration; {h} = hours, {m} = minutes (two digits).
-#: lib/island/strings.js:186
+#: lib/island/strings.js:200
 msgid "{h} h {m} min"
 msgstr ""
 
 #. Translators: a duration in minutes.
-#: lib/island/strings.js:189
+#: lib/island/strings.js:203
 msgid "{m} min"
 msgstr ""
 
 #. Translators: battery, e.g. "1 h 05 min until full".
-#: lib/island/strings.js:205
+#: lib/island/strings.js:219
 msgid "{time} until full"
 msgstr ""
 
 #. Translators: battery, e.g. "3 h 20 min left".
-#: lib/island/strings.js:213
+#: lib/island/strings.js:227
 msgid "{time} left"
 msgstr ""
 

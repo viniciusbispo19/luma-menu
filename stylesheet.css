@@ -456,3 +456,122 @@
 .message.notification-banner {
     margin-right: 12px;
 }
+
+/* ---------- Página Notificações ---------- */
+.luma-island-unseen {
+    icon-size: 16px;
+}
+
+.luma-notifications {
+    spacing: 8px;
+    min-width: 420px;
+}
+
+.luma-notifications-bar {
+    spacing: 8px;
+}
+
+/* Botões em "pílula" (Não Perturbe, Limpar, ações): cinza translúcido, como
+ * os botões das notificações do GNOME. Ligado = cor de destaque. */
+.luma-island-pill {
+    padding: 4px 12px;
+    border-radius: 99px;
+    background-color: rgba(128, 128, 128, 0.18);
+    color: inherit;
+}
+
+.luma-island-pill:hover {
+    background-color: rgba(128, 128, 128, 0.28);
+}
+
+.luma-island-pill:checked {
+    background-color: -st-accent-color;
+    color: -st-accent-fg-color;
+}
+
+.luma-island-pill-box {
+    spacing: 6px;
+}
+
+.luma-island-pill-icon {
+    icon-size: 14px;
+}
+
+.luma-notifications-scroll {
+    max-height: 320px;
+}
+
+.luma-notifications-list {
+    spacing: 6px;
+}
+
+.luma-notification {
+    padding: 8px 10px;
+    border-radius: 10px;
+    background-color: rgba(128, 128, 128, 0.12);
+    color: inherit;
+    text-align: left;
+}
+
+.luma-notification:hover {
+    background-color: rgba(128, 128, 128, 0.2);
+}
+
+.luma-notification-box {
+    spacing: 4px;
+}
+
+.luma-notification-header {
+    spacing: 6px;
+}
+
+.luma-notification-app-icon {
+    icon-size: 16px;
+}
+
+.luma-notification-meta {
+    font-size: 0.9em;
+    color: rgba(150, 150, 150, 1);
+}
+
+.luma-notification-close {
+    padding: 2px;
+    border-radius: 99px;
+    color: rgba(150, 150, 150, 1);
+}
+
+.luma-notification-close:hover {
+    background-color: rgba(128, 128, 128, 0.25);
+    color: inherit;
+}
+
+.luma-notification-close StIcon {
+    icon-size: 12px;
+}
+
+.luma-notification-content {
+    spacing: 10px;
+}
+
+.luma-notification-image {
+    icon-size: 32px;
+}
+
+.luma-notification-title {
+    font-weight: bold;
+}
+
+.luma-notification-actions {
+    spacing: 6px;
+    padding-top: 4px;
+}
+
+.luma-notifications-empty {
+    spacing: 6px;
+    padding: 30px 0;
+}
+
+.luma-notifications-empty-icon {
+    icon-size: 32px;
+    color: rgba(150, 150, 150, 1);
+}

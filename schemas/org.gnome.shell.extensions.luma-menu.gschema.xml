@@ -168,8 +168,9 @@
       <summary>Show the date beside the time in the clock</summary>
     </key>
     <key name="island-pages" type="as">
-      <default>['music', 'calendar', 'notifications', 'focus', 'reminders']</default>
-      <summary>Clock panel pages, in order (music, calendar, notifications, focus, reminders)</summary>
+      <!-- Sem "música": o wavebar-music do usuário já cuida disso. -->
+      <default>['calendar', 'notifications', 'focus', 'reminders']</default>
+      <summary>Clock panel pages, in order (calendar, notifications, focus, reminders)</summary>
     </key>
     <key name="island-world-clocks" type="b">
       <default>true</default>
@@ -235,10 +236,6 @@
     </key>
 
     <!-- Páginas (Fase 2) -->
-    <key name="music-lyrics" type="b">
-      <default>true</default>
-      <summary>Fetch synced lyrics from lrclib.net</summary>
-    </key>
     <key name="focus-work-minutes" type="i">
       <range min="1" max="180"/>
       <default>25</default>

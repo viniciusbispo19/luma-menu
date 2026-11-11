@@ -232,8 +232,19 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
 - `PanelMenu.Button` sem menu (`dontCreateMenu`) desliga o ClickGesture dele: o relógio
   tem o próprio `Clutter.ClickGesture` (recognize_on_press). Padding do botão do painel:
   `get_theme_node().get_length('-natural-hpadding')`.
-- Fases 1 e 2a concluídas. Próximas: 2b (Música portada do wavebar-music, Notificações),
-  2c (Foco, Lembretes, demais alertas), 3 (prefs completas; perguntar antes).
+- Fases 1, 2a e 2b concluídas. **Página Música CANCELADA pelo usuário** (ele usa o
+  wavebar-music). 2b = página Notificações (`services/notifications.js` NotificationStore:
+  fontes do `Main.messageTray`; `pages/notificationsPage.js`) + pontinho de não vistas no
+  relógio (regra do `MessagesIndicator` do GNOME: `Σ source.unseenCount − queueCount`, some no
+  Não Perturbe) + banners no CANTO DIREITO (`Main.messageTray.bannerAlignment = END`;
+  o painel redefine em `_updatePanel` a cada `sessionMode 'updated'` e o **Just Perfection**
+  aplica `notification-banner-position` — padrão 1 = centro — ao ser ativado: reaplicar no
+  `updated` e uma vez 3 s depois). Margem direita do banner 12 px (`.message.notification-banner`).
+  Próximas: 2c (Foco, Lembretes, demais alertas), 3 (prefs completas; perguntar antes).
+- GNOME marca a notificação como vista (`acknowledged`) quando o banner aparece: só as que
+  chegam sem banner (Não Perturbe) ficam "não vistas".
+- `msgmerge` cria traduções "fuzzy" erradas ("Clear" → "Limpar Menu"): sempre revisar
+  `msgattrib --only-fuzzy` depois do `update-po.sh`.
 - `PopupMenu.close()` emite `menu-closed` só DEPOIS da animação (útil se voltar a usar menu).
 - `Main.layoutManager.addChrome(actor, params)` no GNOME 51 aceita só `trackFullscreen` e
   `affectsStruts` (`affectsInputRegion` NÃO existe mais → erro "Unrecognized parameter").
