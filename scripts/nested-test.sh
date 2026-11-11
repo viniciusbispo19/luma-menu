@@ -42,6 +42,11 @@ BEFORE=$(wc -l < "$LOG")
     superficies: Main.layoutManager.uiGroup.get_children().filter(c => c.constructor.name === 'LumaMenuIslandSurface').length,
     superVOriginal: !Object.prototype.hasOwnProperty.call(Main.panel, 'toggleCalendar') ||
       Main.panel.toggleCalendar === Object.getPrototypeOf(Main.panel).toggleCalendar,
+    // Prateleira: o atalho Super+Shift+V só existe com o relógio do Luma; a
+    // bandeja de arquivos (janela GTK) fecha junto com a extensão.
+    // (removeKeybinding não apaga a entrada: deixa o modo em NONE = 0.)
+    atalhoPrateleira: (Main.wm._allowedKeybindings['clipboard-shortcut'] ?? 0) !== 0,
+    bandejas: global.get_window_actors().filter(a => a.meta_window.get_wm_class() === 'io.github.viniciusbispo19.LumaMenu.Tray').length,
   });
   // Conta, no palco inteiro, os atores ESTRUTURAIS das nossas classes
   // (barra, títulos, raízes de menu, diálogos — GTypes LumaMenu*). Itens de
@@ -68,7 +73,8 @@ BEFORE=$(wc -l < "$LOG")
     // emprestado precisa voltar para o relógio do GNOME.
     // Um alerta de volume no meio do ciclo (a forma do alerta precisa sumir).
     Main.osdWindowManager.showAll(new (imports.gi.Gio.ThemedIcon)({name: 'audio-volume-medium-symbolic'}), null, 0.5, 1);
-    if (i % 2 === 0) { Main.panel.toggleCalendar(); await wait(150); }
+    if (i % 4 === 0) { m.lookup(uuid).stateObj._island.toggle('shelf', true); await wait(150); }
+    else if (i % 2 === 0) { Main.panel.toggleCalendar(); await wait(150); }
     // E com um menu da barra aberto (a forma do Isle atrás dele).
     else {
       const bar = Main.panel._leftBox.get_children().find(c => c.name === 'lumaMenuBar');
@@ -78,14 +84,17 @@ BEFORE=$(wc -l < "$LOG")
   // Fecha o que ficou aberto (menu do último ciclo) antes de comparar.
   Main.panel.menuManager.activeMenu?.close(); await wait(900);
   const depois = snap();
-  m.disableExtension(uuid); await wait(300);
+  // Abre a bandeja de arquivos e desativa com ela aberta.
+  m.lookup(uuid).stateObj._fileTray.open(); await wait(3000);
+  const comBandeja = snap();
+  m.disableExtension(uuid); await wait(800);
   const desativada = snap();
   m.enableExtension(uuid); await wait(300);
   Main.sessionMode.pushMode('unlock-dialog'); await wait(500);
   const bloqueada = snap();
   Main.sessionMode.popMode('unlock-dialog'); await wait(800);
   const desbloqueada = snap();
-  return {antes, depois, desativada, bloqueada, desbloqueada};
+  return {antes, depois, comBandeja, desativada, bloqueada, desbloqueada};
 })()" | sed "s/^(true, '//; s/')\$//" | python3 -I -c '
 import json, sys
 raw = sys.stdin.read()
@@ -119,6 +128,10 @@ checks = {
     "desativar devolve o OSD original": data["desativada"]["osdOriginal"],
     "bloquear remove o relógio do Luma": data["bloqueada"]["ilhas"] == 0,
     "desbloquear recria 1 relógio do Luma": data["desbloqueada"]["ilhas"] == 1,
+    "atalho da Prateleira registrado": d["atalhoPrateleira"],
+    "desativar remove o atalho da Prateleira": not data["desativada"]["atalhoPrateleira"],
+    "a bandeja de arquivos abre": data["comBandeja"]["bandejas"] == 1,
+    "desativar fecha a bandeja de arquivos": data["desativada"]["bandejas"] == 0,
 }
 for name, ok in checks.items():
     print(("  ✓ " if ok else "  ✗ ") + name)
@@ -138,7 +151,13 @@ for line in sys.stdin.read().splitlines():
     elif cur:
         blocks.append(cur); cur = []
 if cur: blocks.append(cur)
-ours = [b for b in blocks if any("luma-menu@" in l for l in b)]
+def first_frame(b):
+    return next((l for l in b if l.lstrip().startswith("#0")), "")
+# Nosso: a pilha passa pelo luma-menu@ — exceto quando o erro nasce no código
+# de OUTRA extensão (#0 nela), só disparado por algo nosso (ex.: o gnome-mosaic
+# reage a toda janela que se move).
+ours = [b for b in blocks if any("luma-menu@" in l for l in b)
+        and not ("/gnome-shell/extensions/" in first_frame(b) and "luma-menu@" not in first_frame(b))]
 other = [b for b in blocks if not any("@file://" in l or "@resource://" in l for l in b[1:])]
 for b in ours:
     print("\n".join(b)); print()

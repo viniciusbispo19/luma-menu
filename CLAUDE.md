@@ -248,6 +248,49 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   (4 349 cidades em ~30 ms, nomes já em pt-BR; estado = pai de nível `ADM1`). A última página
   ligada não pode ser desligada. `alert-notifications` removida (banners do GNOME no canto).
   "Tempo de abertura" não se aplica: o relógio abre por clique.
+- **Fases 3b e 3c concluídas (2026-11-11)**: Prateleira (`services/clipboard.js`
+  ClipboardHistory + `pages/shelfPage.js`), bandeja de arquivos (`tray/tray.js` GTK 4 +
+  `services/fileTray.js`), uso de apps (`services/appUsage.js` + `pages/usagePage.js`,
+  `app-usage-enabled` falso por padrão; página "usage" entra por último quando ligada).
+  Os três serviços vivem na EXTENSÃO. O usuário vai trocar o Copyous pela Prateleira.
+  Animações: SÓ o padrão do pop-up (pedido do usuário) — nada de animação nova.
+- Área de transferência: `global.display.get_selection()` sinal `owner-changed`
+  (tipo `Meta.SelectionType.SELECTION_CLIPBOARD`); ler com `St.Clipboard.get_mimetypes/
+  get_text/get_content`. **O GLib.Bytes do callback de `get_content` só vale DENTRO do
+  callback** (depois de um await: CRITICAL `g_atomic_ref_count_inc` e lixo) — copiar com
+  `GLib.Bytes.new(bytes.toArray())` ali mesmo. Senhas: tipo `x-kde-passwordManagerHint`.
+  O GNOME esvazia a área de transferência ao bloquear (`screenShield.js`).
+- **Arrastar e soltar no Wayland (Mutter 51)**: `global.backend.get_dnd()` emite
+  `dnd-enter`/`dnd-leave` (o `Main.xdndHandler` vira `drag-begin`/`drag-end`), mas
+  **NÃO emite `dnd-position-change`** — `handleDragOver` nunca é chamado. Solução: timer
+  de 100 ms com `global.get_pointer()` SÓ entre drag-begin e drag-end. O Shell não recebe
+  nem entrega arquivos: por isso a bandeja é uma janela GTK.
+- GTK 4: arrastar um `Gdk.FileList` oferece primeiro `application/vnd.portal.filetransfer`
+  (sem portal, o Nautilus recusa: "Could not convert data…"). Oferecer só
+  `Gdk.ContentProvider.new_for_bytes('text/uri-list', …)`. `drag-cancel` vem ANTES de
+  `drag-end`.
+- Janela Wayland nova: no `window-created` ainda NÃO tem `wm_class`/app_id, e mover cedo é
+  desfeito pelo Mutter/gnome-mosaic → esperar o `first-frame` do ator
+  (`window.get_compositor_private()` num `laters.add(BEFORE_REDRAW)`), aí `move_frame`,
+  `make_above`, `stick`. `window.delete()` fora de evento: usar
+  `global.display.get_current_time_roundtrip()` (com 0: "ping … bad serial").
+- `Main.wm.removeKeybinding` NÃO apaga `_allowedKeybindings[name]`: deixa o modo `NONE` (0).
+- gnome-mosaic gera `Source ID … was not found` (CRITICAL) a cada janela movida — ruído
+  dele; o `nested-test.sh` ignora avisos cujo frame #0 é de outra extensão.
+- Inatividade: `global.backend.get_core_idle_monitor()` → `add_idle_watch(ms, cb)` (repete)
+  e `add_user_active_watch(cb)` (uma vez só); `remove_watch(id)`.
+- Miniatura sem travar: `GdkPixbuf.Pixbuf.new_from_stream_at_scale_async` +
+  `St.ImageContent.new_with_preferred_size` + `set_bytes(coglContext, pixbuf.read_pixel_bytes(),
+  Cogl.PixelFormat.RGBA_8888|RGB_888, w, h, rowstride)` (como `ui/screenshot.js`).
+- Em `St.Widget` com `Clutter.BinLayout`, o filho fica CENTRALIZADO mesmo com
+  `x_align: START`: para barra de progresso use `St.BoxLayout`.
+- `Intl.RelativeTimeFormat(undefined, {numeric: 'auto'})` já sai em pt-BR ("há 5 minutos").
+- **Sessão aninhada usa o MESMO `$HOME`**: testes gravam em `~/.local/share/luma-menu/`
+  (clipboard.json, usage.json, tray.json…) — apagar depois de testar (com o aninhado parado).
+- Arrastar com o mouse virtual: mandar os movimentos de DENTRO do Shell
+  (`GLib.timeout_add` de 30 ms percorrendo um caminho de passos pequenos); saltos grandes via
+  vários Evals não iniciam o arraste do GTK. O ponteiro do aninhado parado em (0,0) "passa"
+  sobre o logo e troca o menu aberto para o menu do sistema.
 - `prefs.js` pode importar `pgettext` de `extensions/prefs.js` (contexto para "Automática" vs
   "Automático").
 - **Cliques/teclas na sessão aninhada**: no Eval, `global.stage.context.get_backend()

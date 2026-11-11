@@ -25,7 +25,7 @@ import {SYSTEM_ICONS} from './lib/icons.js';
 
 const GITHUB_URL = 'https://github.com/viniciusbispo19/luma-menu';
 /** Páginas do pop-up do relógio, na ordem em que aparecem. */
-const CLOCK_PAGES = ['calendar', 'notifications', 'focus', 'reminders'];
+const CLOCK_PAGES = ['calendar', 'notifications', 'shelf', 'focus', 'reminders'];
 /** Quantas cidades mostrar na busca (o resto: digite mais). */
 const MAX_CITY_RESULTS = 40;
 
@@ -212,7 +212,7 @@ export default class LumaMenuPreferences extends ExtensionPreferences {
 
         const clock = new Adw.PreferencesGroup({
             title: _('Clock'),
-            description: _('A macOS-style clock in the right corner; click it for the calendar, notifications, focus and reminders'),
+            description: _('A macOS-style clock in the right corner; click it for the calendar, notifications, copied items, focus and reminders'),
         });
         clock.add(this._switch('island-enabled', _('Use the Luma clock'),
             _('Replaces the GNOME clock')));
@@ -245,8 +245,11 @@ export default class LumaMenuPreferences extends ExtensionPreferences {
             _('The cities from the Clocks app'));
         pages.add(worldClocks);
         pages.add(this._pageSwitch('notifications', _('Notifications')));
+        pages.add(this._pageSwitch('shelf', _('Shelf'), _('Clipboard history and the file tray')));
         pages.add(this._pageSwitch('focus', _('Focus')));
         pages.add(this._pageSwitch('reminders', _('Reminders')));
+        pages.add(this._switch('app-usage-enabled', _('App usage'),
+            _('Records how long each app is in use; stored only on this computer')));
         const syncWorldClocks = () => {
             worldClocks.sensitive = this._settings.get_strv('island-pages').includes('calendar');
         };
@@ -279,6 +282,19 @@ export default class LumaMenuPreferences extends ExtensionPreferences {
         });
         needsClock(weather);
 
+        const shelf = new Adw.PreferencesGroup({
+            title: _('Shelf'),
+            description: _('Copied texts, links, images and files. Passwords copied from password managers are never saved.'),
+        });
+        shelf.add(this._shortcut('clipboard-shortcut', _('Open the clipboard history')));
+        shelf.add(this._switch('clipboard-paste-on-select', _('Paste right away'),
+            _('Choosing an item also pastes it into the app (Ctrl+Shift+V in terminals)')));
+        shelf.add(this._spin('clipboard-history-size', _('Items to keep'),
+            _('Pinned items are not counted'), 10, 200, 10));
+        shelf.add(this._switch('clipboard-save-history', _('Keep between sessions'),
+            _('Turned off, the history lives only in memory and is gone when you log out')));
+        needsClock(shelf);
+
         const focus = new Adw.PreferencesGroup({
             title: _('Focus'),
             description: _('Also adjustable on the Focus page, with − and +'),
@@ -296,8 +312,8 @@ export default class LumaMenuPreferences extends ExtensionPreferences {
      * fica sempre na ordem de CLOCK_PAGES. A última página ligada não pode ser
      * desligada (senão o clique no relógio abriria um balão vazio).
      */
-    _pageSwitch(id, title) {
-        const row = new Adw.SwitchRow({title});
+    _pageSwitch(id, title, subtitle = '') {
+        const row = new Adw.SwitchRow({title, subtitle});
         const sync = () => {
             const pages = this._settings.get_strv('island-pages');
             row.active = pages.includes(id);

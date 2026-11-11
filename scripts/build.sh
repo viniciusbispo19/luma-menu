@@ -18,6 +18,7 @@ ARGS=(
     --gettext-domain=luma-menu
     --extra-source=lib
     --extra-source=icons
+    --extra-source=tray
     --extra-source=LICENSE
 )
 

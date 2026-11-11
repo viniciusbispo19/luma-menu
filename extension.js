@@ -21,6 +21,9 @@ import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 import {BarLook} from './lib/island/barLook.js';
 import {BatteryIndicator} from './lib/island/batteryIcon.js';
 import {Island} from './lib/island/island.js';
+import {AppUsage} from './lib/island/services/appUsage.js';
+import {ClipboardHistory} from './lib/island/services/clipboard.js';
+import {FileTray} from './lib/island/services/fileTray.js';
 import {FocusTimer} from './lib/island/services/focus.js';
 import {ReminderStore} from './lib/island/services/reminders.js';
 import {MenuBar} from './lib/menuBar.js';
@@ -36,6 +39,7 @@ export default class LumaMenuExtension extends Extension {
             'changed::debug', () => setDebug(this._settings.get_boolean('debug')),
             'changed::enable-registrar', () => this._syncRegistrar(),
             'changed::island-enabled', () => this._syncIsland(),
+            'changed::app-usage-enabled', () => this._syncUsage(),
             // O visual dos menus é decidido quando eles são criados (por causa
             // do Blur my Shell): ligar/desligar recria a barra.
             'changed::island-menus', () => {
@@ -54,6 +58,12 @@ export default class LumaMenuExtension extends Extension {
         // contando e a lista continua a mesma.
         this._focusTimer = new FocusTimer(this._settings);
         this._reminders = new ReminderStore();
+        // Pelo mesmo motivo: o histórico da área de transferência, a bandeja
+        // de arquivos e o tempo de uso de apps (este só se ligado).
+        this._clipboard = new ClipboardHistory(this._settings);
+        this._fileTray = new FileTray(this.path);
+        this._usage = null;
+        this._syncUsage();
 
         // Bloqueio/desbloqueio de tela chegam como mudança de "modo de sessão".
         Main.sessionMode.connectObject('updated', () => this._syncSessionMode(), this);
@@ -69,6 +79,12 @@ export default class LumaMenuExtension extends Extension {
         this._focusTimer = null;
         this._reminders?.destroy();
         this._reminders = null;
+        this._clipboard?.destroy();
+        this._clipboard = null;
+        this._fileTray?.destroy();
+        this._fileTray = null;
+        this._usage?.destroy();
+        this._usage = null;
         this._settings?.disconnectObject(this);
         this._settings = null;
         setDebug(false);
@@ -128,12 +144,31 @@ export default class LumaMenuExtension extends Extension {
         const wanted = Boolean(this._menuBar) && this._settings.get_boolean('island-enabled');
         if (wanted && !this._island) {
             this._island = new Island(this._settings, this._barLook,
-                () => this._menuBar.getAppearance(),
-                {focus: this._focusTimer, reminders: this._reminders});
+                () => this._menuBar.getAppearance(), {
+                    focus: this._focusTimer,
+                    reminders: this._reminders,
+                    clipboard: this._clipboard,
+                    fileTray: this._fileTray,
+                    usage: this._usage,
+                });
         } else if (!wanted && this._island) {
             this._island.destroy();
             this._island = null;
         }
+    }
+
+    /** Tempo de uso de apps: liga/desliga ao vivo (desligado por padrão). */
+    _syncUsage() {
+        const wanted = this._settings.get_boolean('app-usage-enabled');
+        if (wanted && !this._usage) {
+            this._usage = new AppUsage();
+        } else if (!wanted && this._usage) {
+            this._usage.destroy();
+            this._usage = null;
+        } else {
+            return;
+        }
+        this._island?.setUsage(this._usage);
     }
 
     _destroyUi() {

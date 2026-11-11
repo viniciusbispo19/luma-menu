@@ -168,9 +168,10 @@
       <summary>Show the date beside the time in the clock</summary>
     </key>
     <key name="island-pages" type="as">
-      <!-- Sem "música": o wavebar-music do usuário já cuida disso. -->
-      <default>['calendar', 'notifications', 'focus', 'reminders']</default>
-      <summary>Clock panel pages, in order (calendar, notifications, focus, reminders)</summary>
+      <!-- Sem "música": o wavebar-music do usuário já cuida disso. A página
+           "uso" não entra aqui: ela aparece quando app-usage-enabled liga. -->
+      <default>['calendar', 'notifications', 'shelf', 'focus', 'reminders']</default>
+      <summary>Clock panel pages, in order (calendar, notifications, shelf, focus, reminders)</summary>
     </key>
     <key name="island-world-clocks" type="b">
       <default>true</default>
@@ -248,6 +249,35 @@
     <key name="focus-dnd" type="b">
       <default>true</default>
       <summary>Turn on Do Not Disturb during focus sessions</summary>
+    </key>
+
+    <!-- Prateleira: histórico da área de transferência (Fase 3b) -->
+    <key name="clipboard-history-size" type="i">
+      <range min="10" max="200"/>
+      <default>50</default>
+      <summary>How many copied items to keep (pinned items are not counted)</summary>
+    </key>
+    <key name="clipboard-save-history" type="b">
+      <default>true</default>
+      <summary>Keep the clipboard history between sessions (saved in ~/.local/share/luma-menu)</summary>
+    </key>
+    <key name="clipboard-paste-on-select" type="b">
+      <default>true</default>
+      <summary>Paste into the app right after choosing an item</summary>
+    </key>
+    <key name="clipboard-paused" type="b">
+      <default>false</default>
+      <summary>Clipboard history paused (nothing new is saved)</summary>
+    </key>
+    <key name="clipboard-shortcut" type="as">
+      <default><![CDATA[['<Super><Shift>v']]]></default>
+      <summary>Shortcut that opens the clipboard history</summary>
+    </key>
+
+    <!-- Uso de apps (Fase 3c) -->
+    <key name="app-usage-enabled" type="b">
+      <default>false</default>
+      <summary>Record how long each app is in use (stored only on this computer)</summary>
     </key>
 
     <!-- ===================== Estado interno ===================== -->

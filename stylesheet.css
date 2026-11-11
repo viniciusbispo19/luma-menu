@@ -297,7 +297,7 @@
 
 /* Abas: como os itens dos menus — cinza no hover, cor de destaque na ativa. */
 .luma-island-tab {
-    padding: 3px 12px;
+    padding: 3px 10px;
     border-radius: 99px;
     color: inherit;
 }
@@ -754,3 +754,181 @@
 .luma-reminders-empty {
     padding: 24px 0;
 }
+
+/* ---------- Página Prateleira (área de transferência) ---------- */
+.luma-shelf {
+    spacing: 8px;
+    min-width: 440px;
+}
+
+.luma-shelf-top {
+    spacing: 6px;
+}
+
+.luma-shelf-search-icon {
+    icon-size: 14px;
+    color: rgba(150, 150, 150, 1);
+    padding-right: 4px;
+}
+
+.luma-shelf-icon-button {
+    padding: 5px;
+    border-radius: 99px;
+    color: inherit;
+}
+
+.luma-shelf-icon-button:hover,
+.luma-shelf-icon-button:focus {
+    background-color: rgba(128, 128, 128, 0.18);
+}
+
+.luma-shelf-icon-button StIcon {
+    icon-size: 14px;
+}
+
+.luma-shelf-note {
+    color: rgba(150, 150, 150, 1);
+    font-size: 0.9em;
+}
+
+.luma-shelf-scroll {
+    max-height: 320px;
+}
+
+.luma-shelf-list {
+    spacing: 2px;
+}
+
+.luma-shelf-row {
+    spacing: 2px;
+    border-radius: 8px;
+}
+
+.luma-shelf-row:hover {
+    background-color: rgba(128, 128, 128, 0.12);
+}
+
+/* Os botões de fixar/apagar só aparecem fortes no item sob o mouse. */
+.luma-shelf-row .luma-shelf-icon-button {
+    color: rgba(150, 150, 150, 0.6);
+}
+
+.luma-shelf-row:hover .luma-shelf-icon-button {
+    color: inherit;
+}
+
+.luma-shelf-row .luma-shelf-pin:checked {
+    color: -st-accent-color;
+}
+
+.luma-shelf-item {
+    padding: 4px 6px;
+    border-radius: 8px;
+    color: inherit;
+    text-align: left;
+}
+
+.luma-shelf-item:focus {
+    background-color: -st-accent-color;
+    color: -st-accent-fg-color;
+}
+
+.luma-shelf-item > StBoxLayout {
+    spacing: 10px;
+}
+
+.luma-shelf-item-icon {
+    icon-size: 16px;
+}
+
+.luma-shelf-item-title {
+    max-width: 300px;
+}
+
+.luma-shelf-item-subtitle {
+    font-size: 0.85em;
+    color: rgba(150, 150, 150, 1);
+}
+
+.luma-shelf-item:focus .luma-shelf-item-subtitle {
+    color: inherit;
+}
+
+.luma-shelf-thumb {
+    border-radius: 6px;
+}
+
+/* Atalho para a bandeja de arquivos, no rodapé. */
+.luma-shelf-tray {
+    padding: 8px 10px;
+    border-radius: 10px;
+    background-color: rgba(128, 128, 128, 0.12);
+    color: inherit;
+    text-align: left;
+}
+
+.luma-shelf-tray:hover,
+.luma-shelf-tray:focus {
+    background-color: rgba(128, 128, 128, 0.22);
+}
+
+.luma-shelf-tray > StBoxLayout {
+    spacing: 10px;
+}
+
+.luma-shelf-tray-icon {
+    icon-size: 20px;
+}
+
+.luma-shelf-tray-title {
+    font-weight: bold;
+}
+
+.luma-shelf-tray-hint {
+    font-size: 0.85em;
+    color: rgba(150, 150, 150, 1);
+}
+
+/* ---------- Página Uso de apps ---------- */
+.luma-usage {
+    spacing: 10px;
+    min-width: 440px;
+}
+
+.luma-usage-top {
+    spacing: 4px;
+}
+
+.luma-usage-total {
+    color: rgba(150, 150, 150, 1);
+    font-feature-settings: "tnum";
+}
+
+.luma-usage-list {
+    spacing: 8px;
+}
+
+.luma-usage-row {
+    spacing: 10px;
+}
+
+.luma-usage-name {
+    width: 130px;
+}
+
+.luma-usage-track {
+    height: 6px;
+    border-radius: 99px;
+    background-color: rgba(128, 128, 128, 0.18);
+}
+
+.luma-usage-bar {
+    border-radius: 99px;
+    background-color: -st-accent-color;
+}
+
+.luma-usage-time {
+    color: rgba(150, 150, 150, 1);
+    font-feature-settings: "tnum";
+}
+
