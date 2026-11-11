@@ -18,6 +18,7 @@
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
+import {Island} from './lib/island/island.js';
 import {MenuBar} from './lib/menuBar.js';
 import {PanelLayout} from './lib/panelLayout.js';
 import {Registrar} from './lib/sources/registrar.js';
@@ -30,6 +31,7 @@ export default class LumaMenuExtension extends Extension {
         this._settings.connectObject(
             'changed::debug', () => setDebug(this._settings.get_boolean('debug')),
             'changed::enable-registrar', () => this._syncRegistrar(),
+            'changed::island-enabled', () => this._syncIsland(),
             this);
 
         this._registrar = null;
@@ -86,9 +88,29 @@ export default class LumaMenuExtension extends Extension {
 
         // Esconde o botão Atividades / move o relógio (conforme preferências).
         this._panelLayout = new PanelLayout(this._settings);
+
+        // A ilha (notch) no lugar do relógio, se ligada nas preferências.
+        this._island = null;
+        this._syncIsland();
+    }
+
+    /** Liga/desliga a ilha ao vivo (só enquanto a interface existe). */
+    _syncIsland() {
+        const wanted = Boolean(this._menuBar) && this._settings.get_boolean('island-enabled');
+        if (wanted && !this._island) {
+            this._island = new Island(this._settings);
+        } else if (!wanted && this._island) {
+            this._island.destroy();
+            this._island = null;
+        }
     }
 
     _destroyUi() {
+        // A ilha primeiro: ela devolve o relógio do GNOME ao painel antes de
+        // o PanelLayout restaurar a posição dele.
+        this._island?.destroy();
+        this._island = null;
+
         this._panelLayout?.destroy();
         this._panelLayout = null;
 

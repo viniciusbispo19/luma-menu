@@ -162,6 +162,37 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   `meta_workspace_get_work_area_for_monitor` CRITICAL; Luma Dock gera
   `LumaBackground … needs an allocation`; milhares de `Overwriting existing binding of keysym`.
 
+### Ilha (projeto 2, inspirado no Isle — plano em ~/.claude/plans/playful-purring-abelson.md)
+- Fase 1 da ilha concluída em 2026-11-11 (`lib/island/`). Fases seguintes: 2a (bateria
+  MacBook, volume/brilho com %, temperatura), 2b (Música portada do wavebar-music,
+  Notificações), 2c (Foco, Lembretes, alertas), 3 (prefs completas; perguntar antes).
+- **Visual pedido pelo usuário**: a ilha FECHADA não tem fundo nem cores próprias — é o
+  relógio da barra (cor/fonte copiadas de `Main.panel.get_theme_node()`). Só a ilha
+  ABERTA ganha o fundo dos menus do luma-menu.
+- `Main.layoutManager.addChrome(actor, params)` no GNOME 51 aceita só `trackFullscreen` e
+  `affectsStruts` (`affectsInputRegion` NÃO existe mais → erro "Unrecognized parameter").
+- `St.ButtonMask.ONE/TWO/THREE` estão obsoletos: usar `PRIMARY/MIDDLE/SECONDARY`.
+- Fonte do tema pode ser absoluta (WhiteSur: "Inter Medium 13.333px") →
+  `font.get_size_is_absolute()` decide px ou pt.
+- Calendário da ilha EMPRESTA `dateMenu._calendar` e `dateMenu._clocksItem` e usa
+  `dateMenu._eventSource` (o `Calendar.Calendar` do Shell nunca desconecta o GSettings:
+  criar outro vazaria). Devolver antes de destruir a ilha (feito também no 'destroy').
+- CalendarServer só entrega id/título/início/fim (sem descrição/local): link de reunião
+  exige `gi://ECal` (decidido: sob demanda, assíncrono).
+- `Source` emite `notification-added` antes de `notification-request-banner`; o MessageTray
+  ignora notificações com `acknowledged = true` (assumir banners sem remendar o tray).
+- Brilho no GNOME 51: `Main.brightnessManager` (sinais `changed`/`user-update`);
+  `org.gnome.SettingsDaemon.Power.Screen` NÃO existe (gsd-power só tem `Power.Keyboard`).
+- Volume: `getMixerControl()` de `ui/status/volume.js`. OSD: `Main.osdWindowManager.show/
+  showAll/showOne`. Bateria: `Main.panel.statusArea.quickSettings._system` (criado async).
+- Clima: GWeather-4.0 e Geoclue-2.0 disponíveis; `org.gnome.shell.weather` tem Salvador.
+  A `WeatherClient` do Shell não tem destroy() → fazer cliente próprio com `GWeather.Info`.
+- PowerProfiles via tuned-ppd (`net.hadess.PowerProfiles` e `org.freedesktop.UPower.PowerProfiles`).
+- Animação de molas parada antes de `removeChrome` (senão: "Timelines with detached actors").
+- Extensões do usuário que tocam no relógio/música: `hiragana-clock` (esconde
+  `dateMenu.container`) e `wavebar-music` (dele, GPL-3.0-or-later; MPRIS + LRCLIB).
+- Isle clonado em `/tmp/isle-ref` (GPL-3.0) só como referência: NÃO copiar código.
+
 ### Ícones
 - Fedora: Simple Icons 16.37.0 (`path` copiado por script, nunca à mão). O Simple Icons
   marca a licença do logo como **custom** (regras de marca do Fedora), não CC0 — ver

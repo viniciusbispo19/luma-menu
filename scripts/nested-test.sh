@@ -28,6 +28,13 @@ BEFORE=$(wc -l < "$LOG")
     menusNoGerenciador: Main.panel.menuManager._menus.length,
     atoresNoUiGroup: Main.layoutManager.uiGroup.get_n_children(),
     atoresLumaNoPalco: countOurs(global.stage),
+    // Ilha: quantas existem, se o relógio do GNOME está visível, se o
+    // calendário dele está em casa e se o Super+V voltou ao original.
+    ilhas: Main.layoutManager.uiGroup.get_children().filter(c => c.name === 'lumaMenuIsland').length,
+    relogioVisivel: Main.panel.statusArea.dateMenu.container.visible,
+    calendarioEmCasa: !Main.panel.statusArea.dateMenu._calendar.get_parent()?.has_style_class_name?.('luma-island-calendar-month'),
+    superVOriginal: !Object.prototype.hasOwnProperty.call(Main.panel, 'toggleCalendar') ||
+      Main.panel.toggleCalendar === Object.getPrototypeOf(Main.panel).toggleCalendar,
   });
   // Conta, no palco inteiro, os atores ESTRUTURAIS das nossas classes
   // (barra, títulos, raízes de menu, diálogos — GTypes LumaMenu*). Itens de
@@ -50,6 +57,9 @@ BEFORE=$(wc -l < "$LOG")
   for (let i = 0; i < ${CYCLES}; i++) {
     m.disableExtension(uuid); await wait(250);
     m.enableExtension(uuid); await wait(250);
+    // Abre a ilha (pelo Super+V) e desativa com ela aberta: o calendário
+    // emprestado precisa voltar para o relógio do GNOME.
+    if (i % 2 === 0) { Main.panel.toggleCalendar(); await wait(150); }
   }
   const depois = snap();
   m.disableExtension(uuid); await wait(300);
@@ -80,6 +90,14 @@ checks = {
     "bloquear remove a barra (só o Registrar fica)": data["bloqueada"]["barras"] == 0
         and data["bloqueada"]["atoresLumaNoPalco"] == 0,
     "desbloquear recria 1 barra": data["desbloqueada"]["barras"] == 1,
+    "exatamente 1 ilha após os ciclos": d["ilhas"] == 1,
+    "ilha esconde o relógio do GNOME": not d["relogioVisivel"],
+    "desativar remove a ilha": data["desativada"]["ilhas"] == 0,
+    "desativar mostra o relógio do GNOME": data["desativada"]["relogioVisivel"],
+    "desativar devolve o calendário ao relógio": data["desativada"]["calendarioEmCasa"],
+    "desativar restaura o Super+V": data["desativada"]["superVOriginal"],
+    "bloquear remove a ilha": data["bloqueada"]["ilhas"] == 0,
+    "desbloquear recria 1 ilha": data["desbloqueada"]["ilhas"] == 1,
 }
 for name, ok in checks.items():
     print(("  ✓ " if ok else "  ✗ ") + name)

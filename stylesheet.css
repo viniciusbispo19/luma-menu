@@ -233,3 +233,101 @@
 .luma-force-quit-row-box {
     spacing: 10px;
 }
+
+/* =============================== Ilha =============================== *
+ * Fechada, a ilha é só o relógio da barra: sem fundo, com a cor e a fonte
+ * do painel (copiadas pelo código, island.js). Aberta, ela ganha a MESMA
+ * cor de fundo dos menus do tema, com a opacidade e o arredondamento das
+ * preferências do Luma Menu (islandActor.js). Aqui ficam os espaçamentos e
+ * a tipografia — os mesmos tokens dos menus suspensos.
+ * "tnum" = dígitos tabulares (todos com a mesma largura): a ilha não
+ * "treme" quando 9:59 vira 10:00. */
+
+.luma-island-closed {
+    padding: 0 18px;
+}
+
+.luma-island-closed-box {
+    spacing: 7px;
+}
+
+.luma-island-time,
+.luma-island-date {
+    font-feature-settings: "tnum";
+}
+
+.luma-island-open {
+    min-width: 560px;
+    padding: 0 20px 18px;
+}
+
+.luma-island-header {
+    spacing: 6px;
+}
+
+.luma-island-tabs {
+    spacing: 4px;
+}
+
+/* Abas: como os itens dos menus — cinza no hover, cor de destaque na ativa. */
+.luma-island-tab {
+    padding: 2px 12px;
+    margin: 3px 0;
+    border-radius: 99px;
+    color: inherit;
+}
+
+.luma-island-tab:hover {
+    background-color: rgba(128, 128, 128, 0.18);
+}
+
+.luma-island-tab:checked {
+    background-color: -st-accent-color;
+    color: -st-accent-fg-color;
+}
+
+.luma-island-page {
+    padding-top: 10px;
+}
+
+.luma-island-calendar {
+    spacing: 20px;
+}
+
+.luma-island-events {
+    spacing: 8px;
+    min-width: 230px;
+}
+
+.luma-island-events-title {
+    font-weight: bold;
+}
+
+.luma-island-events-scroll {
+    max-height: 190px;
+}
+
+.luma-island-events-list {
+    spacing: 4px;
+}
+
+.luma-island-event {
+    spacing: 10px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    background-color: rgba(128, 128, 128, 0.12);
+}
+
+.luma-island-event-time {
+    color: rgba(150, 150, 150, 1);
+    font-feature-settings: "tnum";
+}
+
+.luma-island-placeholder {
+    color: rgba(150, 150, 150, 1);
+    padding: 4px 0;
+}
+
+.luma-island-world-clocks {
+    margin-top: 4px;
+}

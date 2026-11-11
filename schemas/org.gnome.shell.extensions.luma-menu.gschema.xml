@@ -22,6 +22,14 @@
     <value nick="text" value="0"/>
     <value nick="symbols" value="1"/>
   </enum>
+  <enum id="org.gnome.shell.extensions.luma-menu.TemperatureUnit">
+    <value nick="celsius" value="0"/>
+    <value nick="fahrenheit" value="1"/>
+  </enum>
+  <enum id="org.gnome.shell.extensions.luma-menu.WeatherLocationMode">
+    <value nick="auto" value="0"/>
+    <value nick="manual" value="1"/>
+  </enum>
 
   <schema id="org.gnome.shell.extensions.luma-menu" path="/org/gnome/shell/extensions/luma-menu/">
 
@@ -130,6 +138,118 @@
     <key name="debug" type="b">
       <default>false</default>
       <summary>Write debug messages to the journal</summary>
+    </key>
+
+    <!-- ===================== Ilha (notch) =====================
+         Algumas chaves só passam a ter efeito nas Fases 2 e 3; elas já
+         existem para o prefs e o código usarem sempre os mesmos nomes. -->
+    <key name="island-enabled" type="b">
+      <default>true</default>
+      <summary>Show the island in the center of the top bar, in place of the clock</summary>
+    </key>
+    <key name="island-hover-delay" type="i">
+      <range min="0" max="2000"/>
+      <!-- 0 = abre só com clique. -->
+      <default>300</default>
+      <summary>Time the pointer must rest on the island before it opens (ms; 0 = click only)</summary>
+    </key>
+    <key name="island-close-shortcut" type="as">
+      <default><![CDATA[['Escape']]]></default>
+      <summary>Shortcut that closes the open island (active only while it is open)</summary>
+    </key>
+    <key name="island-show-date" type="b">
+      <default>true</default>
+      <summary>Show the date beside the time in the closed island</summary>
+    </key>
+    <key name="island-pages" type="as">
+      <default>['music', 'calendar', 'notifications', 'focus', 'reminders']</default>
+      <summary>Island pages, in order (music, calendar, notifications, focus, reminders)</summary>
+    </key>
+    <key name="island-world-clocks" type="b">
+      <default>true</default>
+      <summary>Show world clocks on the Calendar page</summary>
+    </key>
+    <key name="island-blur" type="b">
+      <default>false</default>
+      <summary>Blur what is behind the open island</summary>
+    </key>
+
+    <!-- Temperatura (Fase 2) -->
+    <key name="weather-enabled" type="b">
+      <default>true</default>
+      <summary>Show the current temperature in the closed island</summary>
+    </key>
+    <key name="weather-unit" enum="org.gnome.shell.extensions.luma-menu.TemperatureUnit">
+      <default>'celsius'</default>
+      <summary>Temperature unit</summary>
+    </key>
+    <key name="weather-location-mode" enum="org.gnome.shell.extensions.luma-menu.WeatherLocationMode">
+      <default>'auto'</default>
+      <summary>Weather location: automatic (GNOME weather settings) or a chosen city</summary>
+    </key>
+    <key name="weather-manual-city" type="s">
+      <default>''</default>
+      <summary>Name of the city chosen for the weather</summary>
+    </key>
+    <key name="weather-manual-coords" type="(dd)">
+      <default>(0.0, 0.0)</default>
+      <summary>Latitude and longitude (degrees) of the city chosen for the weather</summary>
+    </key>
+
+    <!-- Volume, brilho e bateria (Fase 2) -->
+    <key name="alert-volume" type="b">
+      <default>true</default>
+      <summary>Show volume changes in the island instead of GNOME’s pop-up</summary>
+    </key>
+    <key name="alert-brightness" type="b">
+      <default>true</default>
+      <summary>Show brightness changes in the island instead of GNOME’s pop-up</summary>
+    </key>
+    <key name="osd-show-percentage" type="b">
+      <default>true</default>
+      <summary>Show the percentage number in volume and brightness alerts</summary>
+    </key>
+    <key name="battery-icon-enabled" type="b">
+      <default>true</default>
+      <summary>Replace the battery icon with a MacBook-style one</summary>
+    </key>
+    <key name="battery-show-percentage" type="b">
+      <default>false</default>
+      <summary>Show the battery percentage beside the icon</summary>
+    </key>
+
+    <!-- Alertas (Fase 2) -->
+    <key name="alert-battery-low" type="b"><default>true</default><summary>Alert when the battery drops to 20% and 10%</summary></key>
+    <key name="alert-battery-full" type="b"><default>false</default><summary>Alert when the battery is fully charged</summary></key>
+    <key name="alert-notifications" type="b"><default>true</default><summary>Show notifications as island alerts instead of GNOME banners</summary></key>
+    <key name="alert-caps-lock" type="b"><default>true</default><summary>Alert when Caps Lock is turned on or off</summary></key>
+    <key name="alert-bluetooth" type="b"><default>true</default><summary>Alert when a Bluetooth device connects or disconnects</summary></key>
+    <key name="alert-network" type="b"><default>true</default><summary>Alert when the computer goes offline</summary></key>
+    <key name="alert-events" type="b"><default>true</default><summary>Alert before calendar events</summary></key>
+    <key name="event-reminder-minutes" type="i">
+      <range min="1" max="60"/>
+      <default>5</default>
+      <summary>Minutes before an event to show its reminder</summary>
+    </key>
+
+    <!-- Páginas (Fase 2) -->
+    <key name="music-lyrics" type="b">
+      <default>true</default>
+      <summary>Fetch synced lyrics from lrclib.net</summary>
+    </key>
+    <key name="focus-work-minutes" type="i">
+      <range min="1" max="180"/>
+      <default>25</default>
+      <summary>Length of a focus session (minutes)</summary>
+    </key>
+    <key name="focus-break-minutes" type="i">
+      <range min="1" max="60"/>
+      <default>5</default>
+      <summary>Length of a break (minutes)</summary>
+    </key>
+    <key name="focus-dnd" type="b">
+      <default>true</default>
+      <summary>Turn on Do Not Disturb during focus sessions</summary>
     </key>
 
     <!-- ===================== Estado interno ===================== -->

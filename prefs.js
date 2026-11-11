@@ -157,11 +157,27 @@ export default class LumaMenuPreferences extends ExtensionPreferences {
         bar.add(this._switch('show-fallback-menus', _('Standard menus'),
             _('Show File, Edit, View and Window when the app has no menus of its own')));
         bar.add(this._switch('hide-activities', _('Hide the Activities button')));
-        bar.add(this._combo('clock-position', _('Clock position'), [
+        const clockRow = this._combo('clock-position', _('Clock position'), [
             ['center', _('Center')],
             ['right', _('Right (like macOS)')],
-        ]));
+        ], _('Used when the island is off'));
+        // Com a ilha ligada, ela ocupa o centro e o relógio do GNOME some:
+        // a opção fica cinza (só vale com a ilha desligada).
+        this._settings.bind('island-enabled', clockRow, 'sensitive',
+            Gio.SettingsBindFlags.GET | Gio.SettingsBindFlags.INVERT_BOOLEAN);
+        bar.add(clockRow);
         page.add(bar);
+
+        const island = new Adw.PreferencesGroup({
+            title: _('Island'),
+            description: _('A notch in the center of the top bar, in place of the clock'),
+        });
+        island.add(this._switch('island-enabled', _('Show the island')));
+        island.add(this._spin('island-hover-delay', _('Open on hover after (ms)'),
+            _('0 = open only by clicking'), 0, 2000, 50));
+        island.add(this._switch('island-show-date', _('Show the date beside the time')));
+        island.add(this._switch('island-world-clocks', _('World clocks on the Calendar page')));
+        page.add(island);
 
         const keys = new Adw.PreferencesGroup({title: _('Keyboard Shortcuts')});
         keys.add(this._shortcut('focus-bar-shortcut', _('Focus the menu bar'),
