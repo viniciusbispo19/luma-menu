@@ -168,6 +168,15 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   POP-UP padrão do GNOME (balão, `LumaMenu`; o relógio usa `alignment 1.0`), com o desfoque
   do Blur my Shell. `island-menus` agora é `false` por padrão (código da forma ainda existe
   como opção). A forma do Isle (`IslandSurface`) continua só nos ALERTAS. Abaixo, histórico.
+- **Integração com o Blur my Shell nos pop-ups**: o BMS escreve na caixa do menu
+  (`set_style`) um `border-radius` igual ao do vidro dele (`menu-corner-radius` 20) e pinta o
+  fundo pela classe (`rgba(30,30,33,.5) !important`). `LumaMenu._applyAppearance` NÃO toca
+  no estilo de caixas com `bms-popup-blurred` (antes apagava o raio e cobria o vidro).
+  Sem sombra e sem a margem do WhiteSur (`.popup-menu-content` margin 4/12/17px) — viravam
+  uma "moldura" escura. `-boxpointer-gap: 0` (encostado na barra).
+- Pop-up do relógio rente ao canto direito: `boxPointer.setSourceAlignment(1.0)` (o balão
+  mirava o CENTRO do botão; `margin = 4·-arrow-border-radius` no `_reposition`).
+- Bateria MONOCROMÁTICA (pedido do usuário): raio recortado no preenchimento.
 - **Layout decidido pelo usuário (2026-11-11)**: NADA no centro da barra. **Barra preta
   sólida** (chave `black-bar`, padrão ligado; `PanelLayout` acrescenta só a sua declaração
   ao `Main.panel.style` e a tira no destroy). Relógio do Luma no CANTO DIREITO (último
