@@ -157,6 +157,8 @@ export default class LumaMenuPreferences extends ExtensionPreferences {
         bar.add(this._switch('show-fallback-menus', _('Standard menus'),
             _('Show File, Edit, View and Window when the app has no menus of its own')));
         bar.add(this._switch('hide-activities', _('Hide the Activities button')));
+        bar.add(this._switch('black-bar', _('Solid black bar'),
+            _('Like Isle: the bar and the clock panel look like one piece')));
         const clockRow = this._combo('clock-position', _('Clock position'), [
             ['center', _('Center')],
             ['right', _('Right (like macOS)')],

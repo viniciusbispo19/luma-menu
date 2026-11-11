@@ -47,6 +47,11 @@
       <default>'right'</default>
       <summary>Clock position in the top bar</summary>
     </key>
+    <key name="black-bar" type="b">
+      <!-- O visual do Isle: barra preta sólida, unida à forma do relógio. -->
+      <default>true</default>
+      <summary>Solid black top bar</summary>
+    </key>
     <key name="focus-bar-shortcut" type="as">
       <default><![CDATA[['F10']]]></default>
       <summary>Shortcut to focus the menu bar</summary>

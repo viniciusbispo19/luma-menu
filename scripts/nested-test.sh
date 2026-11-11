@@ -33,6 +33,7 @@ BEFORE=$(wc -l < "$LOG")
     ilhas: Main.panel._rightBox.get_children().filter(c => c.get_first_child()?.constructor.name === 'LumaMenuIslandClock').length,
     relogioVisivel: Main.panel.statusArea.dateMenu.container.visible,
     calendarioEmCasa: !Main.panel.statusArea.dateMenu._calendar.get_parent()?.has_style_class_name?.('luma-island-calendar-month'),
+    barraPreta: (Main.panel.style ?? '').includes('#000000'),
     superVOriginal: !Object.prototype.hasOwnProperty.call(Main.panel, 'toggleCalendar') ||
       Main.panel.toggleCalendar === Object.getPrototypeOf(Main.panel).toggleCalendar,
   });
@@ -96,6 +97,8 @@ checks = {
     "desativar mostra o relógio do GNOME": data["desativada"]["relogioVisivel"],
     "desativar devolve o calendário ao relógio": data["desativada"]["calendarioEmCasa"],
     "desativar restaura o Super+V": data["desativada"]["superVOriginal"],
+    "barra preta ativa": d["barraPreta"],
+    "desativar devolve a cor original da barra": not data["desativada"]["barraPreta"],
     "bloquear remove o relógio do Luma": data["bloqueada"]["ilhas"] == 0,
     "desbloquear recria 1 relógio do Luma": data["desbloqueada"]["ilhas"] == 1,
 }

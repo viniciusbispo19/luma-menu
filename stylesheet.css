@@ -234,11 +234,9 @@
     spacing: 10px;
 }
 
-/* ================== Relógio + painel do Isle ================== *
- * O relógio é um botão comum do painel: a fonte, a cor e o destaque ao
- * clicar vêm do tema, como nos outros itens da barra. O painel que abre é um
- * menu do Luma Menu (.luma-menu-content: mesma cor, opacidade e cantos).
- * Aqui ficam só espaçamentos e tipografia.
+/* ================== Relógio + forma do Isle ================== *
+ * O relógio é um botão comum do painel: a fonte e a cor vêm do tema, como
+ * nos outros itens da barra.
  * "tnum" = dígitos tabulares (todos com a mesma largura): o relógio não
  * "treme" quando 9:59 vira 10:00. */
 
@@ -260,40 +258,52 @@
     font-feature-settings: "tnum";
 }
 
-/* O painel inteiro é um único item, sem destaque nem recuo. */
-.luma-island-panel {
-    padding: 0;
-    margin: 0;
+/* ---------- Forma do Isle (preto sólido, sai de baixo do relógio) ----------
+ * O fundo preto, os cantos e os ombros são desenhados pelo código
+ * (islandShape.js, com Cairo). Aqui ficam o texto e os controles, no estilo
+ * do Isle sobre o preto: texto branco, secundários em branco translúcido,
+ * botões "de vidro" (branco a 10–16%). */
+
+.luma-island-content {
+    color: #ffffff;
+    min-width: 540px;
 }
 
-.luma-island-open {
-    min-width: 540px;
-    padding: 4px 8px 8px;
-    spacing: 10px;
+.luma-island-header {
+    padding-left: 16px;
+    spacing: 8px;
 }
 
 .luma-island-tabs {
     spacing: 4px;
 }
 
-/* Abas: como os itens dos menus — cinza no hover, cor de destaque na ativa. */
 .luma-island-tab {
-    padding: 3px 12px;
+    padding: 2px 11px;
     border-radius: 99px;
-    color: inherit;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .luma-island-tab:hover {
-    background-color: rgba(128, 128, 128, 0.18);
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .luma-island-tab:checked {
-    background-color: -st-accent-color;
-    color: -st-accent-fg-color;
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.16);
+}
+
+.luma-island-header-clock {
+    color: #ffffff;
+}
+
+.luma-island-page {
+    padding: 10px 20px 20px;
 }
 
 .luma-island-calendar {
-    spacing: 16px;
+    spacing: 18px;
 }
 
 .luma-island-events {
@@ -310,23 +320,23 @@
 }
 
 .luma-island-events-list {
-    spacing: 4px;
+    spacing: 6px;
 }
 
 .luma-island-event {
     spacing: 10px;
-    padding: 5px 8px;
-    border-radius: 6px;
-    background-color: rgba(128, 128, 128, 0.12);
+    padding: 6px 10px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.08);
 }
 
 .luma-island-event-time {
-    color: rgba(150, 150, 150, 1);
+    color: rgba(255, 255, 255, 0.46);
     font-feature-settings: "tnum";
 }
 
 .luma-island-placeholder {
-    color: rgba(150, 150, 150, 1);
+    color: rgba(255, 255, 255, 0.46);
     padding: 4px 0;
 }
 

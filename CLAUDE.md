@@ -147,7 +147,8 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   `LUMA_MENU_DEV=1`. Isso libera `org.gnome.Shell.Eval` e `org.gnome.Shell.Screenshot`.
 - `./scripts/nested-eval.sh '<js>'` e `./scripts/nested-screenshot.sh [png]` falam com o
   Shell aninhado pelo endereço salvo em `~/.local/state/luma-menu/nested-bus`.
-  No escopo do Eval existem `Main`, `global`, `Shell`, `St`, `Meta`, mas NÃO `Clutter`.
+  No escopo do Eval existem `Main`, `global`, `Shell`, `Meta`, mas NÃO `Clutter` nem `St`
+  (para criar um ator: `new (Main.panel._centerBox.constructor)({...})` = St.BoxLayout).
 - `./scripts/nested-test.sh [ciclos]`: ativa/desativa N vezes + bloqueio simulado e
   só acusa avisos cuja pilha JS passa pelo `luma-menu@` (usa `SHELL_DEBUG=backtrace-warnings`).
 - `./scripts/nested-stop.sh`: encerra só o Shell aninhado. NUNCA usar
@@ -163,17 +164,26 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   `LumaBackground … needs an allocation`; milhares de `Overwriting existing binding of keysym`.
 
 ### Funções do Isle na barra do macOS (projeto 2 — plano em ~/.claude/plans/playful-purring-abelson.md)
-- **Layout decidido pelo usuário (2026-11-11)**: NADA no centro da barra. Relógio do Luma
-  no CANTO DIREITO (último item de `_rightBox`, via `addToStatusArea('luma-menu-clock')`),
-  com a aparência do tema (botão de painel comum, peso normal como "Arquivo"). **Clique**
-  abre o painel do Isle (abas) como um `LumaMenu` alinhado à direita (`alignment = 1.0`).
-  Alertas (Fase 2) numa caixinha no **canto superior direito**, abaixo da barra. Sem hover.
-- Fase 1 concluída (`lib/island/`: clockButton.js, island.js, pages/calendarPage.js,
-  strings.js; spring.js guardado para a caixinha de alertas). Fases seguintes: 2a
-  (bateria MacBook, volume/brilho com %, temperatura), 2b (Música portada do
-  wavebar-music, Notificações), 2c (Foco, Lembretes, alertas), 3 (prefs; perguntar antes).
-- `PopupMenu.close()` emite `menu-closed` só DEPOIS da animação: é quando a página
-  devolve o calendário emprestado.
+- **Layout decidido pelo usuário (2026-11-11)**: NADA no centro da barra. **Barra preta
+  sólida** (chave `black-bar`, padrão ligado; `PanelLayout` acrescenta só a sua declaração
+  ao `Main.panel.style` e a tira no destroy). Relógio do Luma no CANTO DIREITO (último
+  item de `_rightBox`, `addToStatusArea('luma-menu-clock')`, peso normal). **Clique**
+  faz a forma PRETA do Isle sair de baixo do relógio (`islandShape.js`: chrome desenhado
+  com Cairo — corpo, cantos 28 px, ombros côncavos na borda de baixo da barra —, mola,
+  borda direita presa ao relógio, cresce para baixo/esquerda). Cabeçalho na altura da
+  barra: abas à esquerda + cópia da data/hora no mesmo lugar do relógio. Esc/clique
+  fora: `GrabHelper` do Shell (`ui/grabHelper.js`, `grab({actor, onUngrab})`). Alertas
+  (Fase 2) saem do mesmo lugar, mesma forma. Sem hover.
+- NÃO usar `trackFullscreen` em chrome que fica escondido: o LayoutManager força
+  `visible` ao sair da tela cheia.
+- `PanelMenu.Button` sem menu (`dontCreateMenu`) desliga o ClickGesture dele: o relógio
+  tem o próprio `Clutter.ClickGesture` (recognize_on_press). Padding do botão do painel:
+  `get_theme_node().get_length('-natural-hpadding')`.
+- Fase 1 concluída (`lib/island/`: clockButton.js, islandShape.js, island.js, spring.js,
+  pages/calendarPage.js, strings.js). Fases seguintes: 2a (bateria MacBook, volume/brilho
+  com %, temperatura), 2b (Música portada do wavebar-music, Notificações), 2c (Foco,
+  Lembretes, alertas), 3 (prefs; perguntar antes).
+- `PopupMenu.close()` emite `menu-closed` só DEPOIS da animação (útil se voltar a usar menu).
 - `Main.layoutManager.addChrome(actor, params)` no GNOME 51 aceita só `trackFullscreen` e
   `affectsStruts` (`affectsInputRegion` NÃO existe mais → erro "Unrecognized parameter").
 - `St.ButtonMask.ONE/TWO/THREE` estão obsoletos: usar `PRIMARY/MIDDLE/SECONDARY`.
