@@ -77,15 +77,16 @@
 
 /* Fundo e cantos: a opacidade e o raio são aplicados ao vivo pelo código
  * (preferências), mantendo a cor de fundo do tema. */
-/* Sem sombra e sem a margem que o tema (WhiteSur) põe em volta da caixa:
- * o Blur my Shell desfoca a área do menu, e a margem/sombra viravam uma
- * "moldura" escura em volta do pop-up. Seletor com duas classes para vencer
- * o ".popup-menu-content" do tema. */
+/* Sem sombra (com o desfoque do Blur my Shell ela virava uma "moldura"
+ * escura em volta do pop-up). Margem IGUAL à do centro de controle do GNOME
+ * (medida no menu de status: 8 px abaixo da barra, 12 px das bordas da
+ * tela), para todos os pop-ups ficarem padronizados. Seletor com duas
+ * classes para vencer o ".popup-menu-content" do tema. */
 .popup-menu-content.luma-menu-content,
 .luma-menu-content {
     min-width: 200px;
     padding: 5px;
-    margin: 0;
+    margin: 8px 12px 0 12px;
     border-radius: 10px;
     border: 1px solid rgba(128, 128, 128, 0.28);
     box-shadow: none;

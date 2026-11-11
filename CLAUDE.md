@@ -174,8 +174,13 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   no estilo de caixas com `bms-popup-blurred` (antes apagava o raio e cobria o vidro).
   Sem sombra e sem a margem do WhiteSur (`.popup-menu-content` margin 4/12/17px) — viravam
   uma "moldura" escura. `-boxpointer-gap: 0` (encostado na barra).
-- Pop-up do relógio rente ao canto direito: `boxPointer.setSourceAlignment(1.0)` (o balão
-  mirava o CENTRO do botão; `margin = 4·-arrow-border-radius` no `_reposition`).
+- Margem dos pop-ups = a do centro de controle (medida: caixa `.quick-settings` com margin
+  8/12/17/12 → 8 px abaixo da barra, 12 px da borda): `.luma-menu-content { margin: 8px 12px 0 12px }`.
+- Pop-up do relógio no canto direito: `boxPointer.setSourceAlignment(1.0)` (o balão mirava o
+  CENTRO do botão). Perto da borda o `_reposition` puxa o balão de volta até a "mira" (borda
+  direita do CONTEÚDO do relógio, 3 px antes da tela): `translation_x = borda − mira`,
+  aplicado em `menu.afterOpen` (o `open-state-changed` vem ANTES de `boxPointer.open()`, que
+  faz `ease({translation_x: 0})`).
 - Bateria MONOCROMÁTICA (pedido do usuário): raio recortado no preenchimento.
 - **Layout decidido pelo usuário (2026-11-11)**: NADA no centro da barra. **Barra preta
   sólida** (chave `black-bar`, padrão ligado; `PanelLayout` acrescenta só a sua declaração
