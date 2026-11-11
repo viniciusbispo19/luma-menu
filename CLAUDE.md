@@ -240,7 +240,22 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   o painel redefine em `_updatePanel` a cada `sessionMode 'updated'` e o **Just Perfection**
   aplica `notification-banner-position` — padrão 1 = centro — ao ser ativado: reaplicar no
   `updated` e uma vez 3 s depois). Margem direita do banner 12 px (`.message.notification-banner`).
-  Próxima: Fase 3 (prefs completas, clipboard, uso de apps) — PERGUNTAR antes de começar.
+  Fase 3 aprovada pelo usuário em 2026-11-11: 3a (prefs) → 3b (clipboard/bandeja) → 3c (uso de apps).
+- **Fase 3a concluída (2026-11-11)**: páginas Relógio e Alertas no prefs. Formato 12/24 h e
+  segundos = chaves `clock-format`/`clock-show-seconds` do `org.gnome.desktop.interface`
+  (o `GnomeDesktop.WallClock` passa a acordar 1×/s sozinho). Busca de cidade com a base do
+  libgweather: `location.next_child(child)` + `get_level() === GWeather.LocationLevel.CITY`
+  (4 349 cidades em ~30 ms, nomes já em pt-BR; estado = pai de nível `ADM1`). A última página
+  ligada não pode ser desligada. `alert-notifications` removida (banners do GNOME no canto).
+  "Tempo de abertura" não se aplica: o relógio abre por clique.
+- `prefs.js` pode importar `pgettext` de `extensions/prefs.js` (contexto para "Automática" vs
+  "Automático").
+- **Cliques/teclas na sessão aninhada**: no Eval, `global.stage.context.get_backend()
+  .get_default_seat().create_virtual_device(0)` (ponteiro; `1` = teclado) com
+  `notify_absolute_motion`, `notify_button(t, 1, 1/0)`, `notify_discrete_scroll(t, 1=baixo, 1)`,
+  `notify_keyval`. Os primeiros eventos de um dispositivo recém-criado se perdem. A escala é
+  4/3: palco 1200×750, captura 1600×1000 → coordenada do palco = pixel da captura × 0,75.
+  Maximizar a janela das preferências deixa as abas no topo (posição previsível).
 - **Fase 2c concluída (2026-11-11)**: Foco (`services/focus.js` FocusTimer: guarda a HORA do
   fim e agenda UM timeout; Não Perturbe só no foco rodando e só desliga o que ligou; som
   `get_sound_player().play_from_theme('complete')`), Lembretes (`services/reminders.js` +

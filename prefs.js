@@ -12,16 +12,22 @@
 import Adw from 'gi://Adw';
 import Gdk from 'gi://Gdk';
 import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
 import Gtk from 'gi://Gtk';
+import GWeather from 'gi://GWeather?version=4.0';
 import Pango from 'gi://Pango';
 
 import {
-    ExtensionPreferences, gettext as _,
+    ExtensionPreferences, gettext as _, pgettext,
 } from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
 import {SYSTEM_ICONS} from './lib/icons.js';
 
 const GITHUB_URL = 'https://github.com/viniciusbispo19/luma-menu';
+/** Páginas do pop-up do relógio, na ordem em que aparecem. */
+const CLOCK_PAGES = ['calendar', 'notifications', 'focus', 'reminders'];
+/** Quantas cidades mostrar na busca (o resto: digite mais). */
+const MAX_CITY_RESULTS = 40;
 
 export default class LumaMenuPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
@@ -30,6 +36,8 @@ export default class LumaMenuPreferences extends ExtensionPreferences {
         window.search_enabled = true;
 
         window.add(this._generalPage());
+        window.add(this._clockPage());
+        window.add(this._alertsPage());
         window.add(this._appearancePage());
         window.add(this._menusPage());
         window.add(this._compatibilityPage());
@@ -65,24 +73,25 @@ export default class LumaMenuPreferences extends ExtensionPreferences {
      * @param {string} title
      * @param {[string, string][]} options - pares [valor, rótulo]
      * @param {string} [subtitle]
+     * @param {Gio.Settings} [settings] - outro esquema (ex.: o do GNOME)
      */
-    _combo(key, title, options, subtitle = '') {
+    _combo(key, title, options, subtitle = '', settings = this._settings) {
         const row = new Adw.ComboRow({
             title,
             subtitle,
             model: Gtk.StringList.new(options.map(([, label]) => label)),
         });
         const sync = () => {
-            const index = options.findIndex(([value]) => value === this._settings.get_string(key));
+            const index = options.findIndex(([value]) => value === settings.get_string(key));
             row.selected = Math.max(0, index);
         };
         sync();
         row.connect('notify::selected', () => {
             const value = options[row.selected]?.[0];
-            if (value && value !== this._settings.get_string(key))
-                this._settings.set_string(key, value);
+            if (value && value !== settings.get_string(key))
+                settings.set_string(key, value);
         });
-        this._settings.connect(`changed::${key}`, sync);
+        settings.connect(`changed::${key}`, sync);
         return row;
     }
 
@@ -176,16 +185,6 @@ export default class LumaMenuPreferences extends ExtensionPreferences {
         bar.add(clockRow);
         page.add(bar);
 
-        const island = new Adw.PreferencesGroup({
-            title: _('Clock'),
-            description: _('A macOS-style clock in the right corner; click it for music, calendar, notifications, focus and reminders'),
-        });
-        island.add(this._switch('island-enabled', _('Use the Luma clock'),
-            _('Replaces the GNOME clock')));
-        island.add(this._switch('island-show-date', _('Show the date beside the time')));
-        island.add(this._switch('island-world-clocks', _('World clocks on the Calendar page')));
-        page.add(island);
-
         const keys = new Adw.PreferencesGroup({title: _('Keyboard Shortcuts')});
         keys.add(this._shortcut('focus-bar-shortcut', _('Focus the menu bar'),
             _('Opens the app menu; use the arrow keys to navigate')));
@@ -198,6 +197,307 @@ export default class LumaMenuPreferences extends ExtensionPreferences {
             subtitle: _('GNOME has a single top bar, on the primary monitor. Showing the menus on every monitor would need a second bar, which this extension does not create.'),
         }));
         page.add(monitors);
+        return page;
+    }
+
+    /**
+     * Página "Relógio": o relógio do canto direito, as páginas do pop-up, a
+     * temperatura e o Foco.
+     */
+    _clockPage() {
+        const page = new Adw.PreferencesPage({
+            title: _('Clock'),
+            icon_name: 'preferences-system-time-symbolic',
+        });
+
+        const clock = new Adw.PreferencesGroup({
+            title: _('Clock'),
+            description: _('A macOS-style clock in the right corner; click it for the calendar, notifications, focus and reminders'),
+        });
+        clock.add(this._switch('island-enabled', _('Use the Luma clock'),
+            _('Replaces the GNOME clock')));
+
+        // Formato da hora: é a MESMA chave das Configurações do GNOME
+        // (org.gnome.desktop.interface). Mudar aqui muda lá, e vice-versa.
+        const iface = new Gio.Settings({schema_id: 'org.gnome.desktop.interface'});
+        clock.add(this._combo('clock-format', _('Time format'), [
+            ['24h', _('24-hour (13:30)')],
+            ['12h', _('12-hour (1:30 PM)')],
+        ], _('The same option as in GNOME Settings'), iface));
+        const seconds = new Adw.SwitchRow({title: _('Show seconds')});
+        iface.bind('clock-show-seconds', seconds, 'active', Gio.SettingsBindFlags.DEFAULT);
+        clock.add(seconds);
+        clock.add(this._switch('island-show-date', _('Show the date beside the time')));
+        page.add(clock);
+
+        // O resto só existe com o relógio do Luma ligado.
+        const needsClock = group => {
+            this._settings.bind('island-enabled', group, 'sensitive', Gio.SettingsBindFlags.GET);
+            page.add(group);
+        };
+
+        const pages = new Adw.PreferencesGroup({
+            title: _('Pages'),
+            description: _('What appears when you click the clock'),
+        });
+        pages.add(this._pageSwitch('calendar', _('Calendar')));
+        const worldClocks = this._switch('island-world-clocks', _('World clocks on the Calendar page'),
+            _('The cities from the Clocks app'));
+        pages.add(worldClocks);
+        pages.add(this._pageSwitch('notifications', _('Notifications')));
+        pages.add(this._pageSwitch('focus', _('Focus')));
+        pages.add(this._pageSwitch('reminders', _('Reminders')));
+        const syncWorldClocks = () => {
+            worldClocks.sensitive = this._settings.get_strv('island-pages').includes('calendar');
+        };
+        syncWorldClocks();
+        this._settings.connect('changed::island-pages', syncWorldClocks);
+        needsClock(pages);
+
+        const weather = new Adw.PreferencesGroup({
+            title: _('Temperature'),
+            description: _('From GNOME’s weather service (MET Norway); only the city’s approximate position is sent. “Automatic” uses the location of the GNOME Weather settings.'),
+        });
+        weather.add(this._switch('weather-enabled', _('Show the temperature beside the clock')));
+        const weatherRows = [
+            this._combo('weather-unit', _('Unit'), [
+                ['celsius', _('Celsius (°C)')],
+                ['fahrenheit', _('Fahrenheit (°F)')],
+            ]),
+            this._combo('weather-location-mode', _('Location'), [
+                // Contexto próprio: em pt-BR é "Automática" (a localização),
+                // e não "Automático" (o ícone).
+                ['auto', pgettext('weather location', 'Automatic')],
+                ['manual', _('Chosen city')],
+            ]),
+            // Escolher uma cidade já muda a localização para "Cidade escolhida".
+            this._cityRow(),
+        ];
+        weatherRows.forEach(row => {
+            this._settings.bind('weather-enabled', row, 'sensitive', Gio.SettingsBindFlags.GET);
+            weather.add(row);
+        });
+        needsClock(weather);
+
+        const focus = new Adw.PreferencesGroup({
+            title: _('Focus'),
+            description: _('Also adjustable on the Focus page, with − and +'),
+        });
+        focus.add(this._spin('focus-work-minutes', _('Focus length'), _('In minutes'), 1, 180));
+        focus.add(this._spin('focus-break-minutes', _('Break length'), _('In minutes'), 1, 60));
+        focus.add(this._switch('focus-dnd', _('Do Not Disturb while focusing'),
+            _('Turned off again at the end, if it was the focus that turned it on')));
+        needsClock(focus);
+        return page;
+    }
+
+    /**
+     * Interruptor de uma página do pop-up do relógio. A lista "island-pages"
+     * fica sempre na ordem de CLOCK_PAGES. A última página ligada não pode ser
+     * desligada (senão o clique no relógio abriria um balão vazio).
+     */
+    _pageSwitch(id, title) {
+        const row = new Adw.SwitchRow({title});
+        const sync = () => {
+            const pages = this._settings.get_strv('island-pages');
+            row.active = pages.includes(id);
+            row.sensitive = !(row.active && pages.length === 1);
+        };
+        row.connect('notify::active', () => {
+            const pages = this._settings.get_strv('island-pages');
+            if (row.active === pages.includes(id))
+                return;
+            this._settings.set_strv('island-pages',
+                CLOCK_PAGES.filter(p => (p === id ? row.active : pages.includes(p))));
+        });
+        sync();
+        this._settings.connect('changed::island-pages', sync);
+        return row;
+    }
+
+    /** Linha "Cidade": mostra a escolhida; clicar abre a busca. */
+    _cityRow() {
+        const row = new Adw.ActionRow({title: _('City'), activatable: true});
+        row.add_suffix(new Gtk.Image({icon_name: 'go-next-symbolic'}));
+        const sync = () => {
+            row.subtitle = this._settings.get_string('weather-manual-city') || _('None chosen');
+        };
+        sync();
+        this._settings.connect('changed::weather-manual-city', sync);
+        row.connect('activated', () => this._chooseCity(row));
+        return row;
+    }
+
+    /**
+     * Janelinha de busca de cidade. A lista vem do próprio libgweather (a base
+     * de cidades do GNOME, uns 4 mil lugares, já com nomes em pt-BR) — sem
+     * internet e sem serviço de busca externo.
+     */
+    _chooseCity(parent) {
+        const search = new Gtk.SearchEntry({
+            placeholder_text: _('Search for a city…'),
+            hexpand: true,
+        });
+        const list = new Gtk.ListBox({
+            css_classes: ['boxed-list'],
+            selection_mode: Gtk.SelectionMode.NONE,
+            valign: Gtk.Align.START,
+        });
+        const hint = new Gtk.Label({
+            label: _('Type at least two letters'),
+            css_classes: ['dim-label'],
+            margin_top: 24,
+        });
+        const box = new Gtk.Box({
+            orientation: Gtk.Orientation.VERTICAL,
+            spacing: 12,
+            margin_top: 12,
+            margin_bottom: 12,
+            margin_start: 12,
+            margin_end: 12,
+        });
+        box.append(search);
+        box.append(hint);
+        box.append(list);
+        const toolbar = new Adw.ToolbarView({
+            content: new Gtk.ScrolledWindow({
+                child: box,
+                hscrollbar_policy: Gtk.PolicyType.NEVER,
+                vexpand: true,
+            }),
+        });
+        toolbar.add_top_bar(new Adw.HeaderBar());
+        const dialog = new Adw.Dialog({
+            title: _('Choose a City'),
+            content_width: 440,
+            content_height: 560,
+            child: toolbar,
+        });
+
+        const cities = this._cities();
+        search.connect('search-changed', () => {
+            list.remove_all();
+            const query = normalize(search.text.trim());
+            const results = query.length < 2 ? []
+                : cities.filter(c => c.key.includes(query))
+                    // Quem COMEÇA com o texto vem primeiro.
+                    .sort((a, b) => Number(!a.key.startsWith(query)) - Number(!b.key.startsWith(query)) ||
+                        a.name.localeCompare(b.name))
+                    .slice(0, MAX_CITY_RESULTS);
+            hint.label = query.length < 2 ? _('Type at least two letters') : _('No city found');
+            hint.visible = results.length === 0;
+            list.visible = results.length > 0;
+            for (const city of results) {
+                const row = new Adw.ActionRow({
+                    title: city.name,
+                    subtitle: city.region,
+                    activatable: true,
+                });
+                row.connect('activated', () => {
+                    this._settings.set_string('weather-manual-city', city.name);
+                    this._settings.set_value('weather-manual-coords',
+                        new GLib.Variant('(dd)', city.coords));
+                    this._settings.set_string('weather-location-mode', 'manual');
+                    dialog.close();
+                });
+                list.append(row);
+            }
+        });
+        // Enter escolhe o primeiro resultado.
+        search.connect('activate', () => list.get_row_at_index(0)?.activate());
+        list.visible = false;
+        dialog.present(parent);
+        search.grab_focus();
+    }
+
+    /** Todas as cidades do libgweather (lidas uma vez, ~30 ms). */
+    _cities() {
+        if (this._cityCache)
+            return this._cityCache;
+        const cities = [];
+        const walk = location => {
+            let child = null;
+            while ((child = location.next_child(child))) {
+                if (child.get_level() !== GWeather.LocationLevel.CITY) {
+                    walk(child);
+                    continue;
+                }
+                if (!child.has_coords())
+                    continue;
+                const name = child.get_name();
+                const parent = child.get_parent();
+                const state = parent?.get_level() === GWeather.LocationLevel.ADM1 ? parent.get_name() : '';
+                const country = child.get_country_name() ?? '';
+                cities.push({
+                    name,
+                    region: [state, country].filter(Boolean).join(', '),
+                    coords: child.get_coords(),
+                    key: normalize(name),
+                });
+            }
+        };
+        walk(GWeather.Location.get_world());
+        this._cityCache = cities;
+        return cities;
+    }
+
+    /**
+     * Página "Alertas": o que sai do relógio (volume, brilho, bateria, Caps
+     * Lock…) e o ícone da bateria.
+     */
+    _alertsPage() {
+        const page = new Adw.PreferencesPage({
+            title: _('Alerts'),
+            icon_name: 'preferences-system-notifications-symbolic',
+        });
+        // Os alertas saem do relógio do Luma: sem ele, ficam cinza.
+        const needsClock = group => {
+            this._settings.bind('island-enabled', group, 'sensitive', Gio.SettingsBindFlags.GET);
+            page.add(group);
+        };
+
+        const levels = new Adw.PreferencesGroup({
+            title: _('Volume and Brightness'),
+            description: _('Shown below the clock in place of GNOME’s pop-up (in full screen, GNOME’s pop-up is used)'),
+        });
+        levels.add(this._switch('alert-volume', _('Volume')));
+        levels.add(this._switch('alert-brightness', _('Brightness'),
+            _('Screen and keyboard backlight')));
+        levels.add(this._switch('osd-show-percentage', _('Show the percentage'),
+            _('“65%” beside the bar')));
+        needsClock(levels);
+
+        // O ícone da bateria NÃO depende do relógio do Luma.
+        const battery = new Adw.PreferencesGroup({title: _('Battery')});
+        battery.add(this._switch('battery-icon-enabled', _('MacBook-style battery icon'),
+            _('Replaces the GNOME battery icon in the top bar')));
+        const percent = this._switch('battery-show-percentage', _('Show the battery percentage'));
+        this._settings.bind('battery-icon-enabled', percent, 'sensitive', Gio.SettingsBindFlags.GET);
+        battery.add(percent);
+        page.add(battery);
+
+        const batteryAlerts = new Adw.PreferencesGroup({title: _('Battery Alerts')});
+        batteryAlerts.add(this._switch('alert-battery-low', _('Low battery'),
+            _('Once at 20% and once at 10%; the 10% alert shows even in Do Not Disturb')));
+        batteryAlerts.add(this._switch('alert-battery-full', _('Battery charged')));
+        needsClock(batteryAlerts);
+
+        const other = new Adw.PreferencesGroup({
+            title: _('Other Alerts'),
+            description: _('Only important alerts: they wait for full screen to end and are held back in Do Not Disturb'),
+        });
+        other.add(this._switch('alert-caps-lock', _('Caps Lock')));
+        other.add(this._switch('alert-bluetooth', _('Bluetooth devices'),
+            _('When a device connects or disconnects')));
+        other.add(this._switch('alert-network', _('No internet connection'),
+            _('After 5 seconds offline, and again when it comes back')));
+        other.add(this._switch('alert-events', _('Calendar events'),
+            _('With a “Join” button for Meet, Zoom, Teams and Webex')));
+        const minutes = this._spin('event-reminder-minutes', _('Remind me before the event'),
+            _('In minutes'), 1, 60);
+        this._settings.bind('alert-events', minutes, 'sensitive', Gio.SettingsBindFlags.GET);
+        other.add(minutes);
+        needsClock(other);
         return page;
     }
 
@@ -465,4 +765,9 @@ export default class LumaMenuPreferences extends ExtensionPreferences {
 
         return page;
     }
+}
+
+/** Para buscar sem ligar para acentos e maiúsculas: "São Paulo" → "sao paulo". */
+function normalize(text) {
+    return text.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
 }

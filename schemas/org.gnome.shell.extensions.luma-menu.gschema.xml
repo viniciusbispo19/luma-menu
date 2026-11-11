@@ -224,7 +224,6 @@
     <!-- Alertas (Fase 2) -->
     <key name="alert-battery-low" type="b"><default>true</default><summary>Alert when the battery drops to 20% and 10%</summary></key>
     <key name="alert-battery-full" type="b"><default>false</default><summary>Alert when the battery is fully charged</summary></key>
-    <key name="alert-notifications" type="b"><default>true</default><summary>Show notifications as top-right alerts instead of GNOME banners</summary></key>
     <key name="alert-caps-lock" type="b"><default>true</default><summary>Alert when Caps Lock is turned on or off</summary></key>
     <key name="alert-bluetooth" type="b"><default>true</default><summary>Alert when a Bluetooth device connects or disconnects</summary></key>
     <key name="alert-network" type="b"><default>true</default><summary>Alert when the computer goes offline</summary></key>
