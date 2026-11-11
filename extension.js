@@ -21,6 +21,8 @@ import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 import {BarLook} from './lib/island/barLook.js';
 import {BatteryIndicator} from './lib/island/batteryIcon.js';
 import {Island} from './lib/island/island.js';
+import {FocusTimer} from './lib/island/services/focus.js';
+import {ReminderStore} from './lib/island/services/reminders.js';
 import {MenuBar} from './lib/menuBar.js';
 import {PanelLayout} from './lib/panelLayout.js';
 import {Registrar} from './lib/sources/registrar.js';
@@ -47,6 +49,12 @@ export default class LumaMenuExtension extends Extension {
         this._registrar = null;
         this._syncRegistrar();
 
+        // Timer de foco e lembretes vivem AQUI (e não no relógio): a interface
+        // da barra é destruída ao bloquear a tela, mas o Pomodoro continua
+        // contando e a lista continua a mesma.
+        this._focusTimer = new FocusTimer(this._settings);
+        this._reminders = new ReminderStore();
+
         // Bloqueio/desbloqueio de tela chegam como mudança de "modo de sessão".
         Main.sessionMode.connectObject('updated', () => this._syncSessionMode(), this);
         this._syncSessionMode();
@@ -57,6 +65,10 @@ export default class LumaMenuExtension extends Extension {
         this._destroyUi();
         this._registrar?.destroy();
         this._registrar = null;
+        this._focusTimer?.destroy();
+        this._focusTimer = null;
+        this._reminders?.destroy();
+        this._reminders = null;
         this._settings?.disconnectObject(this);
         this._settings = null;
         setDebug(false);
@@ -116,7 +128,8 @@ export default class LumaMenuExtension extends Extension {
         const wanted = Boolean(this._menuBar) && this._settings.get_boolean('island-enabled');
         if (wanted && !this._island) {
             this._island = new Island(this._settings, this._barLook,
-                () => this._menuBar.getAppearance());
+                () => this._menuBar.getAppearance(),
+                {focus: this._focusTimer, reminders: this._reminders});
         } else if (!wanted && this._island) {
             this._island.destroy();
             this._island = null;

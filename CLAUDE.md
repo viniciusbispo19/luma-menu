@@ -240,7 +240,24 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   o painel redefine em `_updatePanel` a cada `sessionMode 'updated'` e o **Just Perfection**
   aplica `notification-banner-position` — padrão 1 = centro — ao ser ativado: reaplicar no
   `updated` e uma vez 3 s depois). Margem direita do banner 12 px (`.message.notification-banner`).
-  Próximas: 2c (Foco, Lembretes, demais alertas), 3 (prefs completas; perguntar antes).
+  Próxima: Fase 3 (prefs completas, clipboard, uso de apps) — PERGUNTAR antes de começar.
+- **Fase 2c concluída (2026-11-11)**: Foco (`services/focus.js` FocusTimer: guarda a HORA do
+  fim e agenda UM timeout; Não Perturbe só no foco rodando e só desliga o que ligou; som
+  `get_sound_player().play_from_theme('complete')`), Lembretes (`services/reminders.js` +
+  `services/storage.js`: JSON atômico em `~/.local/share/luma-menu/`), lembrete de eventos
+  (`services/eventReminders.js`: `Calendar.DBusEventSource` PRÓPRIA — tem `destroy()` — e
+  ECal sob demanda via `await import('gi://ECal?version=2.0')`; id do CalendarServer =
+  `agenda\nevento\nrecorrência`; testado em execução: conecta na agenda e devolve "objeto não
+  localizado" para id falso), alertas do sistema (`services/systemAlerts.js`). FocusTimer e
+  ReminderStore vivem na EXTENSÃO (sobrevivem ao bloqueio; testado).
+- Gio NÃO tem `make_directory_with_parents_async` (só síncrona): usar `make_directory_async`
+  recursivo.
+- `has_allocation()` fica falso enquanto o ator espera novo layout (ex.: o relógio mudou de
+  largura): para "nunca foi alocado" usar `get_allocation_box().get_width() <= 0`.
+- St NÃO herda `text-decoration` do botão para o rótulo: aplicar no `StLabel`.
+- Teste via Eval: `\n` dentro do JS vira quebra de linha real no caminho (SyntaxError
+  silencioso se a saída for descartada): usar `String.fromCharCode(10)`.
+- Atividade no relógio: rótulos com `ellipsize NONE` (com pouco espaço viravam "…").
 - GNOME marca a notificação como vista (`acknowledged`) quando o banner aparece: só as que
   chegam sem banner (Não Perturbe) ficam "não vistas".
 - `msgmerge` cria traduções "fuzzy" erradas ("Clear" → "Limpar Menu"): sempre revisar

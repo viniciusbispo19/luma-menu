@@ -575,3 +575,182 @@
     icon-size: 32px;
     color: rgba(150, 150, 150, 1);
 }
+
+/* ---------- Alertas: mensagens (bateria, Caps Lock, rede, foco, eventos) ---------- */
+.luma-island-alert-message {
+    spacing: 12px;
+}
+
+.luma-island-alert-message .luma-island-alert-icon {
+    icon-size: 24px;
+}
+
+.luma-island-alert-subtitle {
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.64);
+}
+
+.luma-island-alert-action {
+    font-weight: bold;
+}
+
+.luma-island-alert-close {
+    padding: 3px;
+    border-radius: 99px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.luma-island-alert-close:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+}
+
+.luma-island-alert-close StIcon {
+    icon-size: 12px;
+}
+
+/* ---------- Timer de foco ao lado do relógio ---------- */
+.luma-island-focus-activity {
+    spacing: 4px;
+}
+
+.luma-island-focus-icon {
+    icon-size: 14px;
+}
+
+.luma-island-focus-time {
+    font-feature-settings: "tnum";
+}
+
+/* Na pausa, o tom da cor de destaque (como o Isle pinta a pausa de outra cor). */
+.luma-island-focus-break {
+    color: -st-accent-color;
+}
+
+/* ---------- Página Foco ---------- */
+.luma-focus {
+    spacing: 24px;
+    padding: 6px 4px;
+}
+
+.luma-focus-ring {
+    width: 150px;
+    height: 150px;
+    -luma-ring-color: -st-accent-color;
+}
+
+.luma-focus-time {
+    font-size: 2em;
+    font-weight: bold;
+    font-feature-settings: "tnum";
+}
+
+.luma-focus-phase {
+    color: rgba(150, 150, 150, 1);
+}
+
+.luma-focus-side {
+    spacing: 10px;
+    min-width: 230px;
+}
+
+.luma-focus-stepper {
+    spacing: 8px;
+}
+
+.luma-focus-step {
+    padding: 4px;
+    border-radius: 99px;
+    background-color: rgba(128, 128, 128, 0.18);
+    color: inherit;
+}
+
+.luma-focus-step:hover {
+    background-color: rgba(128, 128, 128, 0.28);
+}
+
+.luma-focus-step StIcon {
+    icon-size: 12px;
+}
+
+.luma-focus-step-value {
+    min-width: 4.5em;
+    text-align: center;
+    font-feature-settings: "tnum";
+}
+
+.luma-focus-buttons {
+    spacing: 8px;
+    padding-top: 6px;
+}
+
+.luma-focus-main {
+    background-color: -st-accent-color;
+    color: -st-accent-fg-color;
+    font-weight: bold;
+}
+
+/* ---------- Página Lembretes ---------- */
+.luma-reminders {
+    spacing: 8px;
+    min-width: 420px;
+}
+
+.luma-reminders-entry {
+    border-radius: 8px;
+    padding: 6px 10px;
+}
+
+.luma-reminders-scroll {
+    max-height: 300px;
+}
+
+.luma-reminders-list {
+    spacing: 2px;
+}
+
+.luma-reminder {
+    spacing: 10px;
+    padding: 3px 4px;
+    border-radius: 8px;
+}
+
+.luma-reminder:hover {
+    background-color: rgba(128, 128, 128, 0.12);
+}
+
+/* O círculo de "feito". */
+.luma-reminder-check {
+    width: 18px;
+    height: 18px;
+    border-radius: 99px;
+    border: 2px solid rgba(150, 150, 150, 1);
+    padding: 0;
+}
+
+.luma-reminder-check:checked {
+    background-color: -st-accent-color;
+    border-color: -st-accent-color;
+    color: -st-accent-fg-color;
+}
+
+.luma-reminder-check StIcon {
+    icon-size: 12px;
+}
+
+.luma-reminder-text {
+    color: inherit;
+    padding: 4px 2px;
+    text-align: left;
+}
+
+/* O St não passa text-decoration do botão para o rótulo: vai no rótulo. */
+.luma-reminder-done .luma-reminder-text,
+.luma-reminder-done .luma-reminder-text StLabel {
+    text-decoration: line-through;
+    color: rgba(150, 150, 150, 1);
+}
+
+.luma-reminders-empty {
+    padding: 24px 0;
+}

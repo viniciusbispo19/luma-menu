@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Luma Menu 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/viniciusbispo19/luma-menu/issues\n"
-"POT-Creation-Date: 2026-11-11 18:15-0300\n"
+"POT-Creation-Date: 2026-11-11 18:21-0300\n"
 "PO-Revision-Date: 2026-11-10 15:56-0300\n"
 "Last-Translator: Vinicius Bispo\n"
 "Language-Team: none\n"
@@ -364,83 +364,196 @@ msgid "Only urgent notifications appear while Do Not Disturb is on"
 msgstr "Com o Não Perturbe ligado, só as notificações urgentes aparecem"
 
 #: lib/island/strings.js:76
+msgctxt "focus phase"
+msgid "Break"
+msgstr "Pausa"
+
+#: lib/island/strings.js:79
+msgid "Start"
+msgstr "Iniciar"
+
+#: lib/island/strings.js:82
+msgid "Pause"
+msgstr "Pausar"
+
+#: lib/island/strings.js:85
+msgid "Resume"
+msgstr "Retomar"
+
+#: lib/island/strings.js:88
+msgid "Reset"
+msgstr "Redefinir"
+
+#: lib/island/strings.js:91
+msgid "Focus session done"
+msgstr "Sessão de foco concluída"
+
+#: lib/island/strings.js:94
+msgid "Time for a break"
+msgstr "Hora de uma pausa"
+
+#: lib/island/strings.js:97
+msgid "Start Break"
+msgstr "Iniciar pausa"
+
+#: lib/island/strings.js:100
+msgid "Break is over"
+msgstr "A pausa terminou"
+
+#: lib/island/strings.js:103
+msgid "Ready to focus again?"
+msgstr "Pronto para focar de novo?"
+
+#: lib/island/strings.js:106
+msgid "Start Focus"
+msgstr "Iniciar foco"
+
+#: lib/island/strings.js:111
+msgid "New reminder…"
+msgstr "Novo lembrete…"
+
+#: lib/island/strings.js:114
+msgid "No reminders"
+msgstr "Nenhum lembrete"
+
+#: lib/island/strings.js:117
+msgid "Done"
+msgstr "Feito"
+
+#: lib/island/strings.js:122
+msgid "Low Battery"
+msgstr "Bateria fraca"
+
+#: lib/island/strings.js:125
+msgid "Battery Charged"
+msgstr "Bateria carregada"
+
+#: lib/island/strings.js:128
+msgid "Caps Lock On"
+msgstr "Caps Lock ativado"
+
+#: lib/island/strings.js:131
+msgid "Caps Lock Off"
+msgstr "Caps Lock desativado"
+
+#: lib/island/strings.js:134
+msgid "Connected"
+msgstr "Conectado"
+
+#: lib/island/strings.js:137
+msgid "Disconnected"
+msgstr "Desconectado"
+
+#: lib/island/strings.js:140
+msgid "Offline"
+msgstr "Sem conexão"
+
+#: lib/island/strings.js:143
+msgid "The network connection was lost"
+msgstr "A conexão de rede caiu"
+
+#: lib/island/strings.js:146
+msgid "Back Online"
+msgstr "Conectado de novo"
+
+#: lib/island/strings.js:149
+msgid "Join"
+msgstr "Entrar"
+
+#: lib/island/strings.js:154
 msgid "Volume"
 msgstr "Volume"
 
-#: lib/island/strings.js:79
+#: lib/island/strings.js:157
 msgid "Brightness"
 msgstr "Brilho"
 
-#: lib/island/strings.js:82
+#: lib/island/strings.js:160
 msgid "Keyboard Brightness"
 msgstr "Brilho do teclado"
 
-#: lib/island/strings.js:85
+#: lib/island/strings.js:163
 msgid "Muted"
 msgstr "Mudo"
 
-#: lib/island/strings.js:90
+#: lib/island/strings.js:168
 msgid "Battery"
 msgstr "Bateria"
 
-#: lib/island/strings.js:93
+#: lib/island/strings.js:171
 msgid "Charging"
 msgstr "Carregando"
 
-#: lib/island/strings.js:96
+#: lib/island/strings.js:174
 msgid "Charged"
 msgstr "Carregada"
 
-#: lib/island/strings.js:99
+#: lib/island/strings.js:177
 msgid "Plugged In"
 msgstr "Na tomada"
 
-#: lib/island/strings.js:102
+#: lib/island/strings.js:180
 msgid "Power Saver"
 msgstr "Modo de economia"
 
 #. Translators: date in the top bar clock, e.g. "Wed, Nov 11". Uses
 #. * GLib.DateTime.format() codes: %a weekday, %-d day, %b month.
-#: lib/island/strings.js:118
+#: lib/island/strings.js:196
 msgid "%a, %b %-d"
 msgstr "%a, %-d de %b"
 
 #. Translators: time in 24-hour format (GLib.DateTime.format codes).
-#: lib/island/strings.js:130
+#: lib/island/strings.js:208
 msgctxt "time format"
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: time in 12-hour format (GLib.DateTime.format codes).
-#: lib/island/strings.js:132
+#: lib/island/strings.js:210
 msgctxt "time format"
 msgid "%-l:%M %p"
 msgstr "%-l:%M %p"
 
 #. Translators: a full date with year, e.g. "Wed, Nov 11, 2027".
-#: lib/island/strings.js:157
+#: lib/island/strings.js:235
 msgid "%a, %b %-d, %Y"
 msgstr "%a, %-d de %b de %Y"
 
 #. Translators: a duration; {h} = hours, {m} = minutes (two digits).
-#: lib/island/strings.js:200
+#: lib/island/strings.js:278
 msgid "{h} h {m} min"
 msgstr "{h} h {m} min"
 
 #. Translators: a duration in minutes.
-#: lib/island/strings.js:203
+#. Translators: a duration in minutes, e.g. "25 min".
+#: lib/island/strings.js:281 lib/island/strings.js:333
 msgid "{m} min"
 msgstr "{m} min"
 
 #. Translators: battery, e.g. "1 h 05 min until full".
-#: lib/island/strings.js:219
+#: lib/island/strings.js:297
 msgid "{time} until full"
 msgstr "{time} até completar"
 
 #. Translators: battery, e.g. "3 h 20 min left".
-#: lib/island/strings.js:227
+#: lib/island/strings.js:305
 msgid "{time} left"
 msgstr "{time} restantes"
+
+#. Translators: low battery alert, {p} = "20%".
+#: lib/island/strings.js:358
+msgid "{p} left · plug in the charger"
+msgstr "{p} restantes · conecte o carregador"
+
+#. Translators: an event starting now, {title} = its name.
+#: lib/island/strings.js:371
+msgid "{title} is starting"
+msgstr "{title} está começando"
+
+#. Translators: an event about to start, e.g. "Weekly sync in 5 min".
+#: lib/island/strings.js:374
+msgid "{title} in {n} min"
+msgstr "{title} em {n} min"
 
 #: lib/menuBar.js:285 lib/menuBar.js:294 prefs.js:339
 msgid "Help"
@@ -846,4 +959,3 @@ msgstr "Licença"
 #: prefs.js:462
 msgid "GNU General Public License, version 3 or later"
 msgstr "GNU General Public License, versão 3 ou posterior"
-
