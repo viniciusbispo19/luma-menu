@@ -447,3 +447,12 @@
     padding: 5px 10px;
     border: 1px solid rgba(128, 128, 128, 0.28);
 }
+
+/* ---------- Banners de notificação no canto direito ----------
+ * O relógio do Luma alinha os banners pela direita (embaixo dele). O tema
+ * (WhiteSur) dá 8 px de margem; os pop-ups usam 12 px da borda, como o
+ * centro de controle: a margem direita igual deixa notificação, relógio e
+ * calendário na mesma linha. (Duas classes para vencer a do tema.) */
+.message.notification-banner {
+    margin-right: 12px;
+}
