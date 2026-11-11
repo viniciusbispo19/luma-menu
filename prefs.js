@@ -157,8 +157,14 @@ export default class LumaMenuPreferences extends ExtensionPreferences {
         bar.add(this._switch('show-fallback-menus', _('Standard menus'),
             _('Show File, Edit, View and Window when the app has no menus of its own')));
         bar.add(this._switch('hide-activities', _('Hide the Activities button')));
-        bar.add(this._switch('black-bar', _('Solid black bar'),
-            _('Like Isle: the bar and the clock panel look like one piece')));
+        bar.add(this._switch('black-bar', _('Black bar'),
+            _('Like Isle: the bar, the menus and the clock panel look like one piece')));
+        const opacityRow = this._spin('black-bar-opacity', _('Black bar opacity (%)'),
+            _('Below 100, the Blur my Shell blur shows through'), 50, 100, 5);
+        this._settings.bind('black-bar', opacityRow, 'sensitive', Gio.SettingsBindFlags.GET);
+        bar.add(opacityRow);
+        bar.add(this._switch('island-menus', _('Isle-style menus'),
+            _('Menus come out of the bar as smoked glass, with a spring animation')));
         const clockRow = this._combo('clock-position', _('Clock position'), [
             ['center', _('Center')],
             ['right', _('Right (like macOS)')],

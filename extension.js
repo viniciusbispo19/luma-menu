@@ -18,6 +18,7 @@
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
+import {BarLook} from './lib/island/barLook.js';
 import {Island} from './lib/island/island.js';
 import {MenuBar} from './lib/menuBar.js';
 import {PanelLayout} from './lib/panelLayout.js';
@@ -32,6 +33,14 @@ export default class LumaMenuExtension extends Extension {
             'changed::debug', () => setDebug(this._settings.get_boolean('debug')),
             'changed::enable-registrar', () => this._syncRegistrar(),
             'changed::island-enabled', () => this._syncIsland(),
+            // O visual dos menus é decidido quando eles são criados (por causa
+            // do Blur my Shell): ligar/desligar recria a barra.
+            'changed::island-menus', () => {
+                if (this._menuBar) {
+                    this._destroyUi();
+                    this._createUi();
+                }
+            },
             this);
 
         this._registrar = null;
@@ -75,8 +84,12 @@ export default class LumaMenuExtension extends Extension {
         if (this._menuBar)
             return;
 
+        // A cor da barra (preto fumê ou a do tema), usada pelos menus e pelo
+        // painel do relógio para "sair da barra" com o mesmo visual dela.
+        this._barLook = new BarLook(this._settings);
+
         // A barra é um único ator (St.BoxLayout) com todos os títulos dentro.
-        this._menuBar = new MenuBar(this, this._registrar);
+        this._menuBar = new MenuBar(this, this._registrar, this._barLook);
 
         // `_leftBox` é a caixa da esquerda do painel. O "_" indica que é
         // interno do Shell (não há API pública para inserir um ator qualquer
@@ -98,7 +111,7 @@ export default class LumaMenuExtension extends Extension {
     _syncIsland() {
         const wanted = Boolean(this._menuBar) && this._settings.get_boolean('island-enabled');
         if (wanted && !this._island) {
-            this._island = new Island(this._settings);
+            this._island = new Island(this._settings, this._barLook);
         } else if (!wanted && this._island) {
             this._island.destroy();
             this._island = null;
@@ -118,5 +131,7 @@ export default class LumaMenuExtension extends Extension {
         // menus); os menus saem sozinhos do gerenciador de menus do painel.
         this._menuBar?.destroy();
         this._menuBar = null;
+        this._barLook?.destroy();
+        this._barLook = null;
     }
 }

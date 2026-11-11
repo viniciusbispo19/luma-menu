@@ -50,7 +50,17 @@
     <key name="black-bar" type="b">
       <!-- O visual do Isle: barra preta sólida, unida à forma do relógio. -->
       <default>true</default>
-      <summary>Solid black top bar</summary>
+      <summary>Smoked black top bar</summary>
+    </key>
+    <key name="black-bar-opacity" type="i">
+      <range min="50" max="100"/>
+      <!-- 85%: quase preto, mas o desfoque do Blur my Shell ainda aparece. -->
+      <default>85</default>
+      <summary>Opacity of the black bar (percent; 100 = solid)</summary>
+    </key>
+    <key name="island-menus" type="b">
+      <default>true</default>
+      <summary>Menus come out of the bar with the Isle look (smoked glass, spring animation)</summary>
     </key>
     <key name="focus-bar-shortcut" type="as">
       <default><![CDATA[['F10']]]></default>

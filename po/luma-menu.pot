@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Luma Menu 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/viniciusbispo19/luma-menu/issues\n"
-"POT-Creation-Date: 2026-11-11 14:05-0300\n"
+"POT-Creation-Date: 2026-11-11 14:20-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,19 +94,19 @@ msgstr ""
 msgid "Show All"
 msgstr ""
 
-#: lib/fallbackMenus.js:166 prefs.js:329
+#: lib/fallbackMenus.js:166 prefs.js:335
 msgid "File"
 msgstr ""
 
-#: lib/fallbackMenus.js:168 prefs.js:330
+#: lib/fallbackMenus.js:168 prefs.js:336
 msgid "Edit"
 msgstr ""
 
-#: lib/fallbackMenus.js:170 prefs.js:331
+#: lib/fallbackMenus.js:170 prefs.js:337
 msgid "View"
 msgstr ""
 
-#: lib/fallbackMenus.js:172 prefs.js:332
+#: lib/fallbackMenus.js:172 prefs.js:338
 msgid "Window"
 msgstr ""
 
@@ -272,7 +272,7 @@ msgstr ""
 msgid "%s Help"
 msgstr ""
 
-#: lib/fallbackMenus.js:401 lib/fallbackMenus.js:404 prefs.js:183
+#: lib/fallbackMenus.js:401 lib/fallbackMenus.js:404 prefs.js:189
 msgid "Keyboard Shortcuts"
 msgstr ""
 
@@ -289,7 +289,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: lib/forceQuitDialog.js:67 lib/forceQuitDialog.js:148 prefs.js:186
+#: lib/forceQuitDialog.js:67 lib/forceQuitDialog.js:148 prefs.js:192
 msgid "Force Quit"
 msgstr ""
 
@@ -371,7 +371,7 @@ msgstr ""
 msgid "%a, %b %-d, %Y"
 msgstr ""
 
-#: lib/menuBar.js:279 lib/menuBar.js:288 prefs.js:333
+#: lib/menuBar.js:285 lib/menuBar.js:294 prefs.js:339
 msgid "Help"
 msgstr ""
 
@@ -387,7 +387,7 @@ msgstr ""
 msgid "Space"
 msgstr ""
 
-#: lib/systemMenu.js:54 prefs.js:338
+#: lib/systemMenu.js:54 prefs.js:344
 msgid "System Menu"
 msgstr ""
 
@@ -399,15 +399,15 @@ msgstr ""
 msgid "System Settings…"
 msgstr ""
 
-#: lib/systemMenu.js:80 prefs.js:339
+#: lib/systemMenu.js:80 prefs.js:345
 msgid "Software Center…"
 msgstr ""
 
-#: lib/systemMenu.js:87 prefs.js:340
+#: lib/systemMenu.js:87 prefs.js:346
 msgid "Recent Items"
 msgstr ""
 
-#: lib/systemMenu.js:93 prefs.js:341
+#: lib/systemMenu.js:93 prefs.js:347
 msgid "Force Quit…"
 msgstr ""
 
@@ -472,7 +472,7 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: prefs.js:156 prefs.js:217
+#: prefs.js:156 prefs.js:223
 msgid "Menu Bar"
 msgstr ""
 
@@ -489,261 +489,277 @@ msgid "Hide the Activities button"
 msgstr ""
 
 #: prefs.js:160
-msgid "Solid black bar"
+msgid "Black bar"
 msgstr ""
 
 #: prefs.js:161
-msgid "Like Isle: the bar and the clock panel look like one piece"
+msgid "Like Isle: the bar, the menus and the clock panel look like one piece"
 msgstr ""
 
 #: prefs.js:162
-msgid "Clock position"
+msgid "Black bar opacity (%)"
 msgstr ""
 
 #: prefs.js:163
+msgid "Below 100, the Blur my Shell blur shows through"
+msgstr ""
+
+#: prefs.js:166
+msgid "Isle-style menus"
+msgstr ""
+
+#: prefs.js:167
+msgid "Menus come out of the bar as smoked glass, with a spring animation"
+msgstr ""
+
+#: prefs.js:168
+msgid "Clock position"
+msgstr ""
+
+#: prefs.js:169
 msgid "Center"
 msgstr ""
 
-#: prefs.js:164
+#: prefs.js:170
 msgid "Right (like macOS)"
 msgstr ""
 
-#: prefs.js:165
+#: prefs.js:171
 msgid "Used with the GNOME clock"
 msgstr ""
 
-#: prefs.js:174
+#: prefs.js:180
 msgid "Clock"
 msgstr ""
 
-#: prefs.js:175
+#: prefs.js:181
 msgid ""
 "A macOS-style clock in the right corner; click it for music, calendar, "
 "notifications, focus and reminders"
 msgstr ""
 
-#: prefs.js:177
+#: prefs.js:183
 msgid "Use the Luma clock"
 msgstr ""
 
-#: prefs.js:178
+#: prefs.js:184
 msgid "Replaces the GNOME clock"
 msgstr ""
 
-#: prefs.js:179
+#: prefs.js:185
 msgid "Show the date beside the time"
 msgstr ""
 
-#: prefs.js:180
+#: prefs.js:186
 msgid "World clocks on the Calendar page"
 msgstr ""
 
-#: prefs.js:184
+#: prefs.js:190
 msgid "Focus the menu bar"
 msgstr ""
 
-#: prefs.js:185
+#: prefs.js:191
 msgid "Opens the app menu; use the arrow keys to navigate"
 msgstr ""
 
-#: prefs.js:189
+#: prefs.js:195
 msgid "Multiple Monitors"
 msgstr ""
 
-#: prefs.js:191
+#: prefs.js:197
 msgid "The menu bar is shown on the primary monitor"
 msgstr ""
 
-#: prefs.js:192
+#: prefs.js:198
 msgid ""
 "GNOME has a single top bar, on the primary monitor. Showing the menus on "
 "every monitor would need a second bar, which this extension does not create."
 msgstr ""
 
-#: prefs.js:200
+#: prefs.js:206
 msgid "Appearance"
 msgstr ""
 
-#: prefs.js:206
+#: prefs.js:212
 msgid "System Icon"
 msgstr ""
 
-#: prefs.js:207
+#: prefs.js:213
 msgid "The logo shown in place of the Apple menu"
 msgstr ""
 
-#: prefs.js:210
+#: prefs.js:216
 msgid "Icon size"
 msgstr ""
 
-#: prefs.js:210 prefs.js:229
+#: prefs.js:216 prefs.js:235
 msgid "In pixels"
 msgstr ""
 
-#: prefs.js:211
+#: prefs.js:217
 msgid "Icon style"
 msgstr ""
 
-#: prefs.js:212
+#: prefs.js:218
 msgid "Symbolic (follows the theme color)"
 msgstr ""
 
-#: prefs.js:213
+#: prefs.js:219
 msgid "Color"
 msgstr ""
 
-#: prefs.js:218
+#: prefs.js:224
 msgid "App name in bold"
 msgstr ""
 
-#: prefs.js:219
+#: prefs.js:225
 msgid "Title spacing"
 msgstr ""
 
-#: prefs.js:220
+#: prefs.js:226
 msgid "Space on each side of a menu title, in pixels"
 msgstr ""
 
-#: prefs.js:223
+#: prefs.js:229
 msgid "Drop-down Menus"
 msgstr ""
 
-#: prefs.js:224
+#: prefs.js:230
 msgid "Shortcut style"
 msgstr ""
 
-#: prefs.js:225
+#: prefs.js:231
 msgid "Text (Ctrl+C)"
 msgstr ""
 
-#: prefs.js:226
+#: prefs.js:232
 msgid "Mac symbols (⌃C)"
 msgstr ""
 
-#: prefs.js:228
+#: prefs.js:234
 msgid "Opacity"
 msgstr ""
 
-#: prefs.js:228
+#: prefs.js:234
 msgid "In percent"
 msgstr ""
 
-#: prefs.js:229
+#: prefs.js:235
 msgid "Corner radius"
 msgstr ""
 
-#: prefs.js:279
+#: prefs.js:285
 msgid "Automatic"
 msgstr ""
 
-#: prefs.js:282
+#: prefs.js:288
 msgid "Custom…"
 msgstr ""
 
-#: prefs.js:299
+#: prefs.js:305
 msgid "Images (SVG, PNG)"
 msgstr ""
 
-#: prefs.js:305
+#: prefs.js:311
 msgid "Choose an Icon"
 msgstr ""
 
-#: prefs.js:321
+#: prefs.js:327
 msgid "Menus"
 msgstr ""
 
-#: prefs.js:326
+#: prefs.js:332
 msgid "Standard Menus"
 msgstr ""
 
-#: prefs.js:327
+#: prefs.js:333
 msgid "Used when the app does not export menus of its own"
 msgstr ""
 
-#: prefs.js:334
+#: prefs.js:340
 msgid "Search field in the Help menu"
 msgstr ""
 
-#: prefs.js:335
+#: prefs.js:341
 msgid "Searches every menu item of the current app"
 msgstr ""
 
-#: prefs.js:342
+#: prefs.js:348
 msgid "Suspend, Restart and Shut Down"
 msgstr ""
 
-#: prefs.js:349
+#: prefs.js:355
 msgid "Compatibility"
 msgstr ""
 
-#: prefs.js:353
+#: prefs.js:359
 msgid "Apps That Use DBusMenu"
 msgstr ""
 
-#: prefs.js:354
+#: prefs.js:360
 msgid "Read menus from Qt, Electron and similar apps"
 msgstr ""
 
-#: prefs.js:355
+#: prefs.js:361
 msgid ""
 "Provides the com.canonical.AppMenu.Registrar service. Works with apps "
 "running through XWayland; apps that were already open need to be restarted."
 msgstr ""
 
-#: prefs.js:360
+#: prefs.js:366
 msgid "Troubleshooting"
 msgstr ""
 
-#: prefs.js:361
+#: prefs.js:367
 msgid "Debug mode"
 msgstr ""
 
-#: prefs.js:362
+#: prefs.js:368
 msgid "Writes details to the system journal (journalctl)"
 msgstr ""
 
-#: prefs.js:370
+#: prefs.js:376
 msgid "Ignored Apps"
 msgstr ""
 
-#: prefs.js:371
+#: prefs.js:377
 msgid ""
 "These apps always use the standard menus. Use the app ID (e.g. "
 "org.gnome.TextEditor) or the window class (WM_CLASS)."
 msgstr ""
 
-#: prefs.js:375
+#: prefs.js:381
 msgid "Add app"
 msgstr ""
 
-#: prefs.js:395
+#: prefs.js:401
 msgid "Remove"
 msgstr ""
 
-#: prefs.js:415
+#: prefs.js:421
 msgid "About"
 msgstr ""
 
-#: prefs.js:432
+#: prefs.js:438
 msgid "A macOS-style global menu bar for GNOME"
 msgstr ""
 
-#: prefs.js:440
+#: prefs.js:446
 msgid "Version"
 msgstr ""
 
-#: prefs.js:443
+#: prefs.js:449
 msgid "Author"
 msgstr ""
 
-#: prefs.js:445
+#: prefs.js:451
 msgid "Source code"
 msgstr ""
 
-#: prefs.js:455
+#: prefs.js:461
 msgid "License"
 msgstr ""
 
-#: prefs.js:456
+#: prefs.js:462
 msgid "GNU General Public License, version 3 or later"
 msgstr ""

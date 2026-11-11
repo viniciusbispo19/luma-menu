@@ -174,6 +174,26 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   barra: abas à esquerda + cópia da data/hora no mesmo lugar do relógio. Esc/clique
   fora: `GrabHelper` do Shell (`ui/grabHelper.js`, `grab({actor, onUngrab})`). Alertas
   (Fase 2) saem do mesmo lugar, mesma forma. Sem hover.
+- **Visual atualizado (2026-11-11, pedido do usuário)**: barra = preto FUMÊ (`black-bar-opacity`,
+  padrão 85%) para o desfoque do Blur my Shell aparecer; forma do relógio E menus da barra
+  (`island-menus`) saem da barra como vidro fumê. Peça comum: `lib/island/surface.js`
+  (`IslandSurface`): desfoque ESTÁTICO (cópia do papel de parede via
+  `Background.BackgroundManager` + `Shell.BlurEffect` radius 60·escala, brilho 0,6 — igual ao
+  BMS do painel), recortado por máscara GLSL (`shapeMask.js`, `Clutter.ShaderEffect` +
+  `vfunc_get_static_snippet`), tinta por cima (Cairo), faixa da barra NÃO pintada. Cor:
+  `barLook.js` (preto fumê ou cor do tema do painel com a barra preta desligada).
+- Desfoque `BACKGROUND` não pode ser recortado por outro efeito (o recorte desenha num
+  FBO sem "fundo"): por isso o desfoque é de uma cópia do papel de parede.
+- Área do desfoque: `vfunc_get_paint_volume` = `volume.set_from_allocation(this)` (sem
+  `clip_to_allocation`). Altura 0 → esconder (senão `cogl_framebuffer_set_viewport` CRITICAL).
+- **Blur my Shell 78 desfoca todo popup cuja caixa (`_delegate.box`) tem `popup-menu-content`**
+  (classe `bms-popup-blurred`) e desenha o vidro dele por cima. Opt-out: tirar
+  `popup-menu-content` da caixa no CONSTRUTOR do menu (o BMS decide no `child-added` do
+  uiGroup). Os submenus em cascata continuam com a classe (o BMS desfoca). Opt-in oficial
+  do BMS para outras extensões: classe `bms-popup-blur-target`.
+- O BMS reescreve `Main.panel.style` (tira o `;` final): remover a nossa regra por regex.
+- `get_transformed_position()` de ator sem alocação devolve NaN; menu aberto antes do título
+  ter alocação faz o BoxPointer alocar NaN → `LumaMenu.open` recusa sem `has_allocation()`.
 - NÃO usar `trackFullscreen` em chrome que fica escondido: o LayoutManager força
   `visible` ao sair da tela cheia.
 - `PanelMenu.Button` sem menu (`dontCreateMenu`) desliga o ClickGesture dele: o relógio

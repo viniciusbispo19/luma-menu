@@ -33,7 +33,8 @@ BEFORE=$(wc -l < "$LOG")
     ilhas: Main.panel._rightBox.get_children().filter(c => c.get_first_child()?.constructor.name === 'LumaMenuIslandClock').length,
     relogioVisivel: Main.panel.statusArea.dateMenu.container.visible,
     calendarioEmCasa: !Main.panel.statusArea.dateMenu._calendar.get_parent()?.has_style_class_name?.('luma-island-calendar-month'),
-    barraPreta: (Main.panel.style ?? '').includes('#000000'),
+    barraPreta: (Main.panel.style ?? '').includes('rgba(0, 0, 0,'),
+    superficies: Main.layoutManager.uiGroup.get_children().filter(c => c.constructor.name === 'LumaMenuIslandSurface').length,
     superVOriginal: !Object.prototype.hasOwnProperty.call(Main.panel, 'toggleCalendar') ||
       Main.panel.toggleCalendar === Object.getPrototypeOf(Main.panel).toggleCalendar,
   });
@@ -61,7 +62,14 @@ BEFORE=$(wc -l < "$LOG")
     // Abre o painel (pelo Super+V) e desativa com ele aberto: o calendário
     // emprestado precisa voltar para o relógio do GNOME.
     if (i % 2 === 0) { Main.panel.toggleCalendar(); await wait(150); }
+    // E com um menu da barra aberto (a forma do Isle atrás dele).
+    else {
+      const bar = Main.panel._leftBox.get_children().find(c => c.name === 'lumaMenuBar');
+      bar?._menuButtons[1]?.menu.open(); await wait(150);
+    }
   }
+  // Fecha o que ficou aberto (menu do último ciclo) antes de comparar.
+  Main.panel.menuManager.activeMenu?.close(); await wait(900);
   const depois = snap();
   m.disableExtension(uuid); await wait(300);
   const desativada = snap();
@@ -99,6 +107,7 @@ checks = {
     "desativar restaura o Super+V": data["desativada"]["superVOriginal"],
     "barra preta ativa": d["barraPreta"],
     "desativar devolve a cor original da barra": not data["desativada"]["barraPreta"],
+    "desativar remove as formas do Isle": data["desativada"]["superficies"] == 0,
     "bloquear remove o relógio do Luma": data["bloqueada"]["ilhas"] == 0,
     "desbloquear recria 1 relógio do Luma": data["desbloqueada"]["ilhas"] == 1,
 }

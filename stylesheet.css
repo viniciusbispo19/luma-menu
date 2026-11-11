@@ -68,6 +68,12 @@
     -boxpointer-gap: 2px;
 }
 
+/* Visual do Isle: o menu "sai" da barra, então encosta nela (sem vão). O
+ * fundo é a forma de vidro fumê desenhada atrás (lib/island/surface.js). */
+.luma-menu-boxpointer.luma-menu-island-look {
+    -boxpointer-gap: 0px;
+}
+
 /* Fundo e cantos: a opacidade e o raio são aplicados ao vivo pelo código
  * (preferências), mantendo a cor de fundo do tema. */
 .luma-menu-content {
