@@ -115,7 +115,8 @@ export default class LumaMenuExtension extends Extension {
     _syncIsland() {
         const wanted = Boolean(this._menuBar) && this._settings.get_boolean('island-enabled');
         if (wanted && !this._island) {
-            this._island = new Island(this._settings, this._barLook);
+            this._island = new Island(this._settings, this._barLook,
+                () => this._menuBar.getAppearance());
         } else if (!wanted && this._island) {
             this._island.destroy();
             this._island = null;

@@ -164,6 +164,10 @@ Ambiente conferido em 2026-11-10: Fedora 45, GNOME Shell 51.1, Mutter 51.1, GJS 
   `LumaBackground … needs an allocation`; milhares de `Overwriting existing binding of keysym`.
 
 ### Funções do Isle na barra do macOS (projeto 2 — plano em ~/.claude/plans/playful-purring-abelson.md)
+- **ATUAL (2026-11-11, decisão final do usuário)**: menus da barra E relógio abrem o
+  POP-UP padrão do GNOME (balão, `LumaMenu`; o relógio usa `alignment 1.0`), com o desfoque
+  do Blur my Shell. `island-menus` agora é `false` por padrão (código da forma ainda existe
+  como opção). A forma do Isle (`IslandSurface`) continua só nos ALERTAS. Abaixo, histórico.
 - **Layout decidido pelo usuário (2026-11-11)**: NADA no centro da barra. **Barra preta
   sólida** (chave `black-bar`, padrão ligado; `PanelLayout` acrescenta só a sua declaração
   ao `Main.panel.style` e a tira no destroy). Relógio do Luma no CANTO DIREITO (último

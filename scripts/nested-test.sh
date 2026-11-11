@@ -34,6 +34,7 @@ BEFORE=$(wc -l < "$LOG")
     relogioVisivel: Main.panel.statusArea.dateMenu.container.visible,
     calendarioEmCasa: !Main.panel.statusArea.dateMenu._calendar.get_parent()?.has_style_class_name?.('luma-island-calendar-month'),
     barraPreta: (Main.panel.style ?? '').includes('rgba(0, 0, 0,'),
+    barraPretaPref: m.lookup(uuid).stateObj?._settings?.get_boolean('black-bar') ?? null,
     // Bateria: o ícone do GNOME volta ao desativar; o OSD volta ao original.
     bateriaGnomeVisivel: Main.panel.statusArea.quickSettings._system?.visible ?? true,
     osdOriginal: !Object.prototype.hasOwnProperty.call(Main.osdWindowManager, 'showAll') ||
@@ -111,7 +112,7 @@ checks = {
     "desativar mostra o relógio do GNOME": data["desativada"]["relogioVisivel"],
     "desativar devolve o calendário ao relógio": data["desativada"]["calendarioEmCasa"],
     "desativar restaura o Super+V": data["desativada"]["superVOriginal"],
-    "barra preta ativa": d["barraPreta"],
+    "barra preta conforme a preferência": d["barraPreta"] == bool(d["barraPretaPref"]),
     "desativar devolve a cor original da barra": not data["desativada"]["barraPreta"],
     "desativar remove as formas do Isle": data["desativada"]["superficies"] == 0,
     "desativar mostra o ícone de bateria do GNOME": data["desativada"]["bateriaGnomeVisivel"],

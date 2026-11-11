@@ -264,19 +264,22 @@
     font-feature-settings: "tnum";
 }
 
-/* ---------- Forma do Isle (preto sólido, sai de baixo do relógio) ----------
- * O fundo preto, os cantos e os ombros são desenhados pelo código
- * (islandShape.js, com Cairo). Aqui ficam o texto e os controles, no estilo
- * do Isle sobre o preto: texto branco, secundários em branco translúcido,
- * botões "de vidro" (branco a 10–16%). */
+/* ---------- Pop-up do relógio (abas do Isle) ----------
+ * O pop-up é um menu do Luma (.luma-menu-content: mesma cor, opacidade e
+ * cantos dos outros menus). O conteúdo inteiro é um único item, sem destaque
+ * nem recuo. */
+.luma-island-panel {
+    padding: 0;
+    margin: 0;
+}
 
 .luma-island-content {
-    color: #ffffff;
     min-width: 540px;
+    padding: 4px 6px 6px;
+    spacing: 10px;
 }
 
 .luma-island-header {
-    padding-left: 16px;
     spacing: 8px;
 }
 
@@ -284,28 +287,24 @@
     spacing: 4px;
 }
 
+/* Abas: como os itens dos menus — cinza no hover, cor de destaque na ativa. */
 .luma-island-tab {
-    padding: 2px 11px;
+    padding: 3px 12px;
     border-radius: 99px;
-    color: rgba(255, 255, 255, 0.6);
+    color: inherit;
 }
 
 .luma-island-tab:hover {
-    color: #ffffff;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(128, 128, 128, 0.18);
 }
 
 .luma-island-tab:checked {
-    color: #ffffff;
-    background-color: rgba(255, 255, 255, 0.16);
-}
-
-.luma-island-header-clock {
-    color: #ffffff;
+    background-color: -st-accent-color;
+    color: -st-accent-fg-color;
 }
 
 .luma-island-page {
-    padding: 10px 20px 20px;
+    padding: 4px 8px 6px;
 }
 
 .luma-island-calendar {
@@ -331,18 +330,18 @@
 
 .luma-island-event {
     spacing: 10px;
-    padding: 6px 10px;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.08);
+    padding: 5px 8px;
+    border-radius: 6px;
+    background-color: rgba(128, 128, 128, 0.12);
 }
 
 .luma-island-event-time {
-    color: rgba(255, 255, 255, 0.46);
+    color: rgba(150, 150, 150, 1);
     font-feature-settings: "tnum";
 }
 
 .luma-island-placeholder {
-    color: rgba(255, 255, 255, 0.46);
+    color: rgba(150, 150, 150, 1);
     padding: 4px 0;
 }
 
@@ -366,8 +365,7 @@
 }
 
 .luma-island-weather-condition {
-    color: rgba(255, 255, 255, 0.64);
-    padding-right: 6px;
+    color: rgba(150, 150, 150, 1);
 }
 
 /* ---------- Alertas (volume/brilho) saindo do relógio ---------- */
